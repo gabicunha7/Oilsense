@@ -1,0 +1,30 @@
+section.escuro {
+    background-color: var(--corFundoBody);
+    color: var(--corTexto);
+}
+
+.section_main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 2rem 5rem;
+}
+
+.titulo {
+    font-family: "Poppins-Extrabold";
+    font-size: 3rem;
+}
+
+.section_textos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-right: 2rem;
+    gap: 1rem;
+}
+
+.section_img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
