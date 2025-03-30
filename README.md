@@ -4,7 +4,7 @@
 
 ## Índice
 - <a href="#funcionalidades-do-projeto"> Funcionalidades do Projeto </a>
-- <a href="#protótipo"> protótipo </a> 
+- <a href="#protótipo"> Protótipo </a> 
 - <a href="#tecnologias-utilizadas"> Tecnologias Utilizadas </a> 
 - <a href="#autores"> Autores </a> 
 - <a href="#próximos-passos"> Próximos Passos </a>

@@ -15,25 +15,33 @@
     src: url("../fonte/Poppins/Poppins-ExtraBold.ttf");
 }
 
-:root .escuro {
-    --corFundoBody: #2A292E;
-    --corTexto: #ffffff;
+:root {
     --corBotaoMain: #483EA4;
     --corTextoMarrom: #A47C3E;
     --corBotaoHeader: #D9D9D9;
     --corSecaoCinza: #93919157;
 }
 
-.root .claro {
+:root .escuro {
+    --corFundoBody: #2A292E;
+    --corTexto: #ffffff;
+}
+
+:root .claro {
     --corFundoBody: #D9D9D9;
     --corTexto: #000000;
 }
 
 body {
     width: 100vw;
-    height: 100vh;
-    overflow-y: hidden;
+    min-height: 100vh;
+    overflow-x: hidden;
     display: grid;
     grid-template-rows: 8rem 1fr 6rem;
     color: var(--corTexto);
+}
+
+.texto_pequeno {
+    font-weight: bold;
+    font-size: 0.9rem;
 }
