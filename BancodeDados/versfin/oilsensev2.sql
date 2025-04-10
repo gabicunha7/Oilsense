@@ -17,7 +17,7 @@ create table funcionario(
     nome varchar(40) not null,
     sobrenome varchar(60) not null,
     email varchar(60) unique not null,
-    senha varchar(50),
+    senha varchar(50) not null,
     fkmontadora int not null,
     constraint fk_montadoraFuncionario foreign key(fkmontadora) references montadora(id)
 )auto_increment = 100;
@@ -39,20 +39,20 @@ create table sensor(
 )auto_increment = 100;
 
 create table carro(
-	id int primary key auto_increment,
-    placa char(7) unique,
-	volume decimal(6,3),
-    alturacarter decimal(6,3),
+    placa char(7) unique not null,
+	volume decimal(6,3) not null,
+    alturacarter decimal(6,3) not null,
     fkmodelo int not null,
     fksensor int not null unique,
     constraint fk_modeloCarro foreign key(fkmodelo) references modelo(id),
-    constraint fk_sensorCarro foreign key(fksensor) references sensor(id)
+    constraint fk_sensorCarro foreign key(fksensor) references sensor(id),
+    constraint pk_carro primary key (fksensor)
 )auto_increment = 100;
 
 create table telemetria(
 	id int primary key auto_increment,
-    alturaoleo decimal(6,3),
-    dtColeta datetime,
+    alturaoleo decimal(6,3) not null,
+    dtColeta datetime not null,
 	fksensor int not null,
     constraint fk_sensorTelemetria foreign key(fksensor) references sensor(id)	
 );
