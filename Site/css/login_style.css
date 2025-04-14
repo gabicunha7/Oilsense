@@ -25,6 +25,7 @@ img{
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 .content{
@@ -114,4 +115,9 @@ button{
 
 button:hover{
     background-color: #f8c471;
+}
+
+.logo{
+    width: 7%;
+    margin: 10px;
 }
