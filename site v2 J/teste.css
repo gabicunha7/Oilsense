@@ -1,0 +1,125 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1e1e1e;
+    color: #f1f1f1;
+    line-height: 1.6;
+}
+
+
+
+
+/* Cabeçalho */
+header {
+    background-color: #121212;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    height: 40px;
+}
+
+nav a {
+    margin-left: 1.5rem;
+    color: #f1f1f1;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #ff6600;
+}
+
+nav .btn {
+    background-color: #ff6600;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    color: #fff;
+    margin-left: 1.5rem;
+    transition: background 0.3s;
+}
+
+nav .btn:hover {
+    background-color: #e65500;
+}
+
+
+
+/* Seções */
+.section {
+    padding: 4rem 2rem;
+    text-align: center;
+    border-bottom: 1px solid #333;
+}
+
+.section h1, .section h2 {
+    color: #ff6600;
+    margin-bottom: 1.5rem;
+}
+
+.section p, .section li {
+    max-width: 700px;
+    margin: 0 auto 1rem;
+    font-size: 1.1rem;
+}
+
+.section ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.section li::before {
+    content: "⛽";
+    margin-right: 0.5rem;
+    color: #ff6600;
+}
+
+
+
+
+/* Botão padrão */
+.btn {
+    display: inline-block;
+    background-color: #ff6600;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 1rem;
+    transition: background 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #e65500;
+}
+
+
+
+
+/* Rodapé */
+footer {
+    background-color: #121212;
+    color: #aaa;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    border-top: 1px solid #333;
+}
