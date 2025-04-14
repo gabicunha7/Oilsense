@@ -1,39 +1,23 @@
-#include "Ultrasonic.h" //biblioteca
+// Inclui a biblioteca para o sensor HC-SR04
+#include "Ultrasonic.h"
 
-
+// Definições dos pinos de trigger e echo
 const int PINO_TRIGGER = 13;
 const int PINO_ECHO = 12;
 
-const float height = 10.0;//medição
-const float length = 20.0;
-const float width = 20.0; 
-
+// Cria uma instância do objeto HC_SR04 com os pinos definidos
 HC_SR04 sensor(PINO_TRIGGER, PINO_ECHO);
 
+// Função de inicialização
 void setup() {
-  Serial.begin(9600); 
-
+    Serial.begin(9600); // Inicializa a comunicação serial a 9600 bps
 }
 
-void loop() { // cálculo // tratamento  
-  float distanciaSensor = sensor.distance();
-  if(distanciaSensor >= 0) { 
-  float fluidLevel = height - distanciaSensor; 
-  float volumeCm3 = length*width*fluidLevel; 
-  float volumeLitros = volumeCm3 / 1000.0; 
-    if(volumeLitros >= 0) {
-          Serial.print("Nível máximo:");
-          Serial.print(4); 
-          Serial.print(" ");
-          Serial.print("Volume:"); 
-          Serial.print(volumeLitros);
-          Serial.print(" ");
-          Serial.print("Nível mínimo:");
-          Serial.println(2.5);
-    } 
-  }
+// Função principal de execução contínua
+void loop() {
+    // Exibe a distância no monitor serial
+    Serial.println(sensor.distance());
 
-  delay(1000); 
-
+    // Aguarda 1 segundo antes da próxima leitura
+    delay(1000); 
 }
-
