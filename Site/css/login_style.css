@@ -7,7 +7,7 @@
 
 body{
     height: 100vh;
-    background-color: #f8ecec;
+    background-color: #5d6d7e;
 }
 
 .image{
@@ -34,7 +34,7 @@ img{
     border-radius: 5px;
     padding: 0px 0px;
     width: 800px;
-    border: 2px #e8e4d6 solid;
+    border: none;
 }
 
 h1{
@@ -80,8 +80,12 @@ input{
     border: 1px #808b96 solid;
     outline: none;
     padding: 5px 14px;
-    color: #808b96;
-    background-color: #f8ecec;
+    color: #ffffff;
+    background-color: #5d6d7e;
+}
+
+input::placeholder{
+    color: #ffffff;
 }
 
 input:focus{
