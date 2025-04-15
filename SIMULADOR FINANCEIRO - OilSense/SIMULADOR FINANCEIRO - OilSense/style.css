@@ -29,6 +29,7 @@ header .container{
     margin: 0 auto;
     padding: 0 10%;
 }
+
 .global{
     display: flex;
     width: 100%;
@@ -46,7 +47,7 @@ section.first-simulador{
     width: 800px;
 }
 section input{
-    width: 370px;
+    width: 100%;
     margin-bottom: 10px;
     text-align: center;
     height: 30px;
@@ -70,7 +71,7 @@ footer{
     color: white;
 }
 section.first-simulador button{
-    width: 370px;
+    width: 100%;
     height: 70px;
     font-size: 20px;
     border-radius: 10px;
