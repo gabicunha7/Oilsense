@@ -19,7 +19,6 @@ header {
     box-shadow: 0 2px 4px rgba(0,0,0,0.5);
     position: sticky;
     top: 0;
-    z-index: 1000;
 }
 
 .container {
@@ -111,4 +110,23 @@ footer {
     padding: 1rem;
     font-size: 0.9rem;
     border-top: 1px solid #333;
+}
+
+main.graficos {
+    min-height: calc(100vh - 150px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.grafico {
+    width: 50%;
+    margin: auto;
+}
+
+canvas {
+    background-color: #121212;
+    padding: 16px;
 }
