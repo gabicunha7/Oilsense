@@ -21,7 +21,7 @@ img{
 }
 
 .container{
-    height: 100vh;
+    height: 70vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -117,6 +117,12 @@ button:hover{
 }
 
 .logo{
-    width: 7%;
+    width: 20%;
     margin: 10px;
+}
+
+header{
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
