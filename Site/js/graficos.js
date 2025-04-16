@@ -78,38 +78,49 @@ const dataPizza = {
     ]
 };
 
-const configLinha = {
+let config = {
     type: 'line',
     data: dataLinhas,
     options: {}
 }
 
-const configBarras = {
-    type: 'bar',
-    data: dataBarras,
-    options: {}
-}
-
-const configPizza = {
-    type: 'pie',
-    data: dataPizza,
-    options: {}
-}
+const dashboard = document.getElementById('dashboard');
 
 Chart.defaults.color = '#ffffff';
 Chart.defaults.font.size = 16;
 
-const graficoLinhas = new Chart(
-    document.getElementById('graficoLinhas'),
-    configLinha
+let grafico = new Chart(
+    dashboard,
+    config
 );
 
-const graficoBarras = new Chart(
-    document.getElementById('graficoBarras'),
-    configBarras
-);
+function alterarTipoGrafico() {
+    let tipoGrafico = document.getElementById('tipo_grafico').value;
 
-const graficoPizza = new Chart(
-    document.getElementById('graficoPizza'),
-    configPizza
-);
+    if (tipoGrafico == 'linha') {
+        config = {
+            type: 'line',
+            data: dataLinhas,
+            options: {}
+        }
+    } else if (tipoGrafico == 'barra') {
+        config = {
+            type: 'bar',
+            data: dataBarras,
+            options: {}
+        }
+    } else {
+        config = {
+            type: 'pie',
+            data: dataPizza,
+            options: {}
+        }
+    }
+
+    grafico.destroy();
+
+    grafico = new Chart(
+        dashboard,
+        config
+    );
+}

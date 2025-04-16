@@ -23,15 +23,20 @@
     </header>
 
     <main>
+        <section class="form">
+            <label for="tipo_grafico"> Selecione o tipo de gráfico </label>
+            <select name="tipo_grafico" id="tipo_grafico">
+                <option value="linha"> Linha </option>
+                <option value="barra"> Barra </option>
+                <option value="pizza"> Pizza </option>
+            </select>
+
+            <button onclick="alterarTipoGrafico()"> Alterar Tipo de Gráfico </button>
+        </section>
+
         <section class="graficos">
             <section class="grafico">
-                <canvas id="graficoLinhas"></canvas>
-            </section>
-            <section class="grafico">
-                <canvas id="graficoBarras"></canvas>
-            </section>
-            <section class="grafico">
-                <canvas id="graficoPizza"></canvas>
+                <canvas id="dashboard"></canvas>
             </section>
         </section>
     </main>
