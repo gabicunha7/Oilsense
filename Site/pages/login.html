@@ -9,7 +9,7 @@
 <body>
     
     <header>
-        <a href="" class="logo"><img src="../img/logo/logoExtensa.png"></a>
+        <a href="../index.html" class="logo"><img src="../img/logo/logoExtensa.png"></a>
     </header>
 
     <section class="container">
@@ -26,14 +26,14 @@
                 <h3>Preencha os dados para continuar</h3>
         
                 <label for="ipt_email">E-mail</label>
-                <input type="text" id="ipt_email" placeholder="Entre com seu e-mail">
+                <input type="email" id="ipt_email" placeholder="Entre com seu e-mail">
 
                 <label for="ipt_senha">Senha</label>
-                <input type="text" id="ipt_senha" placeholder="Entre com sua senha">
+                <input type="password" id="ipt_senha" placeholder="Entre com sua senha">
 
                 <h4>Ainda não possui uma conta? <a href="cadastro.html">Cadastre-se</a></h4>
 
-                <button>Entrar</button>
+                <button onclick="entrar()">Entrar</button>
                 
             </div>
 
@@ -42,4 +42,6 @@
     </section>
     
 </body>
+
+<script src="../js/login.js"></script>
 </html>
