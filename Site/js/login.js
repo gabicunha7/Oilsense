@@ -30,16 +30,30 @@ function entrar() {
     ];
 
     for (let i = 0; i < listaEmail.length; i++) {
-        if (emailDigitado == listaEmail[i] && senhaDigitada == listaSenha[i]) {
+        if (emailDigitado.includes("@") && (emailDigitado == listaEmail[i] && senhaDigitada == listaSenha[i])) {
             senhaIncorreta = false;
             window.location.href = 'dashboards.html';
             break;
-        } else {
+        } 
+        
+        else if(emailDigitado == '' && senhaDigitada == ''){
+            alert('Por favor, preencha todos os campos!');
+            break;
+        }
+
+        else if(emailDigitado.includes("@") == false){
+            alert('Por favor, digite um Email válido!');
+            break;
+        }
+
+        else{
             senhaIncorreta = true;
         }
     }
     if (senhaIncorreta){
-        alert('Senha ou Email incorretos.');
+        alert('Email ou senha incorretos.');
+        ipt_email.value = ``;
+        ipt_senha.value = ``;
     }
 
     
