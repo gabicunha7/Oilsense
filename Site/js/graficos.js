@@ -139,8 +139,8 @@ const indicadoresPizza = `<section class="indicador">
                             <p class="indice"> Modelo X </p>
                         </section>
                         <section class="indicador">
-                            <h3> Mês com mais alertas </h3>
-                            <p class="indice"> Janeiro de 2025 </p>
+                            <h3> Alerta mais emitido</h3>
+                            <p class="indice"> Nível 1 </p>
                         </section>`;
 
 let grafico = new Chart(
