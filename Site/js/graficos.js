@@ -132,7 +132,7 @@ const indicadoresBarra = `<section class="indicador">
 
 const indicadoresPizza = `<section class="indicador"> 
                         <h3> Total de alertas </h3>
-                        <p class="indice"> 41 </p>
+                        <p class="indice"> 33 </p>
                         </section>
                         <section class="indicador">
                             <h3> Modelo com mais alertas </h3>
