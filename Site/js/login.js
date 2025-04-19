@@ -30,6 +30,7 @@ function entrar() {
     ];
 
     for (let i = 0; i < listaEmail.length; i++) {
+        
         if (emailDigitado.includes("@") && (emailDigitado == listaEmail[i] && senhaDigitada == listaSenha[i])) {
             senhaIncorreta = false;
             window.location.href = 'dashboards.html';
