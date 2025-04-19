@@ -203,7 +203,7 @@ function alterarTipoGrafico() {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Índice de alertas dos veículos',
+                        text: 'Índice de alertas dos veículos em um mês',
                         font: {
                             size: 28
                         },
