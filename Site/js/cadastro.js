@@ -20,7 +20,7 @@ function cadastrar() {
 
     for (let i = 0; i < listaEmail.length; i++) {
 
-        if (!emailJaCadastrado && emailDigitado.includes("@") && nomeDigitado != '' && cnpjDigitado != '') {
+        if (!emailJaCadastrado && (emailDigitado.includes("@") && emailDigitado.includes(".")) && nomeDigitado != '' && cnpjDigitado != '' && (cnpjDigitado.length == 14)) {
             window.location.href = 'login.html';
         } 
         
@@ -34,8 +34,13 @@ function cadastrar() {
             break;
         }
 
-        if(emailDigitado.includes("@") == false){
+        if((emailDigitado.includes("@") == false) || emailDigitado.includes(".") == false){
             alert('Por favor, digite um Email válido!');
+            break;
+        }
+
+        if(cnpjDigitado.length > 14 || cnpjDigitado.length < 14){
+            alert('CNPJ inválido. Tente novamente');
             break;
         }
 
