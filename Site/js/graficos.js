@@ -44,7 +44,7 @@ const dataLinhas = {
             data: [75, 68, 64, 61, 59, 55]
         }, 
         {
-            label: 'Média Veículo X',
+            label: 'Média modelo X',
             backgroundColor: 'rgb(255, 205, 86)',
             borderColor: 'rgb(255, 205, 86)',
             data: [75, 71, 68, 65, 61, 59]
@@ -78,16 +78,30 @@ const dataPizza = {
     ]
 };
 
+Chart.defaults.color = '#ffffff';
+Chart.defaults.font.size = 16;
+
 let config = {
     type: 'line',
     data: dataLinhas,
-    options: {}
+    options: {
+        plugins: {
+            title: {
+                display: true,
+                text: 'Porcentagem de altura do óleo dos veículos do modelo X',
+                font: {
+                    size: 28
+                },
+                padding: {
+                    top: 16,
+                    bottom: 16
+                } 
+            }
+        }
+    }
 }
 
 const dashboard = document.getElementById('dashboard');
-
-Chart.defaults.color = '#ffffff';
-Chart.defaults.font.size = 16;
 
 let grafico = new Chart(
     dashboard,
@@ -101,19 +115,61 @@ function alterarTipoGrafico() {
         config = {
             type: 'line',
             data: dataLinhas,
-            options: {}
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Porcentagem de altura do óleo dos veículos do modelo X',
+                        font: {
+                            size: 28
+                        },
+                        padding: {
+                            top: 16,
+                            bottom: 16
+                        } 
+                    }
+                }
+            }
         }
     } else if (tipoGrafico == 'barra') {
         config = {
             type: 'bar',
             data: dataBarras,
-            options: {}
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Porcentagem de altura do óleo do veículo X',
+                        font: {
+                            size: 28
+                        },
+                        padding: {
+                            top: 16,
+                            bottom: 16
+                        } 
+                    }
+                }
+            }
         }
     } else {
         config = {
             type: 'pie',
             data: dataPizza,
-            options: {}
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Índice de alertas dos veículos',
+                        font: {
+                            size: 28
+                        },
+                        padding: {
+                            top: 16,
+                            bottom: 16
+                        } 
+                    }
+                }
+            }
         }
     }
 
