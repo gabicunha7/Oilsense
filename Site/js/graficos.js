@@ -38,7 +38,7 @@ const labelsAlerta = [
 const dataLinhas = {
     labels: labelsMes,
     datasets: [{
-            label: 'Veiculo X',
+            label: 'Veiculo Y',
             backgroundColor: 'rgb(54, 162, 235)',
             borderColor: 'rgb(54, 162, 235)',
             data: [75, 68, 64, 61, 59, 55]
@@ -55,7 +55,7 @@ const dataLinhas = {
 const dataBarras = {
     labels: labelsMes,
     datasets: [{
-            label: 'Veiculo X',
+            label: 'Veiculo Y',
             backgroundColor: 'rgb(255, 205, 86)',
             borderColor: 'rgb(255, 205, 86)',
             data: [75, 68, 64, 61, 59, 55]
@@ -102,6 +102,46 @@ let config = {
 }
 
 const dashboard = document.getElementById('dashboard');
+const kpis = document.querySelector('.kpis');
+
+const indicadoresLinha = `<section class="indicador"> 
+                        <h3> Total de veículos modelo X </h3>
+                        <p class="indice"> 60 </p>
+                        </section>
+                        <section class="indicador">
+                            <h3> Classificação em relação ao nível de gasto do veículo Y </h3>
+                            <p class="indice"> #8 </p>
+                        </section>
+                        <section class="indicador">
+                            <h3> Gasto mais alto </h3>
+                            <p class="indice"> 7% - Janeiro de 2025 </p>
+                        </section>`;
+
+const indicadoresBarra = `<section class="indicador"> 
+                        <h3> Total de veículos modelo X </h3>
+                        <p class="indice"> 60 </p>
+                        </section>
+                        <section class="indicador">
+                            <h3> Classificação em relação ao nível de gasto do veículo Y </h3>
+                            <p class="indice"> #8 </p>
+                        </section>
+                        <section class="indicador">
+                            <h3> Gasto mais alto </h3>
+                            <p class="indice"> 7% - Janeiro de 2025 </p>
+                        </section>`;
+
+const indicadoresPizza = `<section class="indicador"> 
+                        <h3> Total de alertas </h3>
+                        <p class="indice"> 41 </p>
+                        </section>
+                        <section class="indicador">
+                            <h3> Modelo com mais alertas </h3>
+                            <p class="indice"> Modelo X </p>
+                        </section>
+                        <section class="indicador">
+                            <h3> Mês com mais alertas </h3>
+                            <p class="indice"> Janeiro de 2025 </p>
+                        </section>`;
 
 let grafico = new Chart(
     dashboard,
@@ -131,6 +171,8 @@ function alterarTipoGrafico() {
                 }
             }
         }
+
+        kpis.innerHTML = indicadoresLinha;
     } else if (tipoGrafico == 'barra') {
         config = {
             type: 'bar',
@@ -139,7 +181,7 @@ function alterarTipoGrafico() {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Porcentagem de altura do óleo do veículo X',
+                        text: 'Porcentagem de altura do óleo do veículo Y',
                         font: {
                             size: 28
                         },
@@ -151,6 +193,8 @@ function alterarTipoGrafico() {
                 }
             }
         }
+
+        kpis.innerHTML = indicadoresBarra;
     } else {
         config = {
             type: 'pie',
@@ -171,6 +215,8 @@ function alterarTipoGrafico() {
                 }
             }
         }
+
+        kpis.innerHTML = indicadoresPizza;
     }
 
     grafico.destroy();
