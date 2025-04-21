@@ -63,7 +63,7 @@ const serial = async (
 
             // este insert irá inserir os dados na tabela "medida"
             await poolBancoDados.execute(
-                'INSERT INTO Telemetria (distancia, dtHoraColeta, fksensor) VALUES (?, CURRENT_TIMESTAMP(), 1)',
+                'INSERT INTO telemetria (distancia, dtHoraColeta, fksensor) VALUES (?, CURRENT_TIMESTAMP(), 1)',
                 [sensorUltrassonico]
             );
             console.log("valores inseridos no banco: ", sensorUltrassonico);
