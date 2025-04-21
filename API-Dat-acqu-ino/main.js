@@ -21,7 +21,7 @@ const serial = async (
         {
             host: '127.0.0.1',
             user: 'insertuser',
-            password: 'insert123',
+            password: 'Insert#123',
             database: 'Oilsense',
             port: 3307
         }
