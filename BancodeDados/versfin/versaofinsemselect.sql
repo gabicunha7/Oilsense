@@ -55,8 +55,8 @@ create table carro(
 
 create table telemetria(
 	id int primary key auto_increment,
-    alturaoleo decimal(6,3) not null,
-    dtColeta datetime not null,
+    distancia decimal(6,3) not null,
+    dtHoraColeta datetime not null,
 	fksensor int not null,
     constraint fk_sensorTelemetria foreign key(fksensor) references sensor(id)	
 );
