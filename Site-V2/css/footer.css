@@ -1,0 +1,7 @@
+footer {
+    background-color: var(--corFundoBody);
+    color: var(--corTexto);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
