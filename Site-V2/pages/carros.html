@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Funcionários - OilSense </title>
+    <link rel="shortcut icon" href="../img/logo/logoIcone.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../css/body.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/grafico.css">
+    <link rel="stylesheet" href="../css/formulario.css">
+</head>
+<body>
+    <header class="escuro">
+        <section class="container">
+            
+            <nav class="menu">
+                <input type="checkbox" name="chk_hamburguer" id="chk_hamburguer" class="check_hamburguer">
+
+                <section class="hamburguer">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </section>
+                <ul>
+                    <li> 
+                        <a href="dashboards.html"> Painel </a>
+                    </li>
+                    <li>
+                        <a href="funcionarios.html"> Funcionários </a>
+                    </li>
+                    <li>
+                        <a href="modelos.html"> Modelos </a>
+                    </li>
+                    <li> 
+                        <a href="carros.html"> Carros </a>
+                    </li>
+                    <li>
+                        <a href="../index.html"> Sair </a>
+                    </li>
+                </ul>
+            </nav>
+            <section class="secao_logo">
+                <a href="dashboards.html">
+                    <img src="../img/logo/logoExtensa.png" alt="Logo OilSense" class="logo">
+                </a>
+            </section>
+
+            <span></span>
+        </section>
+    </header>
+
+    <main class="escuro">
+        <section class="container tabelas">
+            <h1 class="titulo"> Carros </h1>
+
+            <section class="cadastrar">
+                <h2> Adicionar </h2>
+                <button onclick="cadastrarCarro()" class="btnTabela">
+                    <img src="../img/icones/maisIcone.png" alt="Icone de cadastrar" class="iconeTabela"> 
+                </button>
+            </section>
+            
+            <table>
+                <tr>
+                    <th> id </th>
+                    <th> Placa </th>
+                    <th> Volume do Cárter </th>
+                    <th> Altura do Cárter </th>
+                    <th> Modelo </th>
+                    <th> Editar </th>
+                    <th> Excluir </th>
+                </tr>
+                <tr>
+                    <td> 1 </td>
+                    <td> ABC1D01 </td>
+                    <td> 4,5 L </td>
+                    <td> 12,3 cm </td>
+                    <td> Corolla </td>
+                    <td> 
+                        <button onclick="editarCarro()" class="btnTabela"> 
+                            <img src="../img/icones/editarIcone.png" alt="Icone de edição" class="iconeTabela"> 
+                        </button> 
+                    </td>
+                    <td>
+                        <button onclick="excluirCarro()" class="btnTabela"> 
+                            <img src="../img/icones/excluirIcone.png" alt="Icone de excluir" class="iconeTabela"> 
+                        </button> 
+                    </td>
+                </tr>
+                <tr>
+                    <td> 2 </td>
+                    <td> XYZ2E02 </td>
+                    <td> 6,2 L </td>
+                    <td> 13,5 cm </td>
+                    <td> Hilux </td>
+                    <td> 
+                        <button onclick="editarCarro()" class="btnTabela"> 
+                            <img src="../img/icones/editarIcone.png" alt="Icone de edição" class="iconeTabela"> 
+                        </button> 
+                    </td>
+                    <td>
+                        <button onclick="excluirCarro()" class="btnTabela"> 
+                            <img src="../img/icones/excluirIcone.png" alt="Icone de excluir" class="iconeTabela"> 
+                        </button> 
+                    </td>
+                </tr>
+            </table>
+        </section>
+    </main>
+
+    <footer class="escuro">
+        <p>&copy; 2025 OilSense - Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

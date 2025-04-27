@@ -29,9 +29,9 @@ const labelsHorario = [
 ];
 
 const labelsAlerta = [
-    'Nível 1',
-    'Nível 2',
-    'Nível 3',
+    'Nível 1 (Excesso de óleo)',
+    'Nível 2 (Falta de Óleo)',
+    'Nível 3 (Crítico de falta de Óleo)',
     'Sem alerta'
 ];
 

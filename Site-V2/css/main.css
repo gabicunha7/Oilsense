@@ -10,6 +10,10 @@ main {
     color: var(--corTexto);
 }
 
+#home {
+    display: flex;
+}
+
 #home .container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -115,4 +119,59 @@ main {
 .grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
+}
+
+table {
+    width: 75%;
+    background-color: var(--corTextoForm);
+    color: var(--corTextoForm);
+    padding: 0.5rem;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: center;
+}
+
+th {
+    background-color: var(--corBotaoForm);
+}
+
+td {
+    background-color: var(--corTexto);
+}
+
+.btnTabela {
+    display: flex;
+    border-radius: 0.4rem;
+    padding: 0.4rem;
+    border: none;
+    background-color: var(--corBotaoKPI);
+    cursor: pointer;
+    transition: all ease-in-out 0.2s;
+}
+
+.btnTabela:hover {
+    background-color: #A47C3E;
+}
+
+button .iconeTabela {
+    width: 2rem;
+}
+
+.tabelas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.cadastrar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.cadastrar .btnTabela {
+    border-radius: 50%;
 }

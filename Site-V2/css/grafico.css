@@ -11,28 +11,28 @@
 }
 
 #tipo_grafico {
-    color: #fff;
-    background-color: #c18e41;
+    color: var(--corTexto);
+    background-color: var(--corBotaoKPI);
     border: none;
-    border-radius: 3px;
-    padding: 5px;
+    border-radius: 0.3rem;
+    padding: 0.4rem;
     cursor: pointer;
 }
 
 .form button {
-    color: #fff;
-    background-color: #c18e41;
+    color: var(--corTexto);
+    background-color: var(--corBotaoKPI);
     border: none;
-    border-radius: 3px;
-    padding: 5px;
+    border-radius: 0.4rem;
+    padding: 0.4rem;
     margin-top: 1rem;
     cursor: pointer;
     font-size: 1rem;
     margin-bottom: 1rem;
+    transition: all ease-in-out 0.2s;
 }
 
 .form button:hover {
-    color: rgb(120, 119, 119);
     background-color: #A47C3E;
 }
 
@@ -46,8 +46,8 @@
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    background-color: #121212;
-    border-radius: 12px;
+    background-color: var(--corFundoKPI);
+    border-radius: 0.8rem;
 }
 
 .indicador {
@@ -64,7 +64,7 @@
 }
 
 .indicador p.indice {
-    font-size: 28px;
+    font-size: 1.8rem;
     font-weight: bold;
     text-align: center;
 }

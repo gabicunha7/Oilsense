@@ -28,6 +28,9 @@
     --corLinkForm: #2727cd;
     --corInputForm: #5d6d7e;
     --corBotaoForm: #ebc428;
+
+    --corFundoKPI: #121212;
+    --corBotaoKPI: #c18e41;
 }
 
 :root .escuro {

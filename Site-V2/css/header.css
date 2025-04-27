@@ -105,3 +105,7 @@ a:hover {
 .menu ul li a {
     font-size: 1.2rem;
 }
+
+.secao_logo {
+    margin-left: -3%;
+}
