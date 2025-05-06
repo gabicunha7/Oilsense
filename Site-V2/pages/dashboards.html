@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,10 +13,11 @@
     <link rel="stylesheet" href="../css/grafico.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
     <header class="escuro">
         <section class="container">
-            
+
             <nav class="menu">
                 <input type="checkbox" name="chk_hamburguer" id="chk_hamburguer" class="check_hamburguer">
 
@@ -25,7 +27,7 @@
                     <span></span>
                 </section>
                 <ul>
-                    <li> 
+                    <li>
                         <a href="dashboards.html"> Painel </a>
                     </li>
                     <li>
@@ -34,7 +36,7 @@
                     <li>
                         <a href="modelos.html"> Modelos </a>
                     </li>
-                    <li> 
+                    <li>
                         <a href="carros.html"> Carros </a>
                     </li>
                     <li>
@@ -56,9 +58,10 @@
         <section class="form">
             <label for="tipo_grafico"> Selecione o tipo de gráfico </label>
             <select name="tipo_grafico" id="tipo_grafico">
+                <option value="pizza"> Pizza </option>
                 <option value="linha"> Linha </option>
                 <option value="barra"> Barra </option>
-                <option value="pizza"> Pizza </option>
+
             </select>
 
             <button onclick="alterarTipoGrafico()"> Alterar Tipo de Gráfico </button>
@@ -67,7 +70,7 @@
         <section class="graficos">
             <section class="grafico">
                 <section class="kpis">
-                    <section class="indicador"> 
+                    <section class="indicador">
                         <h3> Total de veículos modelo X </h3>
                         <p class="indice"> 60 </p>
                     </section>
@@ -77,10 +80,12 @@
                     </section>
                     <section class="indicador">
                         <h3> Gasto mais alto </h3>
-                        <p class="indice"> 7% - Janeiro de 2025 </p>
+                        <p class="indice"> 1° de Maio de 2025 </p>
                     </section>
                 </section>
-                <canvas id="dashboard"></canvas>
+                <section class="tamanho">
+                    <canvas id="dashboard"></canvas>
+                </section>
             </section>
         </section>
     </main>
@@ -91,4 +96,5 @@
 </body>
 
 <script src="../js/graficos.js"></script>
+
 </html>
