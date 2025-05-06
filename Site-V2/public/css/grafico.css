@@ -39,7 +39,6 @@
 .graficos {
     width: 80%;
     margin: auto;
-
 }
 
 .kpis {
@@ -67,4 +66,9 @@
     font-size: 1.8rem;
     font-weight: bold;
     text-align: center;
+}
+
+.tamanho {
+    width: 40%;
+    margin: auto;
 }
