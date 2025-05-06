@@ -1,10 +1,11 @@
-const labelsMes = [
-    'Janeiro',
-    'Fevereiro',
-    'Março',
-    'Abril',
-    'Maio',
-    'Junho',
+const labelsDias = [
+    '01/05',
+    '02/05',
+    '03/05',
+    '04/05',
+    '05/05',
+    '06/05',
+    '07/05',
     // 'Julho',
     // 'Agosto',
     // 'Setembro',
@@ -20,6 +21,7 @@ const labelsHorario = [
     '08:30',
     '09:00',
     '09:30',
+    '10:00',
     // '10:00',
     // '10:30',
     // '11:00',
@@ -29,36 +31,36 @@ const labelsHorario = [
 ];
 
 const labelsAlerta = [
-    'Nível 1 (Excesso de óleo)',
+    'Nível 1 (Excesso de Óleo)',
     'Nível 2 (Falta de Óleo)',
     'Nível 3 (Crítico de falta de Óleo)',
     'Sem alerta'
 ];
 
 const dataLinhas = {
-    labels: labelsMes,
+    labels: labelsDias,
     datasets: [{
             label: 'Veiculo Y',
             backgroundColor: 'rgb(54, 162, 235)',
             borderColor: 'rgb(54, 162, 235)',
-            data: [75, 68, 64, 61, 59, 55]
+            data: [75, 68, 64, 61, 59, 55, 54]
         }, 
         {
             label: 'Média modelo X',
             backgroundColor: 'rgb(255, 205, 86)',
             borderColor: 'rgb(255, 205, 86)',
-            data: [75, 71, 68, 65, 61, 59]
+            data: [75, 71, 68, 65, 61, 59, 56]
         }
     ]
 };
 
 const dataBarras = {
-    labels: labelsMes,
+    labels: labelsDias,
     datasets: [{
             label: 'Veiculo Y',
             backgroundColor: 'rgb(255, 205, 86)',
             borderColor: 'rgb(255, 205, 86)',
-            data: [75, 68, 64, 61, 59, 55]
+            data: [75, 68, 64, 61, 59, 55, 53]
         }, 
     ]
 };
@@ -82,13 +84,13 @@ Chart.defaults.color = '#ffffff';
 Chart.defaults.font.size = 16;
 
 let config = {
-    type: 'line',
-    data: dataLinhas,
+    type: 'pie',
+    data: dataPizza,
     options: {
         plugins: {
             title: {
                 display: true,
-                text: 'Porcentagem de altura do óleo dos veículos do modelo X',
+                text: 'Índice de alertas dos veículos em um mês',
                 font: {
                     size: 28
                 },
@@ -103,6 +105,7 @@ let config = {
 
 const dashboard = document.getElementById('dashboard');
 const kpis = document.querySelector('.kpis');
+const secaoTamanho = document.querySelector('.tamanho');
 
 const indicadoresLinha = `<section class="indicador"> 
                         <h3> Total de veículos modelo X </h3>
@@ -114,7 +117,7 @@ const indicadoresLinha = `<section class="indicador">
                         </section>
                         <section class="indicador">
                             <h3> Gasto mais alto </h3>
-                            <p class="indice"> 7% - Janeiro de 2025 </p>
+                            <p class="indice"> 7% - 1° de Maio de 2025 </p>
                         </section>`;
 
 const indicadoresBarra = `<section class="indicador"> 
@@ -127,7 +130,7 @@ const indicadoresBarra = `<section class="indicador">
                         </section>
                         <section class="indicador">
                             <h3> Gasto mais alto </h3>
-                            <p class="indice"> 7% - Janeiro de 2025 </p>
+                            <p class="indice"> 7% - 1° de Maio de 2025 </p>
                         </section>`;
 
 const indicadoresPizza = `<section class="indicador"> 
@@ -172,6 +175,8 @@ function alterarTipoGrafico() {
             }
         }
 
+        secaoTamanho.style.width = "100%";
+
         kpis.innerHTML = indicadoresLinha;
     } else if (tipoGrafico == 'barra') {
         config = {
@@ -194,8 +199,10 @@ function alterarTipoGrafico() {
             }
         }
 
+        secaoTamanho.style.width = "100%";
         kpis.innerHTML = indicadoresBarra;
     } else {
+
         config = {
             type: 'pie',
             data: dataPizza,
@@ -216,6 +223,8 @@ function alterarTipoGrafico() {
             }
         }
 
+        
+        secaoTamanho.style.width = "40%";
         kpis.innerHTML = indicadoresPizza;
     }
 
