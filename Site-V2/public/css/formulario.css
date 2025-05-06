@@ -25,34 +25,33 @@ header.login {
         grid-template-columns: 1fr 1fr;
         background-color: var(--corFundoForm);
         border-radius: 5px;
-        width: 800px;
+        width: 1000px;
         border: none;
     }
 
     h1 {
         color: var(--corTextoForm);
-        font-size: 35px;
+        font-size: 2.5rem;
         font-weight: 600;
-        cursor: context-menu;
     }
 
     h3 {
         color: var(--corTextoForm2);
-        font-size: 14px;
+        font-size: 1.2rem;
         font-weight: 600;
         cursor: context-menu;
     }
 
     h4 {
         font-weight: 500;
-        font-size: 12px;
+        font-size: 1rem;
         color: var(--corTextoForm3);
         cursor: context-menu;
     }
 
     a {
         font-weight: 700;
-        font-size: 12px;
+        font-size: 1rem;
         text-decoration: none;
         color: var(--corLinkForm);
         cursor: pointer;
@@ -62,17 +61,17 @@ header.login {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        gap: 10px;
-        padding: 0 45px 0 45px;
+        gap: 0.6rem;
+        padding: 0 2.5rem 0 2.5rem;
     }
 
     input {
         width: 100%;
-        height: 40px;
-        border-radius: 12px;
+        height: 3rem;
+        border-radius: 0.8rem;
         border: 1px var(--corTextoForm3) solid;
         outline: none;
-        padding: 5px 14px;
+        padding: 0.3rem 0.9rem;
         color: var(--corFundoForm);
         background-color: var(--corInputForm);
     }
@@ -93,11 +92,11 @@ header.login {
     button {
         border-radius: 12px;
         border: 1px var(--corBotaoForm) solid;
-        padding: 8px 16px;
+        padding: 0.5rem 1rem;
         cursor: pointer;
         background-color: var(--corBotaoForm);
         font-weight: 600;
-        font-size: 16px;
+        font-size: 1rem;
         transition: 0.2s ease-in-out;
         margin-top: 5px;
         color: var(--corTextoForm);
@@ -108,4 +107,10 @@ header.login {
     button:hover {
         background-color: #c19e15;
     }
+}
+
+.cadastro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
