@@ -30,7 +30,7 @@ function cadastrar(req, res) {
     if (resultado.length > 0) {
       res
         .status(401)
-        .json({ mensagem: `a empresa com o cnpj ${cnpj} já existe` });
+        .json({ mensagem: `a montadora com o cnpj ${cnpj} já existe` });
     } else {
       empresaModel.cadastrar(razaoSocial, cnpj).then((resultado) => {
         res.status(201).json(resultado);
