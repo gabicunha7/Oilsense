@@ -109,6 +109,11 @@ header.login {
     }
 }
 
+.carro .content { 
+    height: 600px;
+    
+}
+
 .cadastro {
     display: flex;
     justify-content: center;
