@@ -2,15 +2,17 @@ var montadoraModel = require("../models/montadoraModel");
 
 function autenticar(req, res) {
     var email = req.body.emailServer;
-    var token = req.body.tokenServer;
+    //var token = req.body.tokenServer;
 
     if (email == undefined) {
         res.status(400).send("Seu email está undefined!");
-    } else if (token == undefined) {
-        res.status(400).send("Sua token está indefinida!");
-    } else {
+    } 
+    // else if (token == undefined) {
+    //     res.status(400).send("Sua token está indefinida!");
+    // } 
+    else {
 
-        montadoraModel.autenticar(email, token)
+        montadoraModel.autenticar(email)
             .then(
                 function (resultadoAutenticar) {
                     console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
@@ -23,7 +25,7 @@ function autenticar(req, res) {
                                     res.json({
                                         email: resultadoAutenticar[0].email,
                                         nome: resultadoAutenticar[0].nome,
-                                        cnpj: resultadoAutenticar[0]
+                                        cnpj: resultadoAutenticar[0].cnpj
                                     });
 
                             

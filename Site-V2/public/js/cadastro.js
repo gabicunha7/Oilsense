@@ -69,8 +69,9 @@ function cadastrar() {
   // Verificando se há algum campo em branco
   if (
     nomeVar == "" ||
-    emailVar == "" ||
-    cnpjVar == ""
+    cnpjVar == "" ||
+    emailVar == "" 
+    
   ) {
     cardErro.style.display = "block";
     mensagem_erro.innerHTML =
@@ -136,24 +137,24 @@ function cadastrar() {
 }
 
 // Listando empresas cadastradas 
-function listar() {
-  fetch("/empresas/listar", {
-    method: "GET",
-  })
-    .then(function (resposta) {
-      resposta.json().then((empresas) => {
-        empresas.forEach((empresa) => {
-          listaMontadorasCadastradas.push(empresa);
+// function listar() {
+//   fetch("/empresas/listar", {
+//     method: "GET",
+//   })
+//     .then(function (resposta) {
+//       resposta.json().then((empresas) => {
+//         empresas.forEach((empresa) => {
+//           listaMontadorasCadastradas.push(empresa);
 
-          console.log("listaMontadorasCadastradas")
-          console.log(listaMontadorasCadastradas[0].cnpjVar)
-        });
-      });
-    })
-    .catch(function (resposta) {
-      console.log(`#ERRO: ${resposta}`);
-    });
-}
+//           console.log("listaMontadorasCadastradas")
+//           console.log(listaMontadorasCadastradas[0].cnpjVar)
+//         });
+//       });
+//     })
+//     .catch(function (resposta) {
+//       console.log(`#ERRO: ${resposta}`);
+//     });
+// }
 
 function sumirMensagem() {
   cardErro.style.display = "none";
