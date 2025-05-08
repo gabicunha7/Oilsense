@@ -95,7 +95,7 @@ function cadastrar() {
   }
 
   // Enviando o valor da nova input
-  fetch("/usuarios/cadastrar", {
+  fetch("/montadora/cadastrar", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -104,8 +104,8 @@ function cadastrar() {
       // crie um atributo que recebe o valor recuperado aqui
       // Agora vá para o arquivo routes/usuario.js
       nomeServer: nomeVar,
-      emailServer: emailVar,
-      cnpjServer: cnpjVar
+      cnpjServer: cnpjVar,
+      emailServer: emailVar
     }),
   })
     .then(function (resposta) {
@@ -158,3 +158,4 @@ function listar() {
 function sumirMensagem() {
   cardErro.style.display = "none";
 }
+//
