@@ -60,17 +60,17 @@ function cadastrar() {
   // Agora vá para o método fetch logo abaixo
 
 
-
   var nomeVar = ipt_nome.value;
   var emailVar = ipt_email.value;
   var cnpjVar = ipt_cnpj.value;
-
+  var senhaVar = ipt_senha.value;
 
   // Verificando se há algum campo em branco
   if (
     nomeVar == "" ||
     cnpjVar == "" ||
-    emailVar == ""
+    emailVar == "" ||
+    senhaVar == ""
 
   ) {
     cardErro.style.display = "block";
@@ -85,7 +85,7 @@ function cadastrar() {
 
   // Verificando se o código de ativação é de alguma empresa cadastrada
   for (let i = 0; i < listaMontadorasCadastradas.length; i++) {
-    if (!listaMontadorasCadastradas.includes(cnpjVar)) {
+    if (!listaMontadorasCadastradas.includes(senhaVar)) {
       console.log("CNPJ válido.");
       break;
     } else {
