@@ -7,7 +7,7 @@ create table montadora(
     nome varchar(70) not null,
     cnpj char(18) unique not null,
     email varchar(50) unique not null,
-    token varchar(70) unique not null,
+    senha varchar(70) unique not null,
     dtcadastro date,
     status varchar(10),
     constraint chk_status check (status in ('Ativo', 'Inativo', 'Manutenção'))
@@ -62,11 +62,11 @@ create table telemetria(
 );
 
 
-insert into montadora(nome, cnpj, email, token, status, dtcadastro)
-values  	('Toyota', '59.104.760/0001-91', 'toyota@gmail.com', 'e4484b99e445cc97ac2acafbd965579954989dd0b64bf4c012d8727f230388af', 'Ativo', '2023-03-15'),
-			('Volkswagen', '59.104.422/0001-50', 'volkswagen@gmail.com', 'bd66c30ca16443581d957f3824286dec51b953a9845e24ace5dd97fcc8986ff4', 'Inativo', '2025-03-10'),
-			('Hyundai', '10.394.422/0001-42', 'hyundai@gmail.com', '0b9fea9badc53a9775d7f11cace2f8edb29f270d9eda7c8d56b661b1e9a35ccd', 'Ativo', '2020-08-20'),
-            ('Honda', '01.192.333/0003-94', 'honda@gmail.com', '463a83bc0ca1971faeffc7938cc80c040a8049ce48c6c251ac7124a715c8278e', 'Ativo', '2024-05-25');
+insert into montadora(nome, cnpj, email, senha, status, dtcadastro)
+values  	('Toyota', '59.104.760/0001-91', 'toyota@gmail.com', 'ToyotaSenha', 'Ativo', '2023-03-15'),
+			('Volkswagen', '59.104.422/0001-50', 'volkswagen@gmail.com', 'VolkswagenSenha', 'Inativo', '2025-03-10'),
+			('Hyundai', '10.394.422/0001-42', 'hyundai@gmail.com', 'HyundaiSenha', 'Ativo', '2020-08-20'),
+            ('Honda', '01.192.333/0003-94', 'honda@gmail.com', 'HondaSenha', 'Ativo', '2024-05-25');
             
             
 insert into funcionario (nome, sobrenome, email, senha, fkmontadora)
