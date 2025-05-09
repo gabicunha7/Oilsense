@@ -2,14 +2,14 @@ var montadoraModel = require("../models/montadoraModel");
 
 function autenticar(req, res) {
     var email = req.body.emailServer;
-    //var token = req.body.tokenServer;
+    var senha = req.body.senhaServer;
 
     if (email == undefined) {
         res.status(400).send("Seu email está undefined!");
     } 
-    // else if (token == undefined) {
-    //     res.status(400).send("Sua token está indefinida!");
-    // } 
+    else if (senha == undefined) {
+        res.status(400).send("Sua senha está indefinida!");
+    } 
     else {
 
         montadoraModel.autenticar(email)
@@ -20,12 +20,12 @@ function autenticar(req, res) {
 
                     if (resultadoAutenticar.length == 1) {
                         console.log(resultadoAutenticar);
-// alterado!!///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                 
                                     res.json({
                                         email: resultadoAutenticar[0].email,
                                         nome: resultadoAutenticar[0].nome,
-                                        cnpj: resultadoAutenticar[0].cnpj
+                                        cnpj: resultadoAutenticar[0].cnpj,
+                                        senha: resultadoAutenticar[0].senha
                                     });
 
                             
@@ -51,6 +51,7 @@ function cadastrar(req, res) {
     var nome = req.body.nomeServer;
     var cnpj = req.body.cnpjServer;
     var email = req.body.emailServer;
+    var senha = req.body.senhaServer;
 
     // Faça as validações dos valores
     if (nome == undefined) {
@@ -59,10 +60,13 @@ function cadastrar(req, res) {
         res.status(400).send("Seu CNPJ está undefined!");
     } else if (email == undefined) {
         res.status(400).send("Seu email está undefined!");
-    } else {
+    } else if (senha == undefined) {
+        res.status(400).send("Sua senha está undefined!");
+    }  
+    else {
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        montadoraModel.cadastrar(nome, cnpj, email)
+        montadoraModel.cadastrar(nome, cnpj, email, senha)
             .then(
                 function (resultado) {
                     res.json(resultado);
