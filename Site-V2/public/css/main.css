@@ -142,10 +142,9 @@ td {
 }
 
 .btnTabela {
-    display: flex;
-    
+    width: 3rem;
+    height: 3rem;
     border-radius: 0.4rem;
-    padding: 0.4rem;
     border: none;
     background-color: var(--corBotaoKPI);
     cursor: pointer;
@@ -158,6 +157,8 @@ td {
 
 button .iconeTabela {
     width: 2rem;
+    height: 2rem;
+    vertical-align: middle;
 }
 
 .tabelas {

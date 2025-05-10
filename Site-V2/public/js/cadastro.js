@@ -23,7 +23,7 @@
 //         if (!emailJaCadastrado && (emailDigitado.includes("@") && emailDigitado.includes(".")) && nomeDigitado != '' && cnpjDigitado != '' && (cnpjDigitado.length == 14)) {
 //             window.location.href = 'login.html';
 //         } 
-        
+
 //         else if(emailJaCadastrado){
 //             alert('Este email já está cadastrado em nosso sistema. Tente novamente.');
 //             break;
@@ -45,7 +45,7 @@
 //         }
 
 //     }
-    
+
 // }
 
 
@@ -59,18 +59,19 @@ function cadastrar() {
   //Recupere o valor da nova input pelo nome do id
   // Agora vá para o método fetch logo abaixo
 
- 
 
   var nomeVar = ipt_nome.value;
   var emailVar = ipt_email.value;
   var cnpjVar = ipt_cnpj.value;
-  
+  var senhaVar = ipt_senha.value;
 
   // Verificando se há algum campo em branco
   if (
     nomeVar == "" ||
+    cnpjVar == "" ||
     emailVar == "" ||
-    cnpjVar == ""
+    senhaVar == ""
+
   ) {
     cardErro.style.display = "block";
     mensagem_erro.innerHTML =
@@ -84,7 +85,7 @@ function cadastrar() {
 
   // Verificando se o código de ativação é de alguma empresa cadastrada
   for (let i = 0; i < listaMontadorasCadastradas.length; i++) {
-    if (!listaMontadorasCadastradas.includes(cnpjVar)) {
+    if (!listaMontadorasCadastradas.includes(senhaVar)) {
       console.log("CNPJ válido.");
       break;
     } else {
@@ -94,8 +95,41 @@ function cadastrar() {
     }
   }
 
+  // Verificando se o nome possui mais de uma letra:
+  if (nomeVar.length <= 1) {
+    cardErro.style.display = "block";
+    mensagem_erro.innerHTML =
+      "(Mensagem de erro para nome inválido.)";
+    finalizarAguardar();
+    return false;
+  } else {
+    setInterval(sumirMensagem, 5000);
+  }
+
+  // Verificando se o CPF é válido:
+  if (cnpjVar.length != 14) {
+    cardErro.style.display = "block";
+    mensagem_erro.innerHTML =
+      "(Mensagem de erro para CNPJ inválido.)";
+    finalizarAguardar();
+    return false;
+  } else {
+    setInterval(sumirMensagem, 5000);
+  }
+
+  // Verificando se o email é válido:
+  if (!emailVar.includes('@') || !emailVar.includes('.')) {
+    cardErro.style.display = "block";
+    mensagem_erro.innerHTML =
+      "(Mensagem de erro para email inválido.)";
+    finalizarAguardar();
+    return false;
+  } else {
+    setInterval(sumirMensagem, 5000);
+  }
+
   // Enviando o valor da nova input
-  fetch("/usuarios/cadastrar", {
+  fetch("/montadora/cadastrar", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -104,8 +138,8 @@ function cadastrar() {
       // crie um atributo que recebe o valor recuperado aqui
       // Agora vá para o arquivo routes/usuario.js
       nomeServer: nomeVar,
-      emailServer: emailVar,
-      cnpjServer: cnpjVar
+      cnpjServer: cnpjVar,
+      emailServer: emailVar
     }),
   })
     .then(function (resposta) {
@@ -136,25 +170,26 @@ function cadastrar() {
 }
 
 // Listando empresas cadastradas 
-function listar() {
-  fetch("/empresas/listar", {
-    method: "GET",
-  })
-    .then(function (resposta) {
-      resposta.json().then((empresas) => {
-        empresas.forEach((empresa) => {
-          listaMontadorasCadastradas.push(empresa);
+// function listar() {
+//   fetch("/empresas/listar", {
+//     method: "GET",
+//   })
+//     .then(function (resposta) {
+//       resposta.json().then((empresas) => {
+//         empresas.forEach((empresa) => {
+//           listaMontadorasCadastradas.push(empresa);
 
-          console.log("listaMontadorasCadastradas")
-          console.log(listaMontadorasCadastradas[0].cnpjVar)
-        });
-      });
-    })
-    .catch(function (resposta) {
-      console.log(`#ERRO: ${resposta}`);
-    });
-}
+//           console.log("listaMontadorasCadastradas")
+//           console.log(listaMontadorasCadastradas[0].cnpjVar)
+//         });
+//       });
+//     })
+//     .catch(function (resposta) {
+//       console.log(`#ERRO: ${resposta}`);
+//     });
+// }
 
 function sumirMensagem() {
   cardErro.style.display = "none";
 }
+//
