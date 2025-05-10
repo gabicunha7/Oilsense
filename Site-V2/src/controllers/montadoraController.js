@@ -12,7 +12,7 @@ function autenticar(req, res) {
     } 
     else {
 
-        montadoraModel.autenticar(email)
+        montadoraModel.autenticar(email, senha)
             .then(
                 function (resultadoAutenticar) {
                     console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
@@ -30,9 +30,9 @@ function autenticar(req, res) {
 
                             
                     } else if (resultadoAutenticar.length == 0) {
-                        res.status(403).send("Email e/ou token inválido(s)");
+                        res.status(403).send("Email e/ou senha inválido(s)");
                     } else {
-                        res.status(403).send("Mais de um usuário com o mesmo login e token!");
+                        res.status(403).send("Mais de um usuário com o mesmo login e senha!");
                     }
                 }
             ).catch(

@@ -54,11 +54,9 @@
 let listaMontadorasCadastradas = [];
 
 function cadastrar() {
-  // aguardar();
 
   //Recupere o valor da nova input pelo nome do id
   // Agora vá para o método fetch logo abaixo
-
 
   var nomeVar = ipt_nome.value;
   var emailVar = ipt_email.value;
@@ -85,7 +83,7 @@ function cadastrar() {
 
   // Verificando se o código de ativação é de alguma empresa cadastrada
   for (let i = 0; i < listaMontadorasCadastradas.length; i++) {
-    if (!listaMontadorasCadastradas.includes(senhaVar)) {
+    if (!listaMontadorasCadastradas.includes(cnpjVar)) {
       console.log("CNPJ válido.");
       break;
     } else {
@@ -106,7 +104,7 @@ function cadastrar() {
     setInterval(sumirMensagem, 5000);
   }
 
-  // Verificando se o CPF é válido:
+  // Verificando se o CNPJ é válido:
   if (cnpjVar.length != 14) {
     cardErro.style.display = "block";
     mensagem_erro.innerHTML =
@@ -139,7 +137,8 @@ function cadastrar() {
       // Agora vá para o arquivo routes/usuario.js
       nomeServer: nomeVar,
       cnpjServer: cnpjVar,
-      emailServer: emailVar
+      emailServer: emailVar,
+      senhaServer: senhaVar
     }),
   })
     .then(function (resposta) {
