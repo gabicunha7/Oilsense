@@ -148,7 +148,7 @@ function cadastrar() {
         cardErro.style.display = "block";
 
         mensagem_erro.innerHTML =
-          "Cadastro realizado com sucesso! Redirecionando para tela de Recebimento de Token..";
+          "Cadastro realizado com sucesso! Redirecionando para tela de login...";
 
         setTimeout(() => {
           window.location = "login.html";

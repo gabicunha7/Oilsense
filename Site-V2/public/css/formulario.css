@@ -122,7 +122,8 @@ header.login {
 
 .alerta_erro{
   display: flex;
-  justify-content: flex-end;
+  justify-content:end;
+  align-items: flex-start;
 }
 
 .card_erro {
@@ -139,5 +140,5 @@ header.login {
 
 .card_erro #mensagem_erro{
   font-weight: 500;
-  font-size: 20px;
+  font-size: 18px;
 }
