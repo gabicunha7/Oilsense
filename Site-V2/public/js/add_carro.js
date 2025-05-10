@@ -9,14 +9,16 @@
         var volumeVar = ipt_volume.value;
         var alturaVar = ipt_altura.value;
         var modeloVar = ipt_modelo.value;
-        var idEmpresaVincular; // não sei como colocar qual empresa é o carro, provavelmente salvo no storage.
+        var anoVar = ipt_ano.value;
+       // não precisa colocar aqui o usuario, carro está ligado a um modelo já
 
         // Verificando se há algum campo em branco
         if (
             placaVar == "" ||
             volumeVar == "" ||
             alturaVar == "" ||
-            modeloVar == "" 
+            modeloVar == "" ||
+            anoVar == ""
         ) {
             cardErro.style.display = "block";
             mensagem_erro.innerHTML =
@@ -29,20 +31,20 @@
         }
 
         // Verificando se o código de ativação é de alguma empresa cadastrada
-        for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
-            if (listaEmpresasCadastradas[i].codigo_ativacao == codigoVar) {
-                idEmpresaVincular = listaEmpresasCadastradas[i].id // alterar///////////////////////////////////////////////////////////
-                console.log("Código de ativação válido.");
+        for (let i = 0; i < listaModelosCadastrados.length; i++) {
+            if (listaModelosCadastrados[i].codigo_ativacao == codigoVar) {
+                idModeloVincular = listaModelosCadastrados[i].id // alterar///////////////////////////////////////////////////////////
+                console.log("Modelo válido.");
                 break;
             } else {
                 cardErro.style.display = "block"; // não sei se vamos manter
-                mensagem_erro.innerHTML = "(Mensagem de erro para código inválido)";
+                mensagem_erro.innerHTML = "(Mensagem de erro para modelo inválido)";
                 finalizarAguardar();
             }
         }
 
         // Enviando o valor da nova input
-        fetch("/usuarios/cadastrar", {
+        fetch("/montadora/carros/cadastrar", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -53,7 +55,8 @@
                 placaServer: placaVar,
                 volumeServer: volumeVar,
                 alturaServer: alturaVar,
-                modeloServer: modeloVar
+                modeloServer: modeloVar,
+                anoServer: anoVar
             }),
         })
             .then(function (resposta) {

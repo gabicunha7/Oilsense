@@ -58,7 +58,7 @@
 
             <section class="cadastrar">
                 <h2> Adicionar </h2>
-                <button onclick="cadastrarCarro()" class="btnTabela">
+                <button onclick="redirect_add_carro()" class="btnTabela" id="botaocarro">
                     <img src="../img/icones/maisIcone.png" alt="Icone de cadastrar" class="iconeTabela"> 
                 </button>
             </section>
@@ -114,5 +114,14 @@
     <footer class="escuro">
         <p>&copy; 2025 OilSense - Todos os direitos reservados.</p>
     </footer>
+
+    <script src="../js/add_carro.js"></script>
+   
+    <script>
+    document.getElementById("botaocarro").onclick = function () {
+        location.href = "add_carro.html";
+    };
+    </script>
+
 </body>
 </html>
