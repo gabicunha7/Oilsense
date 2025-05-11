@@ -40,45 +40,77 @@ const labelsAlerta = [
 const dataLinhas = {
     labels: labelsDias,
     datasets: [{
-            label: 'Veiculo Y',
-            backgroundColor: 'rgb(54, 162, 235)',
-            borderColor: 'rgb(54, 162, 235)',
-            data: [75, 68, 64, 61, 59, 55, 54]
-        }, 
-        {
-            label: 'Média modelo X',
-            backgroundColor: 'rgb(255, 205, 86)',
-            borderColor: 'rgb(255, 205, 86)',
-            data: [75, 71, 68, 65, 61, 59, 56]
-        }
+        label: 'Veiculo Y',
+        backgroundColor: 'rgb(54, 162, 235)',
+        borderColor: 'rgb(54, 162, 235)',
+        data: [75, 68, 64, 61, 59, 55, 54]
+    },
+    {
+        label: 'Média modelo X',
+        backgroundColor: 'rgb(255, 205, 86)',
+        borderColor: 'rgb(255, 205, 86)',
+        data: [75, 71, 68, 65, 61, 59, 56]
+    }
     ]
 };
 
 const dataBarras = {
     labels: labelsDias,
     datasets: [{
-            label: 'Veiculo Y',
-            backgroundColor: 'rgb(255, 205, 86)',
-            borderColor: 'rgb(255, 205, 86)',
-            data: [75, 68, 64, 61, 59, 55, 53]
-        }, 
+        label: 'Veiculo Y',
+        backgroundColor: 'rgb(255, 205, 86)',
+        borderColor: 'rgb(255, 205, 86)',
+        data: [75, 68, 64, 61, 59, 55, 53]
+    },
     ]
 };
 
 const dataPizza = {
     labels: labelsAlerta,
     datasets: [{
-            label: 'Veiculos',
-            backgroundColor: [
-                'rgb(54, 162, 235)',
-                'rgb(255, 205, 86)',
-                'rgb(255, 99, 132)',
-                'rgb(54, 205, 86)'
-            ],
-            data: [20, 10, 3, 8]
-        }, 
+        label: 'Veiculos',
+        backgroundColor: [
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)',
+            'rgb(255, 99, 132)',
+            'rgb(54, 205, 86)'
+        ],
+        data: [20, 10, 3, 8]
+    },
     ]
 };
+
+const dataArea = {
+    labels: ['01/05/2025', '02/05/2025', '03/05/2025', '04/05/2025', '05/05/2025'],
+    datasets: [
+        {
+            label: 'Veículo X',
+            data: [0.6, 0.7, 1.0, 0.4, 0.5],
+            fill: true,
+            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            borderColor: 'rgb(54, 162, 235)',
+            tension: 0.4
+        },
+        {
+            label: 'Veículo Y',
+            data: [0.4, 0.5, 0.8, 0.3, 0.2],
+            fill: true,
+            backgroundColor: 'rgba(255, 205, 86, 0.5)',
+            borderColor: 'rgb(255, 205, 86)',
+            tension: 0.4
+        },
+        {
+            label: 'Veículo Z',
+            data: [0.7, 0.8, 1.1, 0.5, 0.4],
+            fill: true,
+            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            borderColor: 'rgb(255, 99, 132)',
+            tension: 0.4
+        }
+    ]
+};
+
+
 
 Chart.defaults.color = '#ffffff';
 Chart.defaults.font.size = 16;
@@ -97,7 +129,7 @@ let config = {
                 padding: {
                     top: 16,
                     bottom: 16
-                } 
+                }
             }
         }
     }
@@ -146,6 +178,20 @@ const indicadoresPizza = `<section class="indicador">
                             <p class="indice"> Nível 1 </p>
                         </section>`;
 
+const indicadoresArea = `<section class="indicador"> 
+                            <h3> Total de consumo de óleo acumulado </h3>
+                            <p class="indice"> 8,9 litros </p>
+                        </section>
+                        <section class="indicador">
+                            <h3> Modelo com maior consumo </h3>
+                            <p class="indice"> Veículo Z </p>
+                        </section>
+                        <section class="indicador">
+                            <h3> Dia de maior consumo </h3>
+                            <p class="indice"> 03/05/2025 </p>
+                        </section>`;
+
+
 let grafico = new Chart(
     dashboard,
     config
@@ -169,7 +215,7 @@ function alterarTipoGrafico() {
                         padding: {
                             top: 16,
                             bottom: 16
-                        } 
+                        }
                     }
                 }
             }
@@ -193,7 +239,7 @@ function alterarTipoGrafico() {
                         padding: {
                             top: 16,
                             bottom: 16
-                        } 
+                        }
                     }
                 }
             }
@@ -201,7 +247,7 @@ function alterarTipoGrafico() {
 
         secaoTamanho.style.width = "100%";
         kpis.innerHTML = indicadoresBarra;
-    } else {
+    } else if (tipoGrafico == 'linha') {
 
         config = {
             type: 'pie',
@@ -217,15 +263,49 @@ function alterarTipoGrafico() {
                         padding: {
                             top: 16,
                             bottom: 16
-                        } 
+                        }
                     }
                 }
             }
         }
 
-        
+
         secaoTamanho.style.width = "40%";
         kpis.innerHTML = indicadoresPizza;
+    } else {
+
+        config = {
+            type: 'line',
+            data: dataArea,
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Consumo acumulado de óleo por modelo',
+                        font: {
+                            size: 28
+                        }
+                    },
+                },
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                stacked: true,
+                scales: {
+                    y: {
+                        stacked: true
+                    },
+                    x: {
+                        stacked: true
+                    }
+                }
+            }
+        }
+        
+        secaoTamanho.style.width = "100%";
+        kpis.innerHTML = indicadoresArea;
     }
 
     grafico.destroy();
