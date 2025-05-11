@@ -16,19 +16,15 @@ function cadastrarModelo() {
         return false;
     }
 
-    fetch("/montadora/carros/cadastrar", {
+    fetch("/modelo/cadastrar", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            // crie um atributo que recebe o valor recuperado aqui
-            // Agora vá para o arquivo routes/usuario.js
-            placaServer: placaVar,
-            volumeServer: volumeVar,
-            alturaServer: alturaVar,
-            modeloServer: modeloVar,
-            anoServer: anoVar
+            nomeServer: nomeVar,
+            anoServer: anoVar,
+            id_montadoraServer: id_montadoraVar
         }),
     })
         .then(function (resposta) {
@@ -38,10 +34,10 @@ function cadastrarModelo() {
                 cardErro.style.display = "block";
 
                 mensagem_erro.innerHTML =
-                    "Cadastro do carro realizado com sucesso! Redirecionando para tela de carros...";
+                    "Cadastro do modelo realizado com sucesso! Redirecionando para tela de modelos...";
 
                 setTimeout(() => {
-                    window.location = "carros.html";
+                    window.location = "modelos.html";
                 }, "2000");
 
                 limparFormulario();
