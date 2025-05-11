@@ -17,10 +17,9 @@ var app = express();
 
 var indexRouter = require("./src/routes/index");
 var montadoraRouter = require("./src/routes/montadora");
-var avisosRouter = require("./src/routes/avisos");
-var medidasRouter = require("./src/routes/medidas");
-var aquariosRouter = require("./src/routes/aquarios");
-var empresasRouter = require("./src/routes/empresas");
+var funcionarioRouter = require("./src/routes/funcionario.js");
+var modeloRouter = require("./src/routes/modelo.js");
+var carroRouter = require("./src/routes/carro.js");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -30,10 +29,9 @@ app.use(cors());
 
 app.use("/", indexRouter);
 app.use("/montadora", montadoraRouter);
-app.use("/avisos", avisosRouter);
-app.use("/medidas", medidasRouter);
-app.use("/aquarios", aquariosRouter);
-app.use("/empresas", empresasRouter);
+app.use("/funcionario", funcionarioRouter);
+app.use("/modelo", modeloRouter);
+app.use("/carro", carroRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`
