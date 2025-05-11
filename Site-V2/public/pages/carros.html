@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../css/grafico.css">
     <link rel="stylesheet" href="../css/formulario.css">
 </head>
-<body>
+<body onload="listarCarros()">
     <header class="escuro">
         <section class="container">
             
@@ -58,55 +58,12 @@
 
             <section class="cadastrar">
                 <h2> Adicionar </h2>
-                <button onclick="redirect_add_carro()" class="btnTabela" id="botaocarro">
+                <button class="btnTabela" id="botao_carro">
                     <img src="../img/icones/maisIcone.png" alt="Icone de cadastrar" class="iconeTabela"> 
                 </button>
             </section>
             
             <table>
-                <tr>
-                    <th> id </th>
-                    <th> Placa </th>
-                    <th> Volume do Cárter </th>
-                    <th> Altura do Cárter </th>
-                    <th> Modelo </th>
-                    <th> Editar </th>
-                    <th> Excluir </th>
-                </tr>
-                <tr>
-                    <td> 1 </td>
-                    <td> ABC1D01 </td>
-                    <td> 4,5 L </td>
-                    <td> 12,3 cm </td>
-                    <td> Corolla </td>
-                    <td> 
-                        <button onclick="editarCarro()" class="btnTabela"> 
-                            <img src="../img/icones/editarIcone.png" alt="Icone de edição" class="iconeTabela"> 
-                        </button> 
-                    </td>
-                    <td>
-                        <button onclick="excluirCarro()" class="btnTabela"> 
-                            <img src="../img/icones/excluirIcone.png" alt="Icone de excluir" class="iconeTabela"> 
-                        </button> 
-                    </td>
-                </tr>
-                <tr>
-                    <td> 2 </td>
-                    <td> XYZ2E02 </td>
-                    <td> 6,2 L </td>
-                    <td> 13,5 cm </td>
-                    <td> Hilux </td>
-                    <td> 
-                        <button onclick="editarCarro()" class="btnTabela"> 
-                            <img src="../img/icones/editarIcone.png" alt="Icone de edição" class="iconeTabela"> 
-                        </button> 
-                    </td>
-                    <td>
-                        <button onclick="excluirCarro()" class="btnTabela"> 
-                            <img src="../img/icones/excluirIcone.png" alt="Icone de excluir" class="iconeTabela"> 
-                        </button> 
-                    </td>
-                </tr>
             </table>
         </section>
     </main>
@@ -118,9 +75,9 @@
     <script src="../js/add_carro.js"></script>
    
     <script>
-    document.getElementById("botaocarro").onclick = function () {
-        location.href = "add_carro.html";
-    };
+        document.getElementById("botao_carro").onclick = function () {
+            location.href = "add_carro.html";
+        };
     </script>
 
 </body>

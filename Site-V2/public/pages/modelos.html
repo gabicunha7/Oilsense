@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/grafico.css">
 </head>
-<body>
+<body onload="listarModelos()">
     <header class="escuro">
         <section class="container">
             
@@ -57,49 +57,12 @@
 
             <section class="cadastrar">
                 <h2> Adicionar </h2>
-                <button onclick="cadastrarModelo()" class="btnTabela">
+                <button class="btnTabela" id="botao_modelo">
                     <img src="../img/icones/maisIcone.png" alt="Icone de cadastrar" class="iconeTabela"> 
                 </button>
             </section>
             
             <table>
-                <tr>
-                    <th> id </th>
-                    <th> Modelo </th>
-                    <th> Ano </th>
-                    <th> Editar </th>
-                    <th> Excluir </th>
-                </tr>
-                <tr>
-                    <td> 1 </td>
-                    <td> Corolla </td>
-                    <td> 2022 </td>
-                    <td> 
-                        <button onclick="editarModelo()" class="btnTabela"> 
-                            <img src="../img/icones/editarIcone.png" alt="Icone de edição" class="iconeTabela"> 
-                        </button> 
-                    </td>
-                    <td>
-                        <button onclick="excluirModelo()" class="btnTabela"> 
-                            <img src="../img/icones/excluirIcone.png" alt="Icone de excluir" class="iconeTabela"> 
-                        </button> 
-                    </td>
-                </tr>
-                <tr>
-                    <td> 2 </td>
-                    <td> Hilux </td>
-                    <td> 2023 </td>
-                    <td> 
-                        <button onclick="editarModelo()" class="btnTabela"> 
-                            <img src="../img/icones/editarIcone.png" alt="Icone de edição" class="iconeTabela"> 
-                        </button> 
-                    </td>
-                    <td>
-                        <button onclick="excluirModelo()" class="btnTabela"> 
-                            <img src="../img/icones/excluirIcone.png" alt="Icone de excluir" class="iconeTabela"> 
-                        </button> 
-                    </td>
-                </tr>
             </table>
         </section>
     </main>
@@ -108,4 +71,12 @@
         <p>&copy; 2025 OilSense - Todos os direitos reservados.</p>
     </footer>
 </body>
+
+<script src="../js/add_modelo.js"></script>
+
+<script>
+    document.getElementById("botao_modelo").onclick = function () {
+        location.href = "add_modelo.html";
+    };
+</script>
 </html>

@@ -4,7 +4,7 @@ function cadastrarModelo(req, res) {
 
     var nome = req.body.nomeServer;
     var ano = req.body.anoServer;
-    var id_montadora = req.body.id_montadoraServer;
+    var idMontadora = req.body.idMontadoraServer;
 
     if (nome == undefined) {
         res.status(400).send("Sua placa está undefined!");
@@ -13,7 +13,7 @@ function cadastrarModelo(req, res) {
     } 
     else {
 
-        modeloModel.cadastrarModelo(nome, ano, id_montadora)
+        modeloModel.cadastrarModelo(nome, ano, idMontadora)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -31,6 +31,32 @@ function cadastrarModelo(req, res) {
     }
 }
 
+function listarModelos(req, res) {
+    var idMontadora = req.body.idMontadoraServer;
+
+    modeloModel.listarModelos(idMontadora)
+        .then(
+            function (resultado) {
+                if (resultado.length > 0) {
+                    res.status(200).json(resultado);
+                } else {
+                    res.status(204).send("Nenhum resultado encontrado!");
+                }
+            }
+        )
+        .catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "Houve um erro ao buscar os modelos: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
 module.exports = {
-    cadastrarModelo
+    cadastrarModelo,
+    listarModelos
 }

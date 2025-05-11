@@ -1,5 +1,3 @@
-let carrosCadastrados = [];
-
 function cadastrarCarro() {
     // aguardar();
 
@@ -68,4 +66,64 @@ function cadastrarCarro() {
         });
 
     return false;
+}
+
+function listarCarros() {
+    fetch("/carro/listar", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            idMontadoraServer: 1,
+        }),
+    })
+        .then(function (resposta) {
+            console.log("resposta: ", resposta);
+
+            if (resposta.ok) {
+                resposta.json().then(function (resposta) {
+                    console.log("Dados recebidos: ", JSON.stringify(resposta));
+
+                    let tabela = document.querySelector('table');
+                    let frase = `<tr>
+                        <th> id </th>
+                        <th> Placa </th>
+                        <th> Volume do Cárter </th>
+                        <th> Altura do Cárter </th>
+                        <th> Modelo </th>
+                        <th> Editar </th>
+                        <th> Excluir </th>
+                    </tr>`;
+
+                    for (let i = 0; i < resposta.length; i++) {
+                        frase += `<tr>`;
+                        frase += `<td> ${resposta[i].id} </td>`;
+                        frase += `<td> ${resposta[i].placa} </td>`;
+                        frase += `<td> ${resposta[i].volumecarter} </td>`;
+                        frase += `<td> ${resposta[i].alturacarter} </td>`;
+                        frase += `<td> ${resposta[i].modelo} </td>`;
+                        frase += `<td>
+                            <button onclick="editarCarro(${resposta[i].id})" class="btnTabela"> 
+                                <img src="../img/icones/editarIcone.png" alt="Icone de edição" class="iconeTabela"> 
+                            </button> 
+                        </td>`;
+
+                        frase += `<td>
+                            <button onclick="excluirCarro(${resposta[i].id})" class="btnTabela"> 
+                                <img src="../img/icones/excluirIcone.png" alt="Icone de excluir" class="iconeTabela"> 
+                            </button> 
+                        </td>`;
+                        frase += `</tr>`;
+                    }
+
+                    tabela.innerHTML = frase;
+                });
+            } else {
+                throw "Houve um erro ao tentar listar os carros!";
+            }
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
 }

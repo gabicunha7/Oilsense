@@ -37,6 +37,32 @@ function cadastrarCarro(req, res) {
 	}
 }
 
+function listarCarros(req, res) {
+	var idMontadora = req.body.idMontadoraServer;
+
+	carroModel.listarCarros(idMontadora)
+		.then(
+			function (resultado) {
+				if (resultado.length > 0) {
+					res.status(200).json(resultado);
+				} else {
+					res.status(204).send("Nenhum resultado encontrado!");
+				}
+			}
+		)
+		.catch(
+			function (erro) {
+				console.log(erro);
+				console.log(
+					"Houve um erro ao buscar os carros: ",
+					erro.sqlMessage
+				);
+				res.status(500).json(erro.sqlMessage);
+			}
+		);
+}
+
 module.exports = {
-	cadastrarCarro
+	cadastrarCarro,
+	listarCarros
 }
