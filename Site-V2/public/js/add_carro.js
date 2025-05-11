@@ -6,7 +6,7 @@ function cadastrarCarro() {
     var placaVar = ipt_placa.value;
     var volumeVar = ipt_volume.value;
     var alturaVar = ipt_altura.value;
-    var modeloVar = ipt_modelo.value;
+    var modeloVar = sel_modelos.value;
     // não precisa colocar aqui o usuario, carro está ligado a um modelo já
 
     // Verificando se há algum campo em branco
@@ -121,6 +121,41 @@ function listarCarros() {
                 });
             } else {
                 throw "Houve um erro ao tentar listar os carros!";
+            }
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+}
+
+function listarModelos() {
+    fetch("/modelo/listar", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            idMontadoraServer: 1,
+        }),
+    })
+        .then(function (resposta) {
+            console.log("resposta: ", resposta);
+
+            if (resposta.ok) {
+                resposta.json().then(function (resposta) {
+                    console.log("Dados recebidos: ", JSON.stringify(resposta));
+
+                    let select = document.querySelector('#sel_modelos');
+                    frase = '';
+
+                    for (let i = 0; i < resposta.length; i++) {
+                        frase += `<option value="${resposta[i].id}"> ${resposta[i].modelo} </option>`;
+                    }
+
+                    select.innerHTML = frase;
+                });
+            } else {
+                throw "Houve um erro ao tentar listar os modelos!";
             }
         })
         .catch(function (resposta) {

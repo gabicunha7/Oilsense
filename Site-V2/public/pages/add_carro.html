@@ -14,7 +14,7 @@
     <title> Cadastro Carro - OilSense </title>
 </head>
 
-<body>
+<body onload="listarModelos()">
 
     <header class="escuro">
         <section class="container">
@@ -79,6 +79,7 @@
                     <label for="ipt_altura"> Altura Cárter </label>
                     <input type="number" id="ipt_altura" placeholder="Digite a altura do cárter">
 
+                    <label for="sel_modelos"> Modelo </label>
                     <select name="sel_modelos" id="sel_modelos"></select>
 
                     <button onclick="cadastrarCarro()"> Cadastrar </button>
