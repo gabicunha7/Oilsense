@@ -76,14 +76,11 @@
             finalizarAguardar();
             return false;
         }
-        else {
-            setInterval(sumirMensagem, 5000)
-        }
 
         console.log("FORM LOGIN: ", emailVar);
         console.log("FORM SENHA: ", senhaVar);
 
-        fetch("/usuarios/autenticar", {
+        fetch("/montadora/autenticar", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -105,6 +102,10 @@
                     sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.ID_USUARIO = json.id;
                 });
+                
+                setTimeout(function () {
+                        window.location = "dashboards.html";
+                    }, 1000); 
 
             } else {
 
