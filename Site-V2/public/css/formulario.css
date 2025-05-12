@@ -76,6 +76,10 @@ header.login {
         background-color: var(--corInputForm);
     }
 
+    select {
+        cursor: pointer;
+    }
+
     input::placeholder {
         color: var(--corFundoForm);
     }

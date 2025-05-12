@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,8 +13,9 @@
     <script src="../js/sessão.js"></script>
     <title> Login - OilSense </title>
 </head>
+
 <body>
-    
+
     <header class="escuro login">
         <a href="../index.html">
             <img class="logo" src="../img/logo/logoExtensa.png" alt="Logo do OilSense">
@@ -23,37 +25,43 @@
     <main class="escuro cadastro">
 
         <section class="container formulario">
-    
+
             <section class="content">
-    
+
                 <section class="image">
                     <img src="../img/fundo/login_image.PNG" alt="Motor de um veículo">
                 </section>
-    
+
                 <section class="section-input">
-    
+
                     <h1> Log-in </h1>
                     <h3> Preencha os dados para continuar </h3>
-            
+
                     <label for="ipt_email"> E-mail </label>
                     <input type="email" id="ipt_email" placeholder="Entre com seu e-mail">
-    
+
                     <label for="ipt_senha"> Senha </label>
                     <input type="password" id="ipt_senha" placeholder="Entre com sua senha">
 
+                    <label for="sel_user"> Tipo de usuário </label>
+                    <select id="sel_user">
+                        <option value="montadora"> Montadora </option>
+                        <option value="funcionario"> Funcionário </option>
+                    </select>
+
                     <div id="div_aguardar" class="loading-div">
-                    <img src="../img/icones/circle-loading.gif" id="loading-gif">
+                        <img src="../img/icones/circle-loading.gif" id="loading-gif">
                     </div>
-                     <div id="div_erros_login"></div>
-    
+                    <div id="div_erros_login"></div>
+
                     <h4> Ainda não possui uma conta? <a href="cadastro.html"> Cadastre-se </a> </h4>
-    
+
                     <button onclick="entrar()">Entrar</button>
-                    
+
                 </section>
-    
+
             </section>
-    
+
         </section>
     </main>
 
@@ -61,67 +69,8 @@
         <p> &copy; OilSense 2025 - Todos os direitos reservados. </p>
     </footer>
 
-    
+
 </body>
-<script>
-     function entrar() {
-        aguardar();
+<script src="../js/login.js"></script>
 
-        var emailVar = ipt_email.value;
-        var senhaVar = ipt_senha.value;
-
-        if (emailVar == "" || senhaVar == "") {
-            cardErro.style.display = "block"
-            mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
-            finalizarAguardar();
-            return false;
-        }
-
-        console.log("FORM LOGIN: ", emailVar);
-        console.log("FORM SENHA: ", senhaVar);
-
-        fetch("/montadora/autenticar", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                emailServer: emailVar,
-                senhaServer: senhaVar
-            })
-        }).then(function (resposta) {
-            console.log("ESTOU NO THEN DO entrar()!")
-
-            if (resposta.ok) {
-                console.log(resposta);
-
-                resposta.json().then(json => {
-                    console.log(json);
-                    console.log(JSON.stringify(json));
-                    sessionStorage.EMAIL_USUARIO = json.email;
-                    sessionStorage.NOME_USUARIO = json.nome;
-                    sessionStorage.ID_USUARIO = json.id;
-                });
-                
-                setTimeout(function () {
-                        window.location = "dashboards.html";
-                    }, 1000); 
-
-            } else {
-
-                console.log("Houve um erro ao tentar realizar o login!");
-
-                resposta.text().then(texto => {
-                    console.error(texto);
-                    finalizarAguardar(texto);
-                });
-            }
-
-        }).catch(function (erro) {
-            console.log(erro);
-        })
-
-        return false;
-    }
-</script>
 </html>
