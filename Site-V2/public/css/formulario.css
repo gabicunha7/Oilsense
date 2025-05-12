@@ -126,8 +126,8 @@ header.login {
 
 .alerta_erro{
   display: flex;
-  justify-content:end;
-  align-items: flex-start;
+  justify-content: start;
+  align-items: end;
 }
 
 .card_erro {
