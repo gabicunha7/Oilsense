@@ -5,9 +5,9 @@ use Oilsense;
 create table montadora(
 	id int primary key auto_increment,
     nome varchar(70) not null,
-    cnpj char(18) unique not null,
+    cnpj char(14) unique not null,
     email varchar(50) unique not null,
-    senha varchar(70) unique not null,
+    senha varchar(70) not null,
     dtcadastro date,
     status varchar(10),
     constraint chk_status check (status in ('Ativo', 'Inativo', 'Manutenção'))
@@ -63,10 +63,10 @@ create table telemetria(
 
 
 insert into montadora(nome, cnpj, email, senha, status, dtcadastro)
-values  	('Toyota', '59.104.760/0001-91', 'toyota@gmail.com', 'ToyotaSenha', 'Ativo', '2023-03-15'),
-			('Volkswagen', '59.104.422/0001-50', 'volkswagen@gmail.com', 'VolkswagenSenha', 'Inativo', '2025-03-10'),
-			('Hyundai', '10.394.422/0001-42', 'hyundai@gmail.com', 'HyundaiSenha', 'Ativo', '2020-08-20'),
-            ('Honda', '01.192.333/0003-94', 'honda@gmail.com', 'HondaSenha', 'Ativo', '2024-05-25');
+values  	('Toyota', '59104760000191', 'toyota@gmail.com', 'ToyotaSenha', 'Ativo', '2023-03-15'),
+			('Volkswagen', '59104422000150', 'volkswagen@gmail.com', 'VolkswagenSenha', 'Inativo', '2025-03-10'),
+			('Hyundai', '10394422000142', 'hyundai@gmail.com', 'HyundaiSenha', 'Ativo', '2020-08-20'),
+            ('Honda', '01192333000394', 'honda@gmail.com', 'HondaSenha', 'Ativo', '2024-05-25');
             
             
 insert into funcionario (nome, sobrenome, email, senha, fkmontadora)
