@@ -8,9 +8,9 @@ function cadastrarModelo() {
         nomeVar == "" ||
         anoVar == ""
     ) {
-        cardErro.style.display = "block";
-        mensagem_erro.innerHTML =
-            "(Mensagem de erro para todos os campos em branco)";
+        // cardErro.style.display = "block";
+        // mensagem_erro.innerHTML =
+        //     "(Mensagem de erro para todos os campos em branco)";
 
         finalizarAguardar();
         return false;
@@ -31,16 +31,15 @@ function cadastrarModelo() {
             console.log("resposta: ", resposta);
 
             if (resposta.ok) {
-                cardErro.style.display = "block";
+                // cardErro.style.display = "block";
 
-                mensagem_erro.innerHTML =
-                    "Cadastro do modelo realizado com sucesso! Redirecionando para tela de modelos...";
+                // mensagem_erro.innerHTML =
+                //     "Cadastro do modelo realizado com sucesso! Redirecionando para tela de modelos...";
 
                 setTimeout(() => {
                     window.location = "modelos.html";
                 }, "2000");
 
-                limparFormulario();
                 finalizarAguardar();
             } else {
                 throw "Houve um erro ao tentar realizar o cadastro!";
@@ -61,7 +60,7 @@ function listarModelos() {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            idMontadoraServer: 1,
+            idMontadoraServer: sessionStorage.ID_MONTADORA,
         }),
     })
         .then(function (resposta) {

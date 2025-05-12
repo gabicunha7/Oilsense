@@ -11,8 +11,9 @@
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/grafico.css">
     <link rel="stylesheet" href="../css/formulario.css">
+    <script src="../js/sessão.js"></script>
 </head>
-<body onload="listarCarros()">
+<body onload="validarSessao(), listarCarros()">
     <header class="escuro">
         <section class="container">
             
@@ -38,7 +39,7 @@
                         <a href="carros.html"> Carros </a>
                     </li>
                     <li>
-                        <a href="../index.html"> Sair </a>
+                        <a onclick="limparSessao()"> Sair </a>
                     </li>
                 </ul>
             </nav>

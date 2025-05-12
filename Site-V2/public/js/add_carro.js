@@ -75,7 +75,7 @@ function listarCarros() {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            idMontadoraServer: 1,
+            idMontadoraServer: sessionStorage.ID_MONTADORA,
         }),
     })
         .then(function (resposta) {
@@ -135,7 +135,7 @@ function listarModelos() {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            idMontadoraServer: 1,
+            idMontadoraServer: sessionStorage.ID_MONTADORA,
         }),
     })
         .then(function (resposta) {

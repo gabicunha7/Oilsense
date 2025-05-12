@@ -10,9 +10,10 @@
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/grafico.css">
     <link rel="stylesheet" href="../css/formulario.css">
+    <script src="../js/sessão.js"></script>
     <title> Cadastro Modelo - OilSense </title>
 </head>
-<body>
+<body onload="validarSessao()">
 
     <header class="escuro">
         <section class="container">
@@ -39,7 +40,7 @@
                         <a href="carros.html"> Carros </a>
                     </li>
                     <li>
-                        <a href="../index.html"> Sair </a>
+                        <a onclick="limparSessao()"> Sair </a>
                     </li>
                 </ul>
             </nav>
@@ -75,6 +76,11 @@
                     <input type="number" id="ipt_ano" placeholder="Digite o ano do Modelo">
     
                     <button onclick="cadastrarModelo()"> Cadastrar </button>
+
+                     <div id="div_aguardar" class="loading-div">
+                        <img src="../img/icones/circle-loading.gif" id="loading-gif">
+                    </div>
+                    <div id="div_erros_login"></div>
 
                 </section>
 

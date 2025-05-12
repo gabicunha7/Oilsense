@@ -1,19 +1,16 @@
 function validarSessao() {
-    var email = sessionStorage.EMAIL_USUARIO;
-    var senha = sessionStorage.SENHA_USUARIO;
+    var email = sessionStorage.EMAIL_MONTADORA;
+    var nome = sessionStorage.NOME_MONTADORA;
 
-    var b_usuario = document.getElementById("b_usuario");
 
-    if (email != null && senha != null) {
-        b_usuario.innerHTML = senha;
-    } else {
-        window.location = "../login.html";
-    }
+    if (email == null && nome == null) {
+        window.location = "login.html";
+    } 
 }
 
 function limparSessao() {
     sessionStorage.clear();
-    window.location = "../login.html";
+    window.location = "login.html";
 }
 
 // carregamento (loading)
@@ -30,5 +27,15 @@ function finalizarAguardar(texto) {
     if (texto) {
         divErrosLogin.style.display = "flex";
         divErrosLogin.innerHTML = texto;
+    }
+}
+
+
+function pgFuncionario() {
+    var email = sessionStorage.EMAIL_FUNCIONARIO;
+    var nome = sessionStorage.NOME_FUNCIONARIO;
+
+    if (email != null && nome != null) {
+        window.location = "dashboards.html";
     }
 }
