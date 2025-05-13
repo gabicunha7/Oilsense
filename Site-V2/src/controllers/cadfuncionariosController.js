@@ -1,21 +1,50 @@
-var FuncionarioModel = require('../models/FuncionarioModel');
+var FuncionarioModel = require('../models/cadfuncionariosModel');
 
-function cadastrar(req, res) {
-    var { nome, sobrenome, email, senha, fkmontadora } = req.body;
+function cadastrarFuncionario(req, res) {
+    var nome = req.body.nomeServer;
+    var sobrenome = req.body.sobrenomeServer;
+    var email = req.body.emailServer;
+    var senha = req.body.senhaServer;
 
-    if (!nome || !sobrenome || !email || !senha || !fkmontadora) {
-        return res.status(400).send('Todos os campos são obrigatórios.');
-    }
-
-    try {
-        FuncionarioModel.cadastrarFuncionario({ nome, sobrenome, email, senha, fkmontadora });
-        res.status(200).send('Funcionário cadastrado com sucesso.');
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Erro ao cadastrar funcionário.');
+    // Validações individuais
+    if (nome == undefined) {
+        res.status(400).send("O nome está undefined!");
+    } else if (sobrenome == undefined) {
+        res.status(400).send("O sobrenome está undefined!");
+    } else if (email == undefined) {
+        res.status(400).send("O email está undefined!");
+    } else if (senha == undefined) {
+        res.status(400).send("A senha está undefined!");
+    } else {
+        FuncionarioModel.cadastrarFuncionario(nome, sobrenome, email, senha)
+            .then(function (resultado) {
+                res.json(resultado);
+            })
+            .catch(function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao cadastrar o funcionário! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            });
     }
 }
 
+function listarFuncionarios(req, res) {
+    FuncionarioModel.listarFuncionarios()
+        .then(function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum funcionário encontrado!");
+            }
+        })
+        .catch(function (erro) {
+            console.log(erro);
+            console.log("\nHouve um erro ao listar os funcionários! Erro: ", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
 module.exports = {
-    cadastrar
+    cadastrarFuncionario,
+    listarFuncionarios
 };
