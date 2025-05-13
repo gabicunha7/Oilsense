@@ -22,9 +22,7 @@ function cadastrarCarro() {
 
         finalizarAguardar();
         return false;
-    } else {
-        setInterval(sumirMensagem, 5000);// talvez tire isso, depende se vai exibir mensagem
-    }
+    } 
 
     // Enviando o valor da nova input
     fetch("/carro/cadastrar", {
