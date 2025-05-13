@@ -247,34 +247,9 @@ function alterarTipoGrafico() {
 
         secaoTamanho.style.width = "100%";
         kpis.innerHTML = indicadoresBarra;
-    } else if (tipoGrafico == 'linha') {
+    } else if (tipoGrafico == 'area') {
 
-        config = {
-            type: 'pie',
-            data: dataPizza,
-            options: {
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Índice de alertas dos veículos em um mês',
-                        font: {
-                            size: 28
-                        },
-                        padding: {
-                            top: 16,
-                            bottom: 16
-                        }
-                    }
-                }
-            }
-        }
-
-
-        secaoTamanho.style.width = "40%";
-        kpis.innerHTML = indicadoresPizza;
-    } else {
-
-        config = {
+                config = {
             type: 'line',
             data: dataArea,
             options: {
@@ -306,6 +281,33 @@ function alterarTipoGrafico() {
         
         secaoTamanho.style.width = "100%";
         kpis.innerHTML = indicadoresArea;
+        
+    } else {
+
+        config = {
+            type: 'pie',
+            data: dataPizza,
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Índice de alertas dos veículos em um mês',
+                        font: {
+                            size: 28
+                        },
+                        padding: {
+                            top: 16,
+                            bottom: 16
+                        }
+                    }
+                }
+            }
+        }
+
+
+        secaoTamanho.style.width = "40%";
+        kpis.innerHTML = indicadoresPizza;
+
     }
 
     grafico.destroy();
