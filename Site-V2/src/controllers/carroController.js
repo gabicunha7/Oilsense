@@ -19,35 +19,49 @@ function cadastrarCarro(req, res) {
 	}
 	else {
 
-		carroModel.cadastrarSensor()
-			.then(
-				function (cadastar) {
-
-				}
-			).catch(
-				function (erroCadastrar) {
-					console.log(erroCadastrar);
-					console.log(
-						"\nHouve um erro ao realizar o cadastro do sensor! Erro: ",
-						erroCadastrar.sqlMessage
-					);
-
-				}
-			);
-
 		carroModel.listarSensor()
 			.then(
 				function (listar) {
 					var idSensor = listar[0].id;
 
-					if (idSensor == null) {
+					if (idSensor == -1) {
 						carroModel.cadastrarSensor()
 							.then(
 								function (cadastar) {
 									carroModel.listarSensor()
 										.then(
 											function (listar) {
-												var idSensor = listar[0].id;
+												idSensor = listar[0].id;
+
+												carroModel.atualizarSensor(idSensor)
+													.then(
+														function (atualizar) {
+															carroModel.cadastrarCarro(placa, volume, altura, modelo, idSensor)
+																.then(
+																	function (resultado) {
+																		res.json(resultado);
+																	}
+																).catch(
+																	function (erro) {
+																		console.log(erro);
+																		console.log(
+																			"\nHouve um erro ao realizar o cadastro do carro! Erro: ",
+																			erro.sqlMessage
+																		);
+																		res.status(500).json(erro.sqlMessage);
+																	}
+																);
+														}
+													).catch(
+														function (erroAtualizar) {
+															console.log(erroAtualizar);
+															console.log(
+																"\nHouve um erro ao realizar a atualização do sensor! Erro: ",
+																erroAtualizar.sqlMessage
+															);
+
+														}
+													)
 											}
 										).catch(
 											function (erroCadastrar) {
@@ -58,7 +72,7 @@ function cadastrarCarro(req, res) {
 												);
 
 											}
-										)			
+										)
 								}
 							).catch(
 								function (erroCadastrar) {
@@ -70,37 +84,38 @@ function cadastrarCarro(req, res) {
 
 								}
 							);
-					}
+					} else {
 
-					carroModel.atualizarSensor(idSensor)
-						.then(
-							function (atualizar) {
-								carroModel.cadastrarCarro(placa, volume, altura, modelo, idSensor)
-									.then(
-										function (resultado) {
-											res.json(resultado);
-										}
-									).catch(
-										function (erro) {
-											console.log(erro);
-											console.log(
-												"\nHouve um erro ao realizar o cadastro do carro! Erro: ",
-												erro.sqlMessage
-											);
-											res.status(500).json(erro.sqlMessage);
-										}
+						carroModel.atualizarSensor(idSensor)
+							.then(
+								function (atualizar) {
+									carroModel.cadastrarCarro(placa, volume, altura, modelo, idSensor)
+										.then(
+											function (resultado) {
+												res.json(resultado);
+											}
+										).catch(
+											function (erro) {
+												console.log(erro);
+												console.log(
+													"\nHouve um erro ao realizar o cadastro do carro! Erro: ",
+													erro.sqlMessage
+												);
+												res.status(500).json(erro.sqlMessage);
+											}
+										);
+								}
+							).catch(
+								function (erroAtualizar) {
+									console.log(erroAtualizar);
+									console.log(
+										"\nHouve um erro ao realizar a atualização do sensor! Erro: ",
+										erroAtualizar.sqlMessage
 									);
-							}
-						).catch(
-							function (erroAtualizar) {
-								console.log(erroAtualizar);
-								console.log(
-									"\nHouve um erro ao realizar a atualização do sensor! Erro: ",
-									erroAtualizar.sqlMessage
-								);
 
-							}
-						)
+								}
+							)
+					}
 
 				}
 			).catch(

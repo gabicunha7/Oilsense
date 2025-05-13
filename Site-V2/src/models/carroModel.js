@@ -13,16 +13,16 @@ function cadastrarCarro(placa, volume, altura, fkmodelo, idsensor) {
 }
 
 function listarCarros(idMontadora) {
-    console.log("ACESSEI O CARRO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listarModelos():", idMontadora);
+	console.log("ACESSEI O CARRO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listarModelos():", idMontadora);
 
-    var instrucaoSql = `
+	var instrucaoSql = `
         SELECT car.fksensor id, car.placa, car.volumecarter, car.alturacarter, mdl.modelo
 		FROM carro car
 		INNER JOIN modelo mdl ON mdl.id = car.fkmodelo
 		WHERE mdl.fkmontadora = ${idMontadora};
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+	console.log("Executando a instrução SQL: \n" + instrucaoSql);
+	return database.executar(instrucaoSql);
 }
 
 function cadastrarSensor() {
@@ -33,37 +33,40 @@ function cadastrarSensor() {
     `;
 
 	console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+	return database.executar(instrucaoSql);
 }
 
 function listarSensor() {
 	console.log("ACESSEI O CARRO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listarSensor():");
 
 	var instrucaoSql = `
-        SELECT id
+        SELECT
+			CASE
+				WHEN (SELECT COUNT(id) FROM sensor WHERE status = 'Inativo') > 0 THEN (SELECT id FROM sensor WHERE status = 'Inativo' LIMIT 1)
+        		ELSE -1
+			END id
 		FROM sensor
-		WHERE status = 'Inativo'
-		LIMIT 1;
+        LIMIT 1;
     `;
 
 	console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+	return database.executar(instrucaoSql);
 }
 
 function atualizarSensor(idSensor) {
-	console.log("ACESSEI O CARRO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listarSensor():", idSensor);
+	console.log("ACESSEI O CARRO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function atualizarSensor():", idSensor);
 
 	var instrucaoSql = `
         UPDATE sensor SET status = 'Ativo' WHERE id = ${idSensor};
     `;
 
 	console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+	return database.executar(instrucaoSql);
 }
 
 module.exports = {
 	cadastrarCarro,
-	listarCarros, 
+	listarCarros,
 	cadastrarSensor,
 	listarSensor,
 	atualizarSensor

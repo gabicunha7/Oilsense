@@ -20,7 +20,6 @@ var montadoraRouter = require("./src/routes/montadora");
 var funcionarioRouter = require("./src/routes/funcionario.js");
 var modeloRouter = require("./src/routes/modelo.js");
 var carroRouter = require("./src/routes/carro.js");
-var cadfuncionarioRouter = require("./src/routes/cadfuncionario.js");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -33,7 +32,6 @@ app.use("/montadora", montadoraRouter);
 app.use("/funcionario", funcionarioRouter);
 app.use("/modelo", modeloRouter);
 app.use("/carro", carroRouter);
-app.use("/cadfuncionario", cadfuncionarioRouter);
 
 
 app.listen(PORTA_APP, function () {

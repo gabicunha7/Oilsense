@@ -4,11 +4,11 @@ var router = express.Router();
 var funcionarioController = require("../controllers/funcionarioController");
 
 router.post("/cadastrar", function (req, res) {
-    funcionarioController.cadastrar(req, res);
-})
+    funcionarioController.cadastrarFuncionario(req, res);
+});
 
-router.post("/autenticar", function (req, res) {
-    funcionarioController.autenticar(req, res);
+router.get("/listar", function (req, res) {
+    funcionarioController.listarFuncionarios(req, res);
 });
 
 module.exports = router;
