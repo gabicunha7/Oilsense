@@ -19,21 +19,103 @@ function cadastrarCarro(req, res) {
 	}
 	else {
 
-		carroModel.cadastrarCarro(placa, volume, altura, modelo)
+		carroModel.cadastrarSensor()
 			.then(
-				function (resultado) {
-					res.json(resultado);
+				function (cadastar) {
+
 				}
 			).catch(
-				function (erro) {
-					console.log(erro);
+				function (erroCadastrar) {
+					console.log(erroCadastrar);
 					console.log(
-						"\nHouve um erro ao realizar o cadastro do carro! Erro: ",
-						erro.sqlMessage
+						"\nHouve um erro ao realizar o cadastro do sensor! Erro: ",
+						erroCadastrar.sqlMessage
 					);
-					res.status(500).json(erro.sqlMessage);
+
 				}
 			);
+
+		carroModel.listarSensor()
+			.then(
+				function (listar) {
+					var idSensor = listar[0].id;
+
+					if (idSensor == null) {
+						carroModel.cadastrarSensor()
+							.then(
+								function (cadastar) {
+									carroModel.listarSensor()
+										.then(
+											function (listar) {
+												var idSensor = listar[0].id;
+											}
+										).catch(
+											function (erroCadastrar) {
+												console.log(erroCadastrar);
+												console.log(
+													"\nHouve um erro ao realizar o cadastro do sensor! Erro: ",
+													erroCadastrar.sqlMessage
+												);
+
+											}
+										)			
+								}
+							).catch(
+								function (erroCadastrar) {
+									console.log(erroCadastrar);
+									console.log(
+										"\nHouve um erro ao realizar o cadastro do sensor! Erro: ",
+										erroCadastrar.sqlMessage
+									);
+
+								}
+							);
+					}
+
+					carroModel.atualizarSensor(idSensor)
+						.then(
+							function (atualizar) {
+								carroModel.cadastrarCarro(placa, volume, altura, modelo, idSensor)
+									.then(
+										function (resultado) {
+											res.json(resultado);
+										}
+									).catch(
+										function (erro) {
+											console.log(erro);
+											console.log(
+												"\nHouve um erro ao realizar o cadastro do carro! Erro: ",
+												erro.sqlMessage
+											);
+											res.status(500).json(erro.sqlMessage);
+										}
+									);
+							}
+						).catch(
+							function (erroAtualizar) {
+								console.log(erroAtualizar);
+								console.log(
+									"\nHouve um erro ao realizar a atualização do sensor! Erro: ",
+									erroAtualizar.sqlMessage
+								);
+
+							}
+						)
+
+				}
+			).catch(
+				function (erroListar) {
+					console.log(erroListar);
+					console.log(
+						"\nHouve um erro ao realizar a listagem do sensor! Erro: ",
+						erroListar.sqlMessage
+					);
+
+				}
+			);
+
+
+
 	}
 }
 

@@ -16,9 +16,9 @@ function cadastrarCarro() {
         alturaVar == "" ||
         modeloVar == ""
     ) {
-        cardErro.style.display = "block";
-        mensagem_erro.innerHTML =
-            "(Mensagem de erro para todos os campos em branco)";
+        // cardErro.style.display = "block";
+        // mensagem_erro.innerHTML =
+        //     "(Mensagem de erro para todos os campos em branco)";
 
         finalizarAguardar();
         return false;
@@ -43,16 +43,15 @@ function cadastrarCarro() {
             console.log("resposta: ", resposta);
 
             if (resposta.ok) {
-                cardErro.style.display = "block";
+                // cardErro.style.display = "block";
 
-                mensagem_erro.innerHTML =
-                    "Cadastro do carro realizado com sucesso! Redirecionando para tela de carros...";
+                // mensagem_erro.innerHTML =
+                //     "Cadastro do carro realizado com sucesso! Redirecionando para tela de carros...";
 
                 setTimeout(() => {
                     window.location = "carros.html";
                 }, "2000");
 
-                limparFormulario();
                 finalizarAguardar();
             } else {
                 throw "Houve um erro ao tentar realizar o cadastro!";
