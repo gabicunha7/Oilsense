@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../img/logo/logoIcone.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../css/body.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/grafico.css">
+    <link rel="stylesheet" href="../css/formulario.css">
+    <script src="../js/sessão.js"></script>
+    <title> Cadastro Modelo - OilSense </title>
+</head>
+<body onload="validarSessao()">
+
+    <header class="escuro">
+        <section class="container">
+
+            <nav class="menu">
+                <input type="checkbox" name="chk_hamburguer" id="chk_hamburguer" class="check_hamburguer">
+
+                <section class="hamburguer">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </section>
+                <ul>
+                    <li>
+                        <a href="dashboards.html"> Painel </a>
+                    </li>
+                    <li>
+                        <a href="funcionarios.html"> Funcionários </a>
+                    </li>
+                    <li>
+                        <a href="modelos.html"> Modelos </a>
+                    </li>
+                    <li>
+                        <a href="carros.html"> Carros </a>
+                    </li>
+                    <li>
+                        <a onclick="limparSessao()"> Sair </a>
+                    </li>
+                </ul>
+            </nav>
+            <section class="secao_logo">
+                <a href="dashboards.html">
+                    <img src="../img/logo/logoExtensa.png" alt="Logo OilSense" class="logo">
+                </a>
+            </section>
+
+            <span></span>
+        </section>
+    </header>
+
+    <main class="escuro cadastro">
+
+        <section class="container formulario carro">
+
+            <section class="content">
+
+                <section class="image">
+                    <img src="../img/fundo/carros.jpg" alt="Carros">
+                </section>
+
+                <section class="section-input">
+
+                    <h1> Cadastrar Modelo </h1>
+                    <h3> Preencha os dados para continuar </h3>
+            
+                    <label for="ipt_nome"> Nome </label>
+                    <input type="text" id="ipt_nome" placeholder="Digite o nome do modelo">
+    
+                    <label for="ipt_ano"> Ano </label>
+                    <input type="number" id="ipt_ano" placeholder="Digite o ano do Modelo">
+    
+                    <button onclick="cadastrarModelo()"> Cadastrar </button>
+
+                    <div id="div_aguardar" class="loading-div">
+                        <img src="../img/icones/circle-loading.gif" id="loading-gif">
+                    </div>
+                    <div id="div_erros_login"></div>
+
+                </section>
+
+            </section>
+
+        </section>
+    </main>
+
+    <footer class="escuro">
+        <p> &copy; OilSense 2025 - Todos os direitos reservados. </p>
+    </footer>
+    
+</body>
+<script src="../js/add_modelo.js"></script>
+</html>
