@@ -3,6 +3,7 @@ function cadastrarFuncionario() {
     var sobrenomeVar = ipt_sobrenome.value;
     var emailVar = ipt_email.value;
     var senhaVar = ipt_senha.value;
+    var idMontadoraVar = sessionStorage.ID_MONTADORA;
 
     if (
         nomeVar == "" ||
@@ -19,16 +20,17 @@ function cadastrarFuncionario() {
         return false;
     } 
 
-    fetch("/funcionarios/cadastrar", {
+    fetch("/funcionario/cadastrar", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            nome: nomeVar,
-            sobrenome: sobrenomeVar,
-            email: emailVar,
-            senha: senhaVar
+            nomeServer: nomeVar,
+            sobrenomeServer: sobrenomeVar,
+            emailServer: emailVar,
+            senhaServer: senhaVar,
+            idMontadoraServer: idMontadoraVar
         }),
     })
         .then(function (resposta) {
@@ -41,7 +43,7 @@ function cadastrarFuncionario() {
                 //     "Cadastro do funcionário realizado com sucesso! Redirecionando para tela de login...";
 
                 setTimeout(() => {
-                    window.location = "add_funcionario.html";
+                    window.location = "funcionarios.html";
                 }, "2000");
 
                 finalizarAguardar();

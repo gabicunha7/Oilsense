@@ -17,7 +17,7 @@ var app = express();
 
 var indexRouter = require("./src/routes/index");
 var montadoraRouter = require("./src/routes/montadora");
-var funcionarioRouter = require("./src/routes/funcionario.js");
+var funcionarioRouter = require("./src/routes/funcionario");
 var modeloRouter = require("./src/routes/modelo.js");
 var carroRouter = require("./src/routes/carro.js");
 

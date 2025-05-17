@@ -1,9 +1,7 @@
 function validarSessao() {
-    var email = sessionStorage.EMAIL_MONTADORA;
-    var nome = sessionStorage.NOME_MONTADORA;
-
-
-    if (email == null && nome == null) {
+    var id = sessionStorage.ID_MONTADORA;
+   
+    if (id == null) {
         window.location = "login.html";
     } 
 }

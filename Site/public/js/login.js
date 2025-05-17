@@ -64,7 +64,7 @@ function entrar() {
 
             return false;
         } else {
-            fetch("/montadora/autenticar", {
+            fetch("/funcionario/autenticar", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -82,12 +82,11 @@ function entrar() {
                     resposta.json().then(json => {
                         console.log(json);
                         console.log(JSON.stringify(json));
-                        sessionStorage.EMAIL_MONTADORA = json.email;
-                        sessionStorage.NOME_MONTADORA = json.nome;
-                        sessionStorage.ID_MONTADORA = json.id;
+                        sessionStorage.ID_MONTADORA = json.fkmontadora;
 
                         sessionStorage.EMAIL_FUNCIONARIO = json.email;
                         sessionStorage.NOME_FUNCIONARIO = json.nome;
+                        sessionStorage.SOBRENOME_FUNCIONARIO = json.sobrenome;
                         sessionStorage.ID_FUNCIONARIO = json.id;
                     });
 

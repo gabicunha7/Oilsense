@@ -7,7 +7,11 @@ router.post("/cadastrar", function (req, res) {
     funcionarioController.cadastrarFuncionario(req, res);
 });
 
-router.get("/listar", function (req, res) {
+router.post("/autenticar", function (req, res) {
+    funcionarioController.autenticarFuncionario(req, res);
+});
+
+router.post("/listar", function (req, res) {
     funcionarioController.listarFuncionarios(req, res);
 });
 
