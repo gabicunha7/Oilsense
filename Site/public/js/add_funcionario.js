@@ -4,6 +4,7 @@ function cadastrarFuncionario() {
     var emailVar = ipt_email.value;
     var senhaVar = ipt_senha.value;
     var idMontadoraVar = sessionStorage.ID_MONTADORA;
+    var idFuncionarioVar = sessionStorage.ID_FUNCIONARIO;
 
     if (
         nomeVar == "" ||
@@ -30,18 +31,15 @@ function cadastrarFuncionario() {
             sobrenomeServer: sobrenomeVar,
             emailServer: emailVar,
             senhaServer: senhaVar,
-            idMontadoraServer: idMontadoraVar
+            idMontadoraServer: idMontadoraVar,
+            idFuncionariServer: idFuncionarioVar
         }),
     })
         .then(function (resposta) {
             console.log("resposta: ", resposta);
 
             if (resposta.ok) {
-                // cardErro.style.display = "block";
-
-                // mensagem_erro.innerHTML =
-                //     "Cadastro do funcionário realizado com sucesso! Redirecionando para tela de login...";
-
+             
                 setTimeout(() => {
                     window.location = "funcionarios.html";
                 }, "2000");
@@ -58,6 +56,65 @@ function cadastrarFuncionario() {
 
     return false;
 }
+
+
+function listarFuncionarios() {
+    fetch("/funcionario/listar", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            idMontadoraServer: sessionStorage.ID_MONTADORA,
+            idFuncioanrioServer: sessionStorage.FK_FUNCIONARIO,
+        }),
+    })
+        .then(function (resposta) {
+            console.log("resposta: ", resposta);
+
+            if (resposta.ok) {
+                resposta.json().then(function (resposta) {
+                    console.log("Dados recebidos: ", JSON.stringify(resposta));
+
+                    let tabela = document.querySelector('table');
+                    let frase = `<tr>
+                        <th> nome </th>
+                        <th> email </th>
+                        <th> Editar </th>
+                        <th> Excluir </th>
+                    </tr>`;
+
+                    for (let i = 0; i < resposta.length; i++) {
+                        frase += `<tr>`;
+                        frase += `<td> ${resposta[i].id} </td>`;
+                        frase += `<td> ${resposta[i].nome} </td>`;
+                        frase += `<td> ${resposta[i].email} </td>`;
+                        frase += `<td>
+                            <button onclick="editarFuncionario(${resposta[i].id})" class="btnTabela"> 
+                                <img src="../img/icones/editarIcone.png" alt="Icone de edição" class="iconeTabela"> 
+                            </button> 
+                        </td>`;
+
+                        frase += `<td>
+                            <button onclick="excluirFuncionario(${resposta[i].id})" class="btnTabela"> 
+                                <img src="../img/icones/excluirIcone.png" alt="Icone de excluir" class="iconeTabela"> 
+                            </button> 
+                        </td>`;
+                        frase += `</tr>`;
+                    }
+
+                    tabela.innerHTML = frase;
+                });
+            } else {
+                throw "Houve um erro ao tentar listar os modelos!";
+            }
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+}
+
+
 
 function adicionarFuncionario() {
     location.href = "add_funcionario.html";
