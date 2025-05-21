@@ -11,7 +11,7 @@ router.post("/autenticar", function (req, res) {
     funcionarioController.autenticarFuncionario(req, res);
 });
 
-router.post("/listar", function (req, res) {
+router.get("/listar/:idMontadora", function (req, res) {
     funcionarioController.listarFuncionarios(req, res);
 });
 

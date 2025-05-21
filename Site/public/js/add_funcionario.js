@@ -59,16 +59,9 @@ function cadastrarFuncionario() {
 
 
 function listarFuncionarios() {
-    fetch("/funcionario/listar", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            idMontadoraServer: sessionStorage.ID_MONTADORA,
-            idFuncioanrioServer: sessionStorage.FK_FUNCIONARIO,
-        }),
-    })
+    let idMontadora = sessionStorage.ID_MONTADORA;
+
+    fetch(`/funcionario/listar/${idMontadora}`)
         .then(function (resposta) {
             console.log("resposta: ", resposta);
 
@@ -78,8 +71,10 @@ function listarFuncionarios() {
 
                     let tabela = document.querySelector('table');
                     let frase = `<tr>
-                        <th> nome </th>
-                        <th> email </th>
+                        <th> id </th>
+                        <th> Nome </th>
+                        <th> Sobrenome </th>
+                        <th> Email </th>
                         <th> Editar </th>
                         <th> Excluir </th>
                     </tr>`;
@@ -88,6 +83,7 @@ function listarFuncionarios() {
                         frase += `<tr>`;
                         frase += `<td> ${resposta[i].id} </td>`;
                         frase += `<td> ${resposta[i].nome} </td>`;
+                        frase += `<td> ${resposta[i].sobrenome} </td>`;
                         frase += `<td> ${resposta[i].email} </td>`;
                         frase += `<td>
                             <button onclick="editarFuncionario(${resposta[i].id})" class="btnTabela"> 
@@ -106,7 +102,7 @@ function listarFuncionarios() {
                     tabela.innerHTML = frase;
                 });
             } else {
-                throw "Houve um erro ao tentar listar os modelos!";
+                throw "Houve um erro ao tentar listar os funcionários!";
             }
         })
         .catch(function (resposta) {

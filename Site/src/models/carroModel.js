@@ -40,12 +40,9 @@ function listarSensor() {
 	console.log("ACESSEI O CARRO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listarSensor():");
 
 	var instrucaoSql = `
-        SELECT
-			CASE
-				WHEN (SELECT COUNT(id) FROM sensor WHERE status = 'Inativo') > 0 THEN (SELECT id FROM sensor WHERE status = 'Inativo' LIMIT 1)
-        		ELSE -1
-			END id
+        SELECT id
 		FROM sensor
+		WHERE status = 'Inativo'
         LIMIT 1;
     `;
 

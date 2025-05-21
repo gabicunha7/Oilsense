@@ -54,15 +54,9 @@ function cadastrarModelo() {
 }
 
 function listarModelos() {
-    fetch("/modelo/listar", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            idMontadoraServer: sessionStorage.ID_MONTADORA,
-        }),
-    })
+    let idMontadora = sessionStorage.ID_MONTADORA;
+
+    fetch(`/modelo/listar/${idMontadora}`)
         .then(function (resposta) {
             console.log("resposta: ", resposta);
 

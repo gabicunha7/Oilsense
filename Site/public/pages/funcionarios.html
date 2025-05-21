@@ -14,7 +14,7 @@
     <script src="../js/sessão.js"></script>
 </head>
 
-<body onload="validarSessao(), pgFuncionario()">
+<body onload="validarSessao(), pgFuncionario(), listarFuncionarios()">
     <header class="escuro">
         <section class="container">
 
@@ -66,46 +66,6 @@
             </section>
 
             <table>
-                <tr>
-                    <th> id </th>
-                    <th> Nome </th>
-                    <th> Sobrenome </th>
-                    <th> Email </th>
-                    <th> Editar </th>
-                    <th> Excluir </th>
-                </tr>
-                <tr>
-                    <td> 1 </td>
-                    <td> Lucas </td>
-                    <td> Silva </td>
-                    <td> lucas.silva@toyota.com </td>
-                    <td>
-                        <button onclick="editarFuncionario()" class="btnTabela">
-                            <img src="../img/icones/editarIcone.png" alt="Icone de edição" class="iconeTabela">
-                        </button>
-                    </td>
-                    <td>
-                        <button onclick="excluirFuncionario()" class="btnTabela">
-                            <img src="../img/icones/excluirIcone.png" alt="Icone de excluir" class="iconeTabela">
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td> 2 </td>
-                    <td> Mariana </td>
-                    <td> Costa </td>
-                    <td> mariana.costa@toyota.com </td>
-                    <td>
-                        <button onclick="editarFuncionario()" class="btnTabela">
-                            <img src="../img/icones/editarIcone.png" alt="Icone de edição" class="iconeTabela">
-                        </button>
-                    </td>
-                    <td>
-                        <button onclick="excluirFuncionario()" class="btnTabela">
-                            <img src="../img/icones/excluirIcone.png" alt="Icone de excluir" class="iconeTabela">
-                        </button>
-                    </td>
-                </tr>
             </table>
         </section>
     </main>

@@ -34,7 +34,7 @@ function cadastrarFuncionario(req, res) {
 }
 
 function listarFuncionarios(req, res) {
-    var idMontadora = req.body.idMontadoraServer;
+    var idMontadora = req.params.idMontadora;
 
     funcionarioModel.listarFuncionarios(idMontadora)
         .then(

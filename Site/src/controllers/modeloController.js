@@ -32,7 +32,7 @@ function cadastrarModelo(req, res) {
 }
 
 function listarModelos(req, res) {
-    var idMontadora = req.body.idMontadoraServer;
+    var idMontadora = req.params.idMontadora;
 
     modeloModel.listarModelos(idMontadora)
         .then(
