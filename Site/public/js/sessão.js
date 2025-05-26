@@ -1,5 +1,13 @@
 function validarSessao() {
     var id = sessionStorage.ID_MONTADORA;
+
+    var emailFun = sessionStorage.EMAIL_FUNCIONARIO;
+    var nomeFun = sessionStorage.NOME_FUNCIONARIO;
+
+    if (emailFun != null && nomeFun != null) {
+        let linkFuncionario = document.querySelectorAll('.menu li')[1];
+        linkFuncionario.style.display = 'none';
+    }
    
     if (id == null) {
         window.location = "login.html";
