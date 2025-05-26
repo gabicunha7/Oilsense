@@ -4,6 +4,8 @@ var alturaVar = '';
 var modeloVar = '';
 
 function cadastrarCarro() {
+    aguardar();
+
     placaVar = ipt_placa.value;
     volumeVar = ipt_volume.value;
     alturaVar = ipt_altura.value;
@@ -15,8 +17,7 @@ function cadastrarCarro() {
         alturaVar == "" ||
         modeloVar == ""
     ) {
-        
-        finalizarAguardar();
+        finalizarAguardar("Os campos não podem ser vazios.");
         return false;
     }
 
@@ -41,7 +42,6 @@ function cadastrarSensor() {
         })
         .catch(function (resposta) {
             console.log(`#ERRO: ${resposta}`);
-            finalizarAguardar();
         });
 }
 
@@ -109,12 +109,14 @@ function cadastrar(idSensor) {
             console.log("resposta: ", resposta);
 
             if (resposta.ok) {
+                var sectionErrosLogin = document.getElementById("section_erros_login");
+                sectionErrosLogin.style.backgroundColor = '#069006';
+                
+                finalizarAguardar("Cadastro realizado com sucesso! Redirecionando para tela de carros...");
 
                 setTimeout(() => {
                     window.location = "carros.html";
                 }, "2000");
-
-                finalizarAguardar();
             } else {
                 throw "Houve um erro ao tentar realizar o cadastro!";
             }

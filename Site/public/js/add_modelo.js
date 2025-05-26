@@ -1,18 +1,15 @@
 function cadastrarModelo() {
+    aguardar();
+
     var nomeVar = ipt_nome.value;
     var anoVar = Number(ipt_ano.value);
     var idMontadoraVar = sessionStorage.ID_MONTADORA;
 
-    // Verificando se há algum campo em branco
     if (
         nomeVar == "" ||
         anoVar == ""
     ) {
-        // cardErro.style.display = "block";
-        // mensagem_erro.innerHTML =
-        //     "(Mensagem de erro para todos os campos em branco)";
-
-        finalizarAguardar();
+        finalizarAguardar("Os campos não podem ser vazios.");
         return false;
     }
 
@@ -29,18 +26,15 @@ function cadastrarModelo() {
     })
         .then(function (resposta) {
             console.log("resposta: ", resposta);
+            var sectionErrosLogin = document.getElementById("section_erros_login");
+            sectionErrosLogin.style.backgroundColor = '#069006';
+
+            finalizarAguardar("Cadastro realizado com sucesso! Redirecionando para tela de modelos...");
 
             if (resposta.ok) {
-                // cardErro.style.display = "block";
-
-                // mensagem_erro.innerHTML =
-                //     "Cadastro do modelo realizado com sucesso! Redirecionando para tela de modelos...";
-
                 setTimeout(() => {
                     window.location = "modelos.html";
                 }, "2000");
-
-                finalizarAguardar();
             } else {
                 throw "Houve um erro ao tentar realizar o cadastro!";
             }

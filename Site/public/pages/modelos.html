@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,10 +13,11 @@
     <link rel="stylesheet" href="../css/grafico.css">
     <script src="../js/sessão.js"></script>
 </head>
+
 <body onload="validarSessao(), listarModelos()">
     <header class="escuro">
         <section class="container">
-            
+
             <nav class="menu">
                 <input type="checkbox" name="chk_hamburguer" id="chk_hamburguer" class="check_hamburguer">
 
@@ -25,7 +27,7 @@
                     <span></span>
                 </section>
                 <ul>
-                    <li> 
+                    <li>
                         <a href="dashboards.html"> Painel </a>
                     </li>
                     <li>
@@ -34,7 +36,7 @@
                     <li>
                         <a href="modelos.html"> Modelos </a>
                     </li>
-                    <li> 
+                    <li>
                         <a href="carros.html"> Carros </a>
                     </li>
                     <li>
@@ -59,10 +61,10 @@
             <section class="cadastrar">
                 <h2> Adicionar </h2>
                 <button class="btnTabela" onclick="adicionarModelo()">
-                    <img src="../img/icones/maisIcone.png" alt="Icone de cadastrar" class="iconeTabela"> 
+                    <img src="../img/icones/maisIcone.png" alt="Icone de cadastrar" class="iconeTabela">
                 </button>
             </section>
-            
+
             <table>
             </table>
         </section>
@@ -74,4 +76,5 @@
 </body>
 
 <script src="../js/add_modelo.js"></script>
+
 </html>

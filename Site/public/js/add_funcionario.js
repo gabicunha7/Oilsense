@@ -1,4 +1,6 @@
 function cadastrarFuncionario() {
+    aguardar();
+
     var nomeVar = ipt_nome.value;
     var sobrenomeVar = ipt_sobrenome.value;
     var emailVar = ipt_email.value;
@@ -12,12 +14,10 @@ function cadastrarFuncionario() {
         emailVar == "" ||
         senhaVar == ""
     ) {
-        // cardErro.style.display = "block";
-        // mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
-        finalizarAguardar();
+        finalizarAguardar("Os campos não podem ser vazios.");
         return false;
     } else if (!emailVar.includes("@") || !emailVar.includes(".")) {
-        alert("Por favor, digite um email válido!");
+        finalizarAguardar("O e-mail é inválido.");
         return false;
     } 
 
@@ -39,12 +39,14 @@ function cadastrarFuncionario() {
             console.log("resposta: ", resposta);
 
             if (resposta.ok) {
-             
+                var sectionErrosLogin = document.getElementById("section_erros_login");
+                sectionErrosLogin.style.backgroundColor = '#069006';
+
+                finalizarAguardar("Cadastro realizado com sucesso! Redirecionando para tela de funcionários...");
+
                 setTimeout(() => {
                     window.location = "funcionarios.html";
                 }, "2000");
-
-                finalizarAguardar();
             } else {
                 throw "Houve um erro ao tentar realizar o cadastro!";
             }
