@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -9,13 +9,12 @@
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/footer.css">
-    <link rel="stylesheet" href="../css/grafico.css">
     <link rel="stylesheet" href="../css/formulario.css">
     <script src="../js/sessão.js"></script>
-    <title> Cadastro Carro - OilSense </title>
+    <title> Cadastro de Funcionários - OilSense </title>
 </head>
 
-<body onload="validarSessao(), listarModelos()">
+<body onload="validarSessao(), pgFuncionario(), carregarFunEditando()">
 
     <header class="escuro">
         <section class="container">
@@ -58,32 +57,34 @@
 
     <main class="escuro cadastro">
 
-        <section class="container formulario carro">
+        <section class="container formulario">
 
             <section class="content">
 
                 <section class="image">
-                    <img src="../img/fundo/carros.jpg" alt="Carros">
+                    <img src="../img/fundo/imagefuncio.png" alt="Motor de um veículo">
                 </section>
 
                 <section class="section-input">
 
-                    <h1> Cadastrar Carro </h1>
-                    <h3> Preencha os dados para continuar </h3>
+                    <h1> Edição de Funcionário </h1>
 
-                    <label for="ipt_placa"> Placa </label>
-                    <input type="text" id="ipt_placa" placeholder="Digite a placa do carro" maxlength="7">
+                    <label for="ipt_id"> ID </label>
+                    <input type="number" name="ipt_id" id="ipt_id">
 
-                    <label for="ipt_volume"> Volume Cárter </label>
-                    <input type="number" id="ipt_volume" placeholder="Digite o volume do cárter">
+                    <label for="ipt_nome"> Nome </label>
+                    <input type="text" id="ipt_nome" placeholder="Insira o nome do funcionário">
 
-                    <label for="ipt_altura"> Altura Cárter </label>
-                    <input type="number" id="ipt_altura" placeholder="Digite a altura do cárter">
+                    <label for="ipt_sobrenome"> Sobrenome </label>
+                    <input type="text" id="ipt_sobrenome" placeholder="Insira o sobrenome do funcionário">
 
-                    <label for="sel_modelos"> Modelo </label>
-                    <select name="sel_modelos" id="sel_modelos"></select>
+                    <label for="ipt_email"> E-mail </label>
+                    <input type="email" id="ipt_email" placeholder="Insira o e-mail do funcionário">
 
-                    <button onclick="cadastrarCarro()"> Cadastrar </button>
+                    <label for="ipt_senha"> Senha </label>
+                    <input type="password" id="ipt_senha" placeholder="Insira a senha do funcionário">
+
+                    <button onclick="atualizarFuncionario()"> Editar </button>
 
                 </section>
             </section>
@@ -101,8 +102,9 @@
         <p> &copy; OilSense 2025 - Todos os direitos reservados. </p>
     </footer>
 
+
 </body>
 
-<script src="../js/carro.js"></script>
+<script src="../js/funcionario.js"></script>
 
 </html>
