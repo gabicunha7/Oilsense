@@ -46,6 +46,6 @@ function pgFuncionario() {
     var nome = sessionStorage.NOME_FUNCIONARIO;
 
     if (email != null && nome != null) {
-        window.location = "dashboards.html";
+        window.location = "bobia.html";
     }
 }
