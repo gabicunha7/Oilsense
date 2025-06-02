@@ -21,6 +21,7 @@ var funcionarioRouter = require("./src/routes/funcionario");
 var modeloRouter = require("./src/routes/modelo.js");
 var carroRouter = require("./src/routes/carro.js");
 var sensorRouter = require("./src/routes/sensor.js");
+var graficosRouter = require("./src/routes/graficos.js");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -34,6 +35,7 @@ app.use("/funcionario", funcionarioRouter);
 app.use("/modelo", modeloRouter);
 app.use("/carro", carroRouter);
 app.use("/sensor", sensorRouter);
+app.use("/graficos",graficosRouter)
 
 
 app.listen(PORTA_APP, function () {
