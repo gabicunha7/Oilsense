@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/footer.css">
+    <script src="../js/sessão.js"></script>
 </head>
 
 <body>
@@ -21,12 +22,31 @@
                 </a>
             </section>
 
-            <nav>
-                <a href="../index.html"> Home </a>
-                <a href="../index.html#servicos"> Serviços </a>
-                <a href="../index.html#sobreNos"> Sobre nós </a>
-                <a href="../index.html#contato"> Contato </a>
-                <a href="./login.html" class="botao header"> Login </a>
+            <nav class="menu">
+                <input type="checkbox" name="chk_hamburguer" id="chk_hamburguer" class="check_hamburguer">
+
+                <section class="hamburguer">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </section>
+                <ul>
+                    <li>
+                        <a href="dashboards.html"> Painel </a>
+                    </li>
+                    <li>
+                        <a href="funcionarios.html"> Funcionários </a>
+                    </li>
+                    <li>
+                        <a href="modelos.html"> Modelos </a>
+                    </li>
+                    <li>
+                        <a href="carros.html"> Carros </a>
+                    </li>
+                    <li>
+                        <a onclick="limparSessao()"> Sair </a>
+                    </li>
+                </ul>
             </nav>
         </section>
     </header>
@@ -45,30 +65,19 @@
                 <section id="respostaIA" class="caixa-resposta"></section>
             </section>
         </section>
+
+        <section id="section_aguardar" class="loading-section">
+            <img src="../img/logo/logoCurta.png" alt="Icone logo aguardar">
+            <section class="borda_aguardar"></section>
+        </section>
+        <section id="section_erros_login"></section>
     </main>
 
     <footer class="escuro">
         <p>&copy; OilSense 2025 - Todos os direitos reservados.</p>
     </footer>
 
-    <script>
-        function enviarPergunta() {
-            const input = document.getElementById('inputPergunta').value.trim();
-            const respostaDiv = document.getElementById('respostaIA');
-
-            if (input === '') {
-                alert('Por favor, digite uma pergunta.');
-                return;
-            }
-
-            const resposta = `Resposta do BOBIA`;
-
-            respostaDiv.style.display = 'block';
-            respostaDiv.innerText = resposta;
-
-            document.getElementById('inputPergunta').value = '';
-        }
-    </script>
 </body>
+<script src="../js/bobia.js"></script>
 
 </html>
