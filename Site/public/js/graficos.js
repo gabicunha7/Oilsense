@@ -30,7 +30,7 @@ function listarPlacas() {
 }
 
 
-function graficos(){
+function graficos() {
     porcentagemCarroPorPlaca()
 }
 
@@ -41,13 +41,13 @@ function porcentagemCarroPorPlaca() {
     fetch(`/graficos/porcentagemCarroPorPlaca/${placa}`)
         .then(function (resposta) {
             if (resposta.ok) {
-                if (resposta.statusText == 'No Content'){
+                if (resposta.statusText == 'No Content') {
                     alert("nenhum dado encontrado!")
-                }else{
+                } else {
                     resposta.json().then(function (dados) {
                         console.log("graficos:", dados);
                         plotarGraficoPlacaBarras(dados);
-    
+
                     });
                 }
             } else {
@@ -63,56 +63,53 @@ function porcentagemCarroPorPlaca() {
 }
 
 
- function plotarGraficoPlacaBarras(dados){
+function plotarGraficoPlacaBarras(dados) {
     console.log('Plotando gráfico de barras com os dados:', dados);
 
     let labels = [];
 
     const config = {
-    type: 'bar',
-    data: {
-        labels: labels,
-        datasets: [{
-            label: `Valores`, 
-            data: [],
-            backgroundColor: [
-                'rgb(255, 159, 64)',
-            ],
-            borderColor: [
-                'rgb(255, 159, 64)',
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        plugins: {
-            legend: {
-                display: false 
-            }
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: `Valores`,
+                data: [],
+                backgroundColor: [
+                    'rgb(255, 159, 64)',
+                ],
+                borderColor: [
+                    'rgb(255, 159, 64)',
+                ],
+                borderWidth: 1
+            }]
         },
-        scales: {
-            y: {
-                beginAtZero: true,
-                precision: 0
+        options: {
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    precision: 0
+                }
             }
         }
+    };
+    for (var i = 0; i < dados.length; i++) {
+        config.data.datasets[0].data.push(dados[i].porcentagem)
+        config.data.labels.push(dados[i].dia_mes)
+
     }
-};
-
-    config.data.datasets[0].data.push(dados.porcentagem)
-    labels.push(dados.dia_mes)
-    console.log(dados.porcentagem)
-
-    console.log('----------------------------------------------')
-    console.log('O gráfico barras será plotado com os respectivos valores:')
-    console.log('Labels:')
-    console.log(labels)
-    console.log('Dados:')
-    console.log(dados.datasets)
-    console.log('----------------------------------------------')
 
     document.querySelector(".tamanho").style.display = "block"
 
+    Chart.defaults.color = '#ffffff';
+    Chart.defaults.font.size = 16;
+
+      document.getElementById('dashboard').destroy();
 
     new Chart(
         document.getElementById('dashboard'),
