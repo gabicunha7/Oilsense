@@ -43,8 +43,32 @@ function porcentagemMediaModelo(modelo_id) {
     return database.executar(instrucaoSql);
 }
 
+function nivelDeAlertaPorMes(mes) {
+        console.log("ACESSEI O FUNCIONARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listarFuncionarios()");
+    
+        var instrucaoSql = `
+                select 
+                case when round(avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100), 1) > 70 then 'Nível 1 (Excesso de óleo)'
+                when round(avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100), 1) < 60 then 'Nível 2 (Falta de óleo)'
+                        when round(avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100), 1) < 50 then 'Nível 3 (Crítico de falta de óleo)'
+                        else 'Sem Alerta' 
+                end as 'nivel_oleo'
+                from carro c
+                inner join sensor s   
+                        on c.fksensor = s.id
+                inner join telemetria t
+                        on t.fksensor = s.id
+                where month(dtHoraColeta) = ${mes}
+                group by month(dtHoraColeta), c.placa;
+        `;
+    
+        console.log("Executando a instrução SQL: \n" + instrucaoSql);
+        return database.executar(instrucaoSql);
+    }
+
+
 module.exports = {
-    graficosModel,
     porcentagemCarroPorPlaca,
-    porcentagemMediaModelo
+    porcentagemMediaModelo,
+    nivelDeAlertaPorMes
 }
