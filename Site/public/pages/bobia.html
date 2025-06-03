@@ -22,12 +22,31 @@
                 </a>
             </section>
 
-            <nav>
-                <a href="../index.html"> Home </a>
-                <a href="../index.html#servicos"> Serviços </a>
-                <a href="../index.html#sobreNos"> Sobre nós </a>
-                <a href="../index.html#contato"> Contato </a>
-                <a href="./login.html" class="botao header"> Login </a>
+            <nav class="menu">
+                <input type="checkbox" name="chk_hamburguer" id="chk_hamburguer" class="check_hamburguer">
+
+                <section class="hamburguer">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </section>
+                <ul>
+                    <li>
+                        <a href="dashboards.html"> Painel </a>
+                    </li>
+                    <li>
+                        <a href="funcionarios.html"> Funcionários </a>
+                    </li>
+                    <li>
+                        <a href="modelos.html"> Modelos </a>
+                    </li>
+                    <li>
+                        <a href="carros.html"> Carros </a>
+                    </li>
+                    <li>
+                        <a onclick="limparSessao()"> Sair </a>
+                    </li>
+                </ul>
             </nav>
         </section>
     </header>
@@ -58,7 +77,7 @@
         <p>&copy; OilSense 2025 - Todos os direitos reservados.</p>
     </footer>
 
-    <script src="../js/bobia.js"></script>
 </body>
+<script src="../js/bobia.js"></script>
 
 </html>
