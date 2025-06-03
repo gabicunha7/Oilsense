@@ -212,6 +212,164 @@ function listarModelos() {
         });
 }
 
+function carregarCarEditando() {
+    let id = sessionStorage.ID_CARRO_EDITANDO;
+
+    if (id == null) {
+        window.location = "modelos.html";
+    }
+
+    fetch(`/carro/listarUm/${id}`)
+        .then(function (resposta) {
+            console.log("resposta: ", resposta);
+
+            if (resposta.ok) {
+                resposta.json().then(function (resposta) {
+                    console.log("Dados recebidos: ", JSON.stringify(resposta));
+
+                    ipt_id.value = id;
+                    ipt_id.disabled = true;
+
+                    ipt_placa.value = resposta[0].placa;
+                    ipt_volume.value = resposta[0].volumecarter; 
+                    ipt_altura.value = resposta[0].alturacarter; 
+                });
+            } else {
+                throw "Houve um erro ao tentar listar o modelo!";
+            }
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+}
+
+function atualizarCarro() {
+    aguardar();
+
+    var placaVar = ipt_placa.value;
+    var volumeVar = ipt_volume.value;
+    var alturaVar = ipt_altura.value;
+    var idMontadoraVar = sessionStorage.ID_MONTADORA;
+    var idCarroVar = sessionStorage.ID_CARRO_EDITANDO;
+
+    if (
+        placaVar == "" ||
+        volumeVar == "" ||
+        alturaVar == ""
+    ) {
+        finalizarAguardar("Os campos não podem ser vazios.");
+        return false;
+    }
+
+    fetch("/carro/editar", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            placaServer: placaVar,
+            volumeServer: volumeVar,
+            alturaServer: alturaVar,
+            idMontadoraServer: idMontadoraVar,
+            idCarroServer: idCarroVar
+        }),
+    })
+        .then(function (resposta) {
+            console.log("resposta: ", resposta);
+
+            if (resposta.ok) {
+                var sectionErrosLogin = document.getElementById("section_erros_login");
+                sectionErrosLogin.style.backgroundColor = '#069006';
+
+                finalizarAguardar("Edição realizada com sucesso! Redirecionando para tela de carros...");
+
+                setTimeout(() => {
+                    window.location = "carros.html";
+                }, "2000");
+            } else {
+                throw "Houve um erro ao tentar realizar a edição!";
+            }
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+            finalizarAguardar();
+        });
+
+    return false;
+}
+
+function deletarCarro(id) {
+    fecharExcluir();
+    aguardar();
+
+    fetch("/carro/excluir", {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            idCarroServer: id
+        }),
+    })
+        .then(function (resposta) {
+            console.log("resposta: ", resposta);
+
+            if (resposta.ok) {
+                var sectionErrosLogin = document.getElementById("section_erros_login");
+                sectionErrosLogin.style.backgroundColor = '#069006';
+
+                finalizarAguardar("Carro excluído com sucesso! Recarregando a página...");
+
+                setTimeout(() => {
+                    window.location = "carros.html";
+                }, "2000");
+            } else {
+                throw "Houve um erro ao tentar realizar a exclusão!";
+            }
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+            finalizarAguardar();
+        });
+
+    return false;
+}
+
+function excluirCarro(id) {
+    var sectionExcluir = document.querySelector('#section_excluir');
+    sectionExcluir.style.display = 'flex';
+
+    var sectionConteudoExcluir = sectionExcluir.querySelector('#section_conteudo_excluir');
+    var frase = '<img src="../img/icones/excluirIcone.png" alt="Icone de excluir">';
+    frase += '<h1> Você tem certeza que deseja excluir o carro? </h1>';
+    frase += `<p> Esta ação não é reversível. </p>`;
+    frase += `<section>
+        <button onclick="fecharExcluir()"> Cancelar </button>
+        <button onclick="deletarCarro(${id})"> Excluir </button>
+    </section>`;
+
+    sectionConteudoExcluir.innerHTML = frase;
+}
+
+function fecharExcluir() {
+    var sectionExcluir = document.querySelector('#section_excluir');
+    sectionExcluir.style.display = 'none';
+}
+
+function editarCarro(id_carro) {
+    var sectionErrosLogin = document.getElementById("section_erros_login");
+    sectionErrosLogin.style.backgroundColor = '#069006';
+
+    sessionStorage.ID_CARRO_EDITANDO = id_carro;
+
+    finalizarAguardar("Redirecionando para a tela de edição de carros...");
+
+    setTimeout(() => {
+        window.location = "edi_carro.html";
+    }, "2000");
+}
+
+
 function adicionarCarro() {
     location.href = "add_carro.html";
 }
