@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/footer.css">
+    <script src="../js/sessão.js"></script>
 </head>
 
 <body>
@@ -45,30 +46,19 @@
                 <section id="respostaIA" class="caixa-resposta"></section>
             </section>
         </section>
+
+        <section id="section_aguardar" class="loading-section">
+            <img src="../img/logo/logoCurta.png" alt="Icone logo aguardar">
+            <section class="borda_aguardar"></section>
+        </section>
+        <section id="section_erros_login"></section>
     </main>
 
     <footer class="escuro">
         <p>&copy; OilSense 2025 - Todos os direitos reservados.</p>
     </footer>
 
-    <script>
-        function enviarPergunta() {
-            const input = document.getElementById('inputPergunta').value.trim();
-            const respostaDiv = document.getElementById('respostaIA');
-
-            if (input === '') {
-                alert('Por favor, digite uma pergunta.');
-                return;
-            }
-
-            const resposta = `Resposta do BOBIA`;
-
-            respostaDiv.style.display = 'block';
-            respostaDiv.innerText = resposta;
-
-            document.getElementById('inputPergunta').value = '';
-        }
-    </script>
+    <script src="../js/bobia.js"></script>
 </body>
 
 </html>
