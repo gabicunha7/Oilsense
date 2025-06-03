@@ -44,7 +44,6 @@ function porcentagemMediaModelo(modelo_id) {
 }
 
 module.exports = {
-    graficosModel,
     porcentagemCarroPorPlaca,
     porcentagemMediaModelo
 }

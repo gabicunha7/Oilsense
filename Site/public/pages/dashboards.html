@@ -13,9 +13,10 @@
     <link rel="stylesheet" href="../css/grafico.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/sessão.js"></script>
+    <script src="../js/graficos.js"></script>
 </head>
 
-<body onload="validarSessao()">
+<body onload="validarSessao(),listarPlacas()">
     <header class="escuro">
         <section class="container">
 
@@ -58,13 +59,18 @@
     <main class="escuro">
         <section class="form">
             <label for="tipo_grafico"> Selecione o tipo de gráfico </label>
-            <select name="tipo_grafico" id="tipo_grafico">
+            <select name="tipo_grafico" id="tipo_grafico">s
                 <option value="pizza"> Pizza </option>
                 <option value="linha"> Linha </option>
                 <option value="barra"> Barra </option>
                 <option value="area"> Área </option>
 
             </select>
+
+            
+            
+            <select id="selecao" class="container"></select>
+            <button onclick="graficos()">aperte e apareça</button>
 
             <button onclick="alterarTipoGrafico()"> Alterar Tipo de Gráfico </button>
         </section>
@@ -85,7 +91,7 @@
                         <p class="indice"> 1° de Maio de 2025 </p>
                     </section>
                 </section>
-                <section class="tamanho">
+                <section  class="tamanho">
                     <canvas id="dashboard"></canvas>
                 </section>
             </section>

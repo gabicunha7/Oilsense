@@ -1,41 +1,132 @@
-const labelsDias = [
-    '01/05',
-    '02/05',
-    '03/05',
-    '04/05',
-    '05/05',
-    '06/05',
-    '07/05',
-    // 'Julho',
-    // 'Agosto',
-    // 'Setembro',
-    // 'Outubro',
-    // 'Novembro',
-    // 'Dezembro'
-];
 
-const labelsHorario = [
-    '07:00',
-    '07:30',
-    '08:00',
-    '08:30',
-    '09:00',
-    '09:30',
-    '10:00',
-    // '10:00',
-    // '10:30',
-    // '11:00',
-    // '11:30',
-    // '12:00',
-    // '12:30',
-];
+function listarPlacas() {
+    let idMontadora = sessionStorage.ID_MONTADORA;
 
-const labelsAlerta = [
-    'Nível 1 (Excesso de Óleo)',
-    'Nível 2 (Falta de Óleo)',
-    'Nível 3 (Crítico de falta de Óleo)',
-    'Sem alerta'
-];
+    fetch(`/carro/listar/${idMontadora}`)
+        .then(function (resposta) {
+            console.log("resposta: ", resposta);
+
+            if (resposta.ok) {
+                resposta.json().then(function (resposta) {
+                    console.log("Dados recebidos: ", JSON.stringify(resposta));
+
+                    let selecionarPlaca = document.querySelector('#selecao');
+                    let frase = `<option value="#"></option>`
+
+                    for (let i = 0; i < resposta.length; i++) {
+
+                        frase += `<option value="${resposta[i].placa}">${resposta[i].placa}</option>`;
+                    }
+
+                    selecionarPlaca.innerHTML = frase;
+                });
+            } else {
+                throw "Houve um erro ao tentar listar os carros!";
+            }
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+}
+
+
+function graficos(){
+    porcentagemCarroPorPlaca()
+}
+
+
+function porcentagemCarroPorPlaca() {
+    let placa = document.querySelector('#selecao').value;
+
+    fetch(`/graficos/porcentagemCarroPorPlaca/${placa}`)
+        .then(function (resposta) {
+            if (resposta.ok) {
+                if (resposta.statusText == 'No Content'){
+                    alert("nenhum dado encontrado!")
+                }else{
+                    resposta.json().then(function (dados) {
+                        console.log("graficos:", dados);
+                        plotarGraficoPlacaBarras(dados);
+    
+                    });
+                }
+            } else {
+                alert("Houve um erro ao tentar puxar os dados!");
+            }
+        })
+        .catch(function (erro) {
+            console.error("#ERRO: ", erro);
+            alert("Erro ao comunicar com o servidor.");
+        });
+
+    return false;
+}
+
+
+ function plotarGraficoPlacaBarras(dados){
+    console.log('Plotando gráfico de barras com os dados:', dados);
+
+    let labels = [];
+
+    const config = {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: `Valores`, 
+            data: [],
+            backgroundColor: [
+                'rgb(255, 159, 64)',
+            ],
+            borderColor: [
+                'rgb(255, 159, 64)',
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        plugins: {
+            legend: {
+                display: false 
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                precision: 0
+            }
+        }
+    }
+};
+
+    config.data.datasets[0].data.push(dados.porcentagem)
+    labels.push(dados.dia_mes)
+    console.log(dados.porcentagem)
+
+    console.log('----------------------------------------------')
+    console.log('O gráfico barras será plotado com os respectivos valores:')
+    console.log('Labels:')
+    console.log(labels)
+    console.log('Dados:')
+    console.log(dados.datasets)
+    console.log('----------------------------------------------')
+
+    document.querySelector(".tamanho").style.display = "block"
+
+
+    new Chart(
+        document.getElementById('dashboard'),
+        config
+    );
+}
+
+
+
+
+
+
+
+
 
 const dataLinhas = {
     labels: labelsDias,
@@ -81,7 +172,7 @@ const dataPizza = {
 };
 
 const dataArea = {
-    labels: ['01/05/2025', '02/05/2025', '03/05/2025', '04/05/2025', '05/05/2025'],
+    labels: [],
     datasets: [
         {
             label: 'Veículo X',
@@ -249,7 +340,7 @@ function alterarTipoGrafico() {
         kpis.innerHTML = indicadoresBarra;
     } else if (tipoGrafico == 'area') {
 
-                config = {
+        config = {
             type: 'line',
             data: dataArea,
             options: {
@@ -278,10 +369,10 @@ function alterarTipoGrafico() {
                 }
             }
         }
-        
+
         secaoTamanho.style.width = "100%";
         kpis.innerHTML = indicadoresArea;
-        
+
     } else {
 
         config = {

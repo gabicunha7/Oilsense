@@ -45,7 +45,7 @@ function entrar() {
                     });
 
                     setTimeout(function () {
-                        window.location = "bobia.html";
+                        window.location = "dashboards.html";
                     }, 1000);
 
                 } else {
@@ -91,7 +91,7 @@ function entrar() {
                     });
 
                     setTimeout(function () {
-                        window.location = "bobia.html";
+                        window.location = "dashboards.html";
                     }, 1000);
 
                 } else {
