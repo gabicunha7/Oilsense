@@ -62,7 +62,6 @@ function porcentagemCarroPorPlaca() {
     return false;
 }
 
-
 function plotarGraficoPlacaBarras(dados) {
     console.log('Plotando gráfico de barras com os dados:', dados);
 
@@ -109,13 +108,104 @@ function plotarGraficoPlacaBarras(dados) {
     Chart.defaults.color = '#ffffff';
     Chart.defaults.font.size = 16;
 
-      document.getElementById('dashboard').destroy();
+ 
 
     new Chart(
         document.getElementById('dashboard'),
         config
     );
 }
+
+
+function porcentagemMediaModelo(){
+     let placa = document.querySelector('#selecao').value;
+    fetch(`/graficos/porcentagemMediaModelo/${modelo_id}`)
+        .then(function (resposta) {
+            if (resposta.ok) {
+                if (resposta.statusText == 'No Content') {
+                    alert("nenhum dado encontrado!")
+                } else {
+                    resposta.json().then(function (dados) {
+                        console.log("graficos:", dados);
+                        plotarGraficoPlacaBarras(dados);
+
+                    });
+                }
+            } else {
+                alert("Houve um erro ao tentar puxar os dados!");
+            }
+        })
+        .catch(function (erro) {
+            console.error("#ERRO: ", erro);
+            alert("Erro ao comunicar com o servidor.");
+        });
+
+    return false;
+
+}
+
+function plotarGraficoPlacaBarras(dados,resposta) {
+    console.log('Plotando gráfico de barras com os dados:', dados);
+
+    let labels = [];
+
+    const config = {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: `Valores`,
+                data: [],
+                backgroundColor: [
+                    'rgb(255, 159, 64)',
+                ],
+                borderColor: [
+                    'rgb(255, 159, 64)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    precision: 0
+                }
+            }
+        }
+    };
+    for (var i = 0; i < dados.length; i++) {
+        config.data.datasets[0].data.push(dados[i].porcentagem)
+        config.data.labels.push(dados[i].dia_mes)
+
+    }
+
+    document.querySelector(".tamanho").style.display = "block"
+
+    Chart.defaults.color = '#ffffff';
+    Chart.defaults.font.size = 16;
+
+ 
+
+    new Chart(
+        document.getElementById('dashboard'),
+        config
+    );
+}
+
+
+
+
+
+
+
+
+
 
 
 

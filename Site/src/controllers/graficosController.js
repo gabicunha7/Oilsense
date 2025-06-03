@@ -29,7 +29,38 @@ function porcentagemCarroPorPlaca(req,res){
     }
 
 
+
+    function porcentagemMediaModelo(req,res){
+        var modelo_id = req.params.modelo_id;
+    
+        graficosModel.porcentagemCarroPorPlaca(modelo_id)
+            .then(
+                function (resultado) {
+                    if (resultado.length > 0) {
+                        res.status(200).json(resultado);
+                    } else {
+                        res.status(204).send("Nenhum resultado encontrado!");
+                    }
+                }
+            )
+            .catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "Houve um erro ao buscar os modelos: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+
+    
+
+
 module.exports = {
     porcentagemCarroPorPlaca,
+    porcentagemMediaModelo,
+
     
 }
