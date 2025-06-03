@@ -102,7 +102,7 @@ values 		('Ativo'),
 			('Ativo'),
             ('Inativo');
             
-            
+
 insert into carro (fksensor, placa, volumecarter, alturacarter, fkmodelo)
 values		(1, 'ABC1D01', 4.500, 12.300, 100), 
 			(2, 'XYZ2E02', 6.200, 13.500, 101), 
@@ -112,4 +112,4 @@ values		(1, 'ABC1D01', 4.500, 12.300, 100),
 			(9, 'STU6I06', 4.200, 12.100, 105),  
 			(10, 'VWX7J07', 4.500, 12.300, 100), 
 			(11, 'YZA8K08', 3.200, 11.700, 102); 
-            
+

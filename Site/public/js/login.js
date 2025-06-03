@@ -88,11 +88,20 @@ function entrar() {
                         sessionStorage.NOME_FUNCIONARIO = json.nome;
                         sessionStorage.SOBRENOME_FUNCIONARIO = json.sobrenome;
                         sessionStorage.ID_FUNCIONARIO = json.id;
-                    });
 
-                    setTimeout(function () {
-                        window.location = "dashboards.html";
-                    }, 1000);
+                        if(json.id == 100){
+                            setTimeout(function () {
+                                window.location = "bobia.html";
+                            }, 1000);
+                        }
+
+                        else{
+                            setTimeout(function () {
+                                window.location = "dashboards.html";
+                            }, 1000);
+                        }
+
+                    });
 
                 } else {
 
