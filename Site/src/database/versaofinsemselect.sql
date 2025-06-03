@@ -9,7 +9,7 @@ create table montadora(
     email varchar(50) unique not null,
     senha varchar(70) not null,
     dtcadastro date,
-    status varchar(10),
+    status varchar(10) default 'Inativo',
     constraint chk_status check (status in ('Ativo', 'Inativo', 'Manutenção'))
 );
 

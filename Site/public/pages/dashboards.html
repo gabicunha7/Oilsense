@@ -16,7 +16,7 @@
     <script src="../js/graficos.js"></script>
 </head>
 
-<body onload="validarSessao(),listarPlacas()">
+<body onload="validarSessao(), alterarTipoGrafico()">
     <header class="escuro">
         <section class="container">
 
@@ -59,18 +59,15 @@
     <main class="escuro">
         <section class="form">
             <label for="tipo_grafico"> Selecione o tipo de gráfico </label>
-            <select name="tipo_grafico" id="tipo_grafico">s
+            <select name="tipo_grafico" id="tipo_grafico" onchange="listarPlacas()">
                 <option value="pizza"> Pizza </option>
                 <option value="linha"> Linha </option>
                 <option value="barra"> Barra </option>
                 <option value="area"> Área </option>
-
             </select>
 
-            
-            
-            <select id="selecao" class="container"></select>
-            <button onclick="graficos()">aperte e apareça</button>
+            <section id="selecao"></section>
+            <!-- <button onclick="graficos()">aperte e apareça</button> -->
 
             <button onclick="alterarTipoGrafico()"> Alterar Tipo de Gráfico </button>
         </section>
@@ -91,7 +88,7 @@
                         <p class="indice"> 1° de Maio de 2025 </p>
                     </section>
                 </section>
-                <section  class="tamanho">
+                <section class="tamanho">
                     <canvas id="dashboard"></canvas>
                 </section>
             </section>
