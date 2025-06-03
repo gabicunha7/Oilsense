@@ -61,10 +61,57 @@ function atualizarSensor(idSensor) {
 	return database.executar(instrucaoSql);
 }
 
+function listarUmCarro(idCarro) {
+    console.log("ACESSEI O CARRO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listarUmCarro()");
+
+    var instrucaoSql = `
+        SELECT fksensor id, placa, volumecarter, alturacarter FROM carro WHERE fksensor = ${idCarro};
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function editarCarro(placa, volume, altura, idCarro) {
+	console.log("ACESSEI O CARRO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function editarCarro():", placa, volume, altura, idCarro);
+
+	var instrucaoSql = `
+		UPDATE carro SET placa = '${placa}', volumecarter = ${volume}, alturacarter = ${altura} WHERE fksensor = ${idCarro};
+	`;
+
+	console.log("Executando a instrução SQL: \n" + instrucaoSql);
+	return database.executar(instrucaoSql);
+}
+
+async function excluirCarro(id_carro) {
+    console.log("ACESSEI O CARRO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function excluirCarro():", id_carro);
+
+	await deixarSensorInativo(id_carro);
+
+    var instrucaoSql = `
+        DELETE FROM carro WHERE fksensor = ${id_carro};
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function deixarSensorInativo(idSensor) {
+	var instrucaoSql = `
+        UPDATE sensor SET status = 'Inativo' WHERE id = ${idSensor};
+    `;
+
+	console.log("Executando a instrução SQL: \n" + instrucaoSql);
+	return database.executar(instrucaoSql);
+}
+
 module.exports = {
 	cadastrarCarro,
 	listarCarros,
 	cadastrarSensor,
 	listarSensor,
-	atualizarSensor
+	atualizarSensor,
+	listarUmCarro,
+	editarCarro,
+	excluirCarro
 };

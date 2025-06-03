@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Funcionários - OilSense </title>
     <link rel="shortcut icon" href="../img/logo/logoIcone.ico" type="image/x-icon">
     <link rel="stylesheet" href="../css/body.css">
     <link rel="stylesheet" href="../css/header.css">
@@ -13,9 +12,11 @@
     <link rel="stylesheet" href="../css/grafico.css">
     <link rel="stylesheet" href="../css/formulario.css">
     <script src="../js/sessão.js"></script>
+    <title> Edição de Modelos - OilSense </title>
 </head>
 
-<body onload="validarSessao(), listarCarros()">
+<body onload="validarSessao(), carregarModEditando()">
+
     <header class="escuro">
         <section class="container">
 
@@ -55,19 +56,33 @@
         </section>
     </header>
 
-    <main class="escuro">
-        <section class="container tabelas">
-            <h1 class="titulo"> Carros </h1>
+    <main class="escuro cadastro">
 
-            <section class="cadastrar">
-                <h2> Adicionar </h2>
-                <button class="btnTabela" onclick="adicionarCarro()">
-                    <img src="../img/icones/maisIcone.png" alt="Icone de cadastrar" class="iconeTabela">
-                </button>
+        <section class="container formulario carro">
+
+            <section class="content">
+
+                <section class="image">
+                    <img src="../img/fundo/carros.jpg" alt="Carros">
+                </section>
+
+                <section class="section-input">
+
+                    <h1> Edição de Modelos </h1>
+
+                    <label for="ipt_id"> ID </label>
+                    <input type="number" name="ipt_id" id="ipt_id">
+
+                    <label for="ipt_nome"> Nome </label>
+                    <input type="text" id="ipt_nome" placeholder="Digite o nome do modelo">
+
+                    <label for="ipt_ano"> Ano </label>
+                    <input type="number" id="ipt_ano" placeholder="Digite o ano do Modelo">
+
+                    <button onclick="atualizarModelo()"> Editar </button>
+
+                </section>
             </section>
-
-            <table>
-            </table>
         </section>
 
         <section id="section_aguardar" class="loading-section">
@@ -75,19 +90,14 @@
             <section class="borda_aguardar"></section>
         </section>
         <section id="section_erros_login"></section>
-        
-        <section id="section_excluir">
-            <section id="section_conteudo_excluir">
-            </section>
-        </section>
+
     </main>
 
     <footer class="escuro">
-        <p>&copy; 2025 OilSense - Todos os direitos reservados.</p>
+        <p> &copy; OilSense 2025 - Todos os direitos reservados. </p>
     </footer>
 
-    <script src="../js/carro.js"></script>
-
 </body>
+<script src="../js/modelo.js"></script>
 
 </html>

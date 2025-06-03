@@ -111,10 +111,6 @@ function porcentagemCarroPorPlaca() {
     return false;
 }
 
-var desenhado = false;
-
-
-var grafico;
 
 function plotarGraficoPlacaBarras(dados) {
     console.log('Plotando gráfico de barras com os dados:', dados);
@@ -162,9 +158,7 @@ function plotarGraficoPlacaBarras(dados) {
     Chart.defaults.color = '#ffffff';
     Chart.defaults.font.size = 16;
 
-    if (desenhado) {
-        grafico.destroy();
-    }
+      document.getElementById('dashboard').destroy();
 
     grafico = new Chart(
         document.getElementById('dashboard'),
@@ -173,6 +167,15 @@ function plotarGraficoPlacaBarras(dados) {
 
     desenhado = true;
 }
+
+
+
+
+
+
+
+
+
 
 
 
