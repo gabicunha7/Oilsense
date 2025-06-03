@@ -1,9 +1,10 @@
 function enviarPergunta() {
     aguardar();
-    const input = document.getElementById('inputPergunta').value.trim();
+
+    const perguntaIpt = document.getElementById('inputPergunta').value.trim();
     const respostaDiv = document.getElementById('respostaIA');
 
-    if (input === '') {
+    if (perguntaIpt === '') {
         alert('Por favor, digite uma pergunta.');
         return;
     }
@@ -14,7 +15,7 @@ function enviarPergunta() {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            pergunta: input 
+            pergunta: perguntaIpt 
         })
     })
         .then(function (resposta) {
@@ -23,15 +24,15 @@ function enviarPergunta() {
             if (resposta.ok) {
                 resposta.json().then(function (resposta) {
                     finalizarAguardar();
+
                     let resultado = resposta.resultado;
-    
                     respostaDiv.style.display = 'block';
                     respostaDiv.innerText = resultado;
     
                     document.getElementById('inputPergunta').value = '';
                 });
             } else {
-                throw "Houve um erro ao tentar realizar o cadastro!";
+                throw "Houve um erro ao tentar enviar a pergunta!";
             }
         })
         .catch(function (resposta) {
