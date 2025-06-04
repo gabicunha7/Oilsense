@@ -30,29 +30,45 @@ function listarPlacas() {
         });
 }
 
-function listarAnoMes() {
+function AnoMes() {
     let selecionar = document.querySelector('#selecao');  
-    let idMontadora = sessionStorage.ID_MONTADORA;
+    let montadora_id = sessionStorage.ID_MONTADORA;
     let frase = ``;
+
     
-    fetch(`/graficos/anosParceira/${idMontadora}`)
+    fetch(`/graficos/anosParceira/${montadora_id}`)
     
         .then(function (resposta) {
 
-            console.log("resposta: ", resposta);
+            console.log("resposta: ", resposta);            
 
             if (resposta.ok) {
                 resposta.json().then(function (resposta) {
                     console.log("Dados recebidos: ", JSON.stringify(resposta));
 
-                    frase = `<select id="sel_ano">`;
+                    frase += `<select id="sel_ano">`;
 
-                    for (let i = 0; i < resposta[qtd_anos]; i++) {
-
-                        frase += `<option value="${resposta[dtcadastro] + i}">${resposta[dtcadastro] + i}</option>`;
+                    for (let i = 0; i <= resposta[0].qtd_anos; i++) {
+                        frase += `<option value="${resposta[0].dtcadastro + i}">${resposta[0].dtcadastro + i}</option>`;
+                        
                     }
                     frase += `</select>`;
-
+                    frase += `<select id="sel_mes">
+                                        <option value="1"> Janeiro</option>
+                                        <option value="2"> Feveiro</option>
+                                        <option value="3"> Março </option>
+                                        <option value="4"> Abril </option>
+                                         <option value="5"> Maio </option>
+                                        <option value="6"> Junho </option>
+                                        <option value="7"> Julho </option>
+                                        <option value="8"> Agosto </option>
+                                         <option value="9"> Setembro </option>
+                                        <option value="10"> Outubro </option>
+                                        <option value="11"> Novembro </option>
+                                        <option value="12"> Dezembro </option>
+                               </select>`;
+                    
+                     selecionar.innerHTML = frase;
                 });
             } else {
                 throw "Houve um erro ao tentar listar os anos que é parceira!";
@@ -60,29 +76,40 @@ function listarAnoMes() {
         })
         .catch(function (resposta) {
             console.log(`#ERRO: ${resposta}`);
-        });
-
-    frase += `<select id="sel_mes">
-                        <option value="1"> Janeiro</option>
-                        <option value="2"> Feveiro</option>
-                        <option value="3"> Março </option>
-                        <option value="4"> Abril </option>
-                         <option value="5"> Maio </option>
-                        <option value="6"> Junho </option>
-                        <option value="7"> Julho </option>
-                        <option value="8"> Agosto </option>
-                         <option value="9"> Setembro </option>
-                        <option value="10"> Outubro </option>
-                        <option value="11"> Novembro </option>
-                        <option value="12"> Dezembro </option>
-               </select>`;
-
-    selecionar.innerHTML = frase;
+        });        
 }
 
 
 
+function alertasGraficoDePizza() {
+    let mes = document.querySelector('#sel_mes').value;
+    let ano = document.querySelector('#sel_ano').value;
+    let montadora_id = sessionStorage.ID_MONTADORA;
+    
 
+    fetch(`/graficos/nivelDeAlertaPorMes/${mes}/${ano}/${montadora_id}`)
+        .then(function (resposta) {
+            if (resposta.ok) {
+                if (resposta.statusText == 'No Content') {
+                    alert("nenhum dado encontrado!")
+                } else {
+                    resposta.json().then(function (dados) {
+                        console.log("graficos:", dados);
+                        plotarGraficoPizza(dados);
+
+                    });
+                }
+            } else {
+                alert("Houve um erro ao tentar puxar os dados!");
+            }
+        })
+        .catch(function (erro) {
+            console.error("#ERRO: ", erro);
+            alert("Erro ao comunicar com o servidor.");
+        });
+
+    return false;
+}
 
 function porcentagemCarroPorPlaca() {
     let placa = document.querySelector('#lista_carros').value;
@@ -111,7 +138,63 @@ function porcentagemCarroPorPlaca() {
     return false;
 }
 
+// desenhadoPizza = false;
+function plotarGraficoPizza(dados) {
+    console.log('Plotando gráfico de barras com os dados:', dados);
 
+    let labels = [];
+
+    const config = {
+        type: 'pie',
+        data: {
+            datasets: [{
+            label: 'Veiculos',
+            backgroundColor: [
+                'rgb(54, 162, 235)',
+                'rgb(255, 205, 86)',
+                'rgb(255, 99, 132)',
+                'rgb(54, 205, 86)'
+            ],
+            data: []
+        }]},
+        options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Índice de alertas dos veículos em um mês',
+                        font: {
+                            size: 28
+                        },
+                        padding: {
+                            top: 16,
+                            bottom: 16
+                        }
+                    }
+                }
+            }
+    };
+    for (var i = 0; i < dados.length; i++) {
+        config.data.datasets[0].data.push(dados[i].contagem)
+        config.data.labels.push(dados[i].nivel_oleo)
+
+    }
+
+    document.querySelector(".tamanho").style.display = "block"
+
+    Chart.defaults.color = '#ffffff';
+    Chart.defaults.font.size = 16;
+
+
+    grafico.destroy();
+    grafico = new Chart(
+        document.getElementById('dashboard'),
+        config
+    );
+
+    desenhadoPizza = true;
+}
+
+desenhadoBarra = false;
 function plotarGraficoPlacaBarras(dados) {
     console.log('Plotando gráfico de barras com os dados:', dados);
 
@@ -158,14 +241,14 @@ function plotarGraficoPlacaBarras(dados) {
     Chart.defaults.color = '#ffffff';
     Chart.defaults.font.size = 16;
 
-      document.getElementById('dashboard').destroy();
 
+    grafico.destroy();
     grafico = new Chart(
         document.getElementById('dashboard'),
         config
     );
 
-    desenhado = true;
+    desenhadoBarra = true;
 }
 
 
@@ -313,18 +396,18 @@ const kpis = document.querySelector('.kpis');
 //                         </section>`;
 let secaoTamanho = document.querySelector('.tamanho');
 
-var indicadoresPizza = `<section class="indicador"> 
-                        <h3> Total de alertas </h3>
-                        <p class="indice"> 33 </p>
-                        </section>
-                        <section class="indicador">
-                            <h3> Modelo com mais alertas </h3>
-                            <p class="indice"> Modelo X </p>
-                        </section>
-                        <section class="indicador">
-                            <h3> Alerta mais emitido</h3>
-                            <p class="indice"> Nível 1 </p>
-                        </section>`;
+// var indicadoresPizza = `<section class="indicador"> 
+//                         <h3> Total de alertas </h3>
+//                         <p class="indice"> 33 </p>
+//                         </section>
+//                         <section class="indicador">
+//                             <h3> Modelo com mais alertas </h3>
+//                             <p class="indice"> Modelo X </p>
+//                         </section>
+//                         <section class="indicador">
+//                             <h3> Alerta mais emitido</h3>
+//                             <p class="indice"> Nível 1 </p>
+//                         </section>`;
 
 // const indicadoresArea = `<section class="indicador"> 
 //                             <h3> Total de consumo de óleo acumulado </h3>
@@ -341,9 +424,10 @@ var indicadoresPizza = `<section class="indicador">
 
 
 // let grafico = new Chart(
-//     dashboard,
-//     config
-// );
+//      dashboard,
+//      config
+//  );
+
 
 let temGrafico = false;
 function alterarTipoGrafico() {
@@ -376,7 +460,7 @@ function alterarTipoGrafico() {
 
         kpis.innerHTML = indicadoresLinha;
     } else if (tipoGrafico == 'barra') {
-        grafico.destroy();
+        //grafico.destroy();
         porcentagemCarroPorPlaca();
         temGrafico = true;
         // secaoTamanho.style.width = "100%";
@@ -417,41 +501,9 @@ function alterarTipoGrafico() {
         kpis.innerHTML = indicadoresArea;
 
     } else {
-        config = {};
-        config = {
-            type: 'pie',
-            data: dataPizza,
-            options: {
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Índice de alertas dos veículos em um mês',
-                        font: {
-                            size: 28
-                        },
-                        padding: {
-                            top: 16,
-                            bottom: 16
-                        }
-                    }
-                }
-            }
-        }
-
-        listarAnoMes();
-        if(temGrafico){
-            grafico.destroy();
-            grafico = new Chart(
-                dashboard,
-                config
-            );
-        } else {
-            grafico = new Chart(
-                dashboard,
-                config
-            );            
-        }
-        temGrafico = true;
+        AnoMes();
+        alertasGraficoDePizza();
+       
         
         // secaoTamanho.style.width = "40%";
         // kpis.innerHTML = indicadoresPizza;

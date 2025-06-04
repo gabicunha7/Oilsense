@@ -43,23 +43,27 @@ function porcentagemMediaModelo(modelo_id) {
         return database.executar(instrucaoSql);
 }
 
-function nivelDeAlertaPorMes(mes, ano) {
+function nivelDeAlertaPorMes(mes, ano, id_montadora) {
         console.log("ACESSEI O FUNCIONARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listarFuncionarios()");
 
         var instrucaoSql = `
+                select nivel_oleo, count(*) contagem from (
                 select 
                 case when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) > 70 then 'Nível 1 (Excesso de óleo)'
                 when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) < 60 then 'Nível 2 (Falta de óleo)'
                         when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) < 50 then 'Nível 3 (Crítico de falta de óleo)'
                         else 'Sem Alerta' 
-                end as 'nivel_oleo'
+                end as nivel_oleo
                 from carro c
                 inner join sensor s   
                         on c.fksensor = s.id
                 inner join telemetria t
                         on t.fksensor = s.id
-                where month(dtHoraColeta) = ${mes} and year(dtHoraColeta) = ${ano}
-                group by month(dtHoraColeta), c.placa;
+				inner join modelo m
+					on c.fkmodelo = m.id
+                where month(dtHoraColeta) = ${mes} and year(dtHoraColeta) = ${ano} and m.fkmontadora = ${id_montadora}
+                group by c.placa) alertas
+                group by nivel_oleo;
         `;
 
         console.log("Executando a instrução SQL: \n" + instrucaoSql);
