@@ -113,6 +113,29 @@ values		(1, 'ABC1D01', 4.500, 12.300, 100),
 			(10, 'VWX7J07', 4.500, 12.300, 100), 
 			(11, 'YZA8K08', 3.200, 11.700, 102); 
 
+insert into telemetria(distancia, dtHoraColeta, fksensor)
+values (3, '2025-05-03 10:50:10', 1),
+(4, '2025-05-04 10:50:10', 1),
+(4.5, '2025-05-05 10:50:10', 1),
+(5, '2025-05-06 10:50:10', 1),
+(6, '2025-05-07 10:50:10', 1),
+(6, '2025-05-08 10:50:10', 1),
+(7, '2025-05-09 10:50:10', 1),
+(1, '2025-05-03 10:50:10', 10),
+(1, '2025-05-04 10:50:10', 10),
+(1.5, '2025-05-05 10:50:10', 10),
+(3, '2025-05-06 10:50:10', 10),
+(3, '2025-05-07 10:50:10', 10),
+(4, '2025-05-08 10:50:10', 10),
+(4, '2025-05-09 10:50:10', 10),
+ (2, '2025-05-03 10:50:10', 2),
+(2, '2025-05-04 10:50:10', 2),
+(2, '2025-05-05 10:50:10', 2),
+(3, '2025-05-06 10:50:10', 2),
+(3, '2025-05-07 10:50:10', 2),
+(3, '2025-05-08 10:50:10', 2),
+(3, '2025-05-09 10:50:10', 2);
+
 CREATE OR REPLACE VIEW vw_nivel_oleo
 AS            
 select 
@@ -122,10 +145,16 @@ select
                         else 'Sem Alerta' 
                 end as 'nivel_oleo',
                 month(dtHoraColeta) mes,
-                year(dtHoraColeta) ano
+                year(dtHoraColeta) ano,
+                m.id id_montadora
                 from carro c
                 inner join sensor s   
                         on c.fksensor = s.id
                 inner join telemetria t
                         on t.fksensor = s.id
-                group by month(dtHoraColeta), year(dtHoraColeta), c.placa;
+                inner join modelo mdl 
+                        on c.fkmodelo = mdl.id
+                inner join montadora m
+                        on mdl.fkmontadora = m.id
+                group by month(dtHoraColeta), year(dtHoraColeta), c.placa, m.id;
+

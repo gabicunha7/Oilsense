@@ -47,7 +47,7 @@ function nivelDeAlertaPorMes(mes, ano, id_montadora) {
         console.log("ACESSEI O GRAFICO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function nivelDeAlertaPorMes()");
 
         var instrucaoSql = `
-                SELECT *, COUNT(nivel_oleo) qtde FROM vw_nivel_oleo where mes = ${mes} and ano = ${ano} and id_montadora = ${id_montadora}
+                SELECT nivel_oleo, COUNT(nivel_oleo) qtde FROM vw_nivel_oleo where mes = ${mes} and ano = ${ano} and id_montadora = ${id_montadora}
                 GROUP BY nivel_oleo;
         `;
 

@@ -69,7 +69,6 @@ function anoMes() {
                                </select>`;
                     
                      selecionar.innerHTML = frase;
-                     alertasGraficoDePizza();
                 });
             } else {
                 throw "Houve um erro ao tentar listar os anos que é parceira!";
@@ -85,6 +84,7 @@ function anoMes() {
 function alertasGraficoDePizza() {
     let mes = document.querySelector('#sel_mes').value;
     let ano = document.querySelector('#sel_ano').value;
+    console.log(ano);
     let montadora_id = sessionStorage.ID_MONTADORA;
 
     fetch(`/graficos/nivelDeAlertaPorMes`, {
@@ -382,152 +382,40 @@ var dataPizza = {
 // }
 
 // const dashboard = document.getElementById('dashboard');
-const kpis = document.querySelector('.kpis');
-
-// const indicadoresLinha = `<section class="indicador"> 
-//                         <h3> Total de veículos modelo X </h3>
-//                         <p class="indice"> 60 </p>
-//                         </section>
-//                         <section class="indicador">
-//                             <h3> Classificação em relação ao nível de gasto do veículo Y </h3>
-//                             <p class="indice"> #8 </p>
-//                         </section>
-//                         <section class="indicador">
-//                             <h3> Gasto mais alto </h3>
-//                             <p class="indice"> 7% - 1° de Maio de 2025 </p>
-//                         </section>`;
-
-// const indicadoresBarra = `<section class="indicador"> 
-//                         <h3> Total de veículos modelo X </h3>
-//                         <p class="indice"> 60 </p>
-//                         </section>
-//                         <section class="indicador">
-//                             <h3> Classificação em relação ao nível de gasto do veículo Y </h3>
-//                             <p class="indice"> #8 </p>
-//                         </section>
-//                         <section class="indicador">
-//                             <h3> Gasto mais alto </h3>
-//                             <p class="indice"> 7% - 1° de Maio de 2025 </p>
-//                         </section>`;
-let secaoTamanho = document.querySelector('.tamanho');
-
-// var indicadoresPizza = `<section class="indicador"> 
-//                         <h3> Total de alertas </h3>
-//                         <p class="indice"> 33 </p>
-//                         </section>
-//                         <section class="indicador">
-//                             <h3> Modelo com mais alertas </h3>
-//                             <p class="indice"> Modelo X </p>
-//                         </section>
-//                         <section class="indicador">
-//                             <h3> Alerta mais emitido</h3>
-//                             <p class="indice"> Nível 1 </p>
-//                         </section>`;
-
-// const indicadoresArea = `<section class="indicador"> 
-//                             <h3> Total de consumo de óleo acumulado </h3>
-//                             <p class="indice"> 8,9 litros </p>
-//                         </section>
-//                         <section class="indicador">
-//                             <h3> Modelo com maior consumo </h3>
-//                             <p class="indice"> Veículo Z </p>
-//                         </section>
-//                         <section class="indicador">
-//                             <h3> Dia de maior consumo </h3>
-//                             <p class="indice"> 03/05/2025 </p>
-//                         </section>`;
+//const kpis = document.querySelector('.kpis');
 
 
-// let grafico = new Chart(
-//      dashboard,
-//      config
-//  );
 
 
-let temGrafico = false;
+//let temGrafico = false;
 function alterarTipoGrafico() {
     let tipoGrafico = document.getElementById('tipo_grafico').value;
-
+    let btn = document.getElementById('btn_plotar');
+    
+    
     if (tipoGrafico == 'linha') {
-        grafico.destroy();
-
-        config = {
-            type: 'line',
-            data: dataLinhas,
-            options: {
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Porcentagem de altura do óleo dos veículos do modelo X',
-                        font: {
-                            size: 28
-                        },
-                        padding: {
-                            top: 16,
-                            bottom: 16
-                        }
-                    }
-                }
-            }
-        }
-
-        secaoTamanho.style.width = "100%";
-
-        kpis.innerHTML = indicadoresLinha;
-    } else if (tipoGrafico == 'barra') {
+        // btn.addEventListener('click', );
         //grafico.destroy();
-        porcentagemCarroPorPlaca();
-        temGrafico = true;
-        // secaoTamanho.style.width = "100%";
-        // kpis.innerHTML = indicadoresBarra;
+
+    } else if (tipoGrafico == 'barra') {
+        btn.addEventListener('click', porcentagemCarroPorPlaca);
+
+        listarPlacas();
+        //grafico.destroy();
+
     } else if (tipoGrafico == 'area') {
+        // btn.addEventListener('click', );
 
-        config = {
-            type: 'line',
-            data: dataArea,
-            options: {
-                responsive: true,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Consumo acumulado de óleo por modelo',
-                        font: {
-                            size: 28
-                        }
-                    },
-                },
-                interaction: {
-                    mode: 'index',
-                    intersect: false,
-                },
-                stacked: true,
-                scales: {
-                    y: {
-                        stacked: true
-                    },
-                    x: {
-                        stacked: true
-                    }
-                }
-            }
-        }
-
-        secaoTamanho.style.width = "100%";
-        kpis.innerHTML = indicadoresArea;
 
     } else {
         anoMes();
-       
-        
-        // secaoTamanho.style.width = "40%";
-        // kpis.innerHTML = indicadoresPizza;
+        btn.addEventListener('click', alertasGraficoDePizza);
 
     }
-
-    // grafico.destroy();
-
-    // grafico = new Chart(
-    //     dashboard,
-    //     config
-    // );
 }
+
+let tipo = document.querySelector('#tipo_grafico');
+tipo.addEventListener('change', alterarTipoGrafico);
+
+let btn = document.getElementById('btn_plotar');
+btn.addEventListener('click', alertasGraficoDePizza);
