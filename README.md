@@ -56,8 +56,6 @@
 
 - João Pedro Santos Pinheiro 
 
-- Khaian Zeferino 
-
 - Lucas Santana Rodrigues 
 
 ## Próximos Passos
