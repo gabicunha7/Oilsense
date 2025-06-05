@@ -26,10 +26,10 @@ function porcentagemCarroPorPlaca(req,res){
     }
 
 
-    function nivelDeAlertaPorMes(req,res){
-        var mes = req.params.mes;
-        var ano = req.params.ano;
-        var montadora = req.params.montadora;
+function nivelDeAlertaPorMes(req,res){
+        var mes = req.body.mes;
+        var ano = req.body.ano;
+        var montadora = req.body.montadora;
     
         graficosModel.nivelDeAlertaPorMes(mes, ano, montadora)
             .then(
@@ -98,33 +98,6 @@ function porcentagemCarroPorPlaca(req,res){
                     console.log(erro);
                     console.log(
                         "Houve um erro ao buscar as placas: ",
-                        erro.sqlMessage
-                    );
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
-    }
-
-
-    function nivelDeAlertaPorMes(req,res){
-        var mes = req.params.mes;
-        var ano = req.params.ano;
-    
-        graficosModel.nivelDeAlertaPorMes(mes, ano)
-            .then(
-                function (resultado) {
-                    if (resultado.length > 0) {
-                        res.status(200).json(resultado);
-                    } else {
-                        res.status(204).send("Nenhum resultado encontrado!");
-                    }
-                }
-            )
-            .catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log(
-                        "Houve um erro ao buscar os alertas: ",
                         erro.sqlMessage
                     );
                     res.status(500).json(erro.sqlMessage);

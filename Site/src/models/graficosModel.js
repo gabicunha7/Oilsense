@@ -3,7 +3,7 @@ var database = require("../database/config");
 
 
 function porcentagemCarroPorPlaca(placa) {
-        console.log("ACESSEI O FUNCIONARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listarFuncionarios()");
+        console.log("ACESSEI O GRAFICO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function porcentagemCarroPorPlaca()");
 
         var instrucaoSql = `
         select round(((c.alturacarter - t.distancia) / c.alturacarter) * 100, 1) porcentagem,
@@ -23,7 +23,7 @@ function porcentagemCarroPorPlaca(placa) {
 }
 
 function porcentagemMediaModelo(modelo_id) {
-        console.log("ACESSEI O FUNCIONARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listarFuncionarios()");
+        console.log("ACESSEI O GRAFICO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function porcentagemMediaModelo()");
 
         var instrucaoSql = `
         select round(avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100), 1) porcentagem,
@@ -44,26 +44,11 @@ function porcentagemMediaModelo(modelo_id) {
 }
 
 function nivelDeAlertaPorMes(mes, ano, id_montadora) {
-        console.log("ACESSEI O FUNCIONARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listarFuncionarios()");
+        console.log("ACESSEI O GRAFICO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function nivelDeAlertaPorMes()");
 
         var instrucaoSql = `
-                select nivel_oleo, count(*) contagem from (
-                select 
-                case when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) > 70 then 'Nível 1 (Excesso de óleo)'
-                when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) < 60 then 'Nível 2 (Falta de óleo)'
-                        when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) < 50 then 'Nível 3 (Crítico de falta de óleo)'
-                        else 'Sem Alerta' 
-                end as nivel_oleo
-                from carro c
-                inner join sensor s   
-                        on c.fksensor = s.id
-                inner join telemetria t
-                        on t.fksensor = s.id
-				inner join modelo m
-					on c.fkmodelo = m.id
-                where month(dtHoraColeta) = ${mes} and year(dtHoraColeta) = ${ano} and m.fkmontadora = ${id_montadora}
-                group by c.placa) alertas
-                group by nivel_oleo;
+                SELECT *, COUNT(nivel_oleo) qtde FROM vw_nivel_oleo where mes = ${mes} and ano = ${ano} and id_montadora = ${id_montadora}
+                GROUP BY nivel_oleo;
         `;
 
         console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -71,7 +56,7 @@ function nivelDeAlertaPorMes(mes, ano, id_montadora) {
 }
 
 function anosParceira(montadora_id) {
-        console.log("ACESSEI O FUNCIONARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listarFuncionarios()");
+        console.log("ACESSEI O GRAFICO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function anosParceira()");
 
         var instrucaoSql = `
                 select (year(current_date()) - year(dtcadastro)) qtd_anos, year(dtcadastro) dtcadastro

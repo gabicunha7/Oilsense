@@ -59,7 +59,7 @@
     <main class="escuro">
         <section class="form">
             <label for="tipo_grafico"> Selecione o tipo de gráfico </label>
-            <select name="tipo_grafico" id="tipo_grafico" onchange="listarPlacas()">
+            <select name="tipo_grafico" id="tipo_grafico" onchange="alterarTipoGrafico()">
                 <option value="pizza"> Pizza </option>
                 <option value="linha"> Linha </option>
                 <option value="barra"> Barra </option>
@@ -69,7 +69,7 @@
             <section id="selecao"></section>
             <!-- <button onclick="graficos()">aperte e apareça</button> -->
 
-            <button onclick="alterarTipoGrafico()"> Alterar Tipo de Gráfico </button>
+            <button onclick="alertasGraficoDePizza()"> Plotar Gráfico </button>
         </section>
 
         <section class="graficos">

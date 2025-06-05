@@ -30,7 +30,7 @@ function listarPlacas() {
         });
 }
 
-function AnoMes() {
+function anoMes() {
     let selecionar = document.querySelector('#selecao');  
     let montadora_id = sessionStorage.ID_MONTADORA;
     let frase = ``;
@@ -69,6 +69,7 @@ function AnoMes() {
                                </select>`;
                     
                      selecionar.innerHTML = frase;
+                     alertasGraficoDePizza();
                 });
             } else {
                 throw "Houve um erro ao tentar listar os anos que é parceira!";
@@ -85,9 +86,18 @@ function alertasGraficoDePizza() {
     let mes = document.querySelector('#sel_mes').value;
     let ano = document.querySelector('#sel_ano').value;
     let montadora_id = sessionStorage.ID_MONTADORA;
-    
 
-    fetch(`/graficos/nivelDeAlertaPorMes/${mes}/${ano}/${montadora_id}`)
+    fetch(`/graficos/nivelDeAlertaPorMes`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            mes: mes,
+            ano: ano,
+            montadora: montadora_id
+        }),
+    })
         .then(function (resposta) {
             if (resposta.ok) {
                 if (resposta.statusText == 'No Content') {
@@ -138,6 +148,8 @@ function porcentagemCarroPorPlaca() {
     return false;
 }
 
+var grafico = null;
+
 // desenhadoPizza = false;
 function plotarGraficoPizza(dados) {
     console.log('Plotando gráfico de barras com os dados:', dados);
@@ -147,6 +159,7 @@ function plotarGraficoPizza(dados) {
     const config = {
         type: 'pie',
         data: {
+            labels: labels,
             datasets: [{
             label: 'Veiculos',
             backgroundColor: [
@@ -174,7 +187,7 @@ function plotarGraficoPizza(dados) {
             }
     };
     for (var i = 0; i < dados.length; i++) {
-        config.data.datasets[0].data.push(dados[i].contagem)
+        config.data.datasets[0].data.push(dados[i].qtde)
         config.data.labels.push(dados[i].nivel_oleo)
 
     }
@@ -184,8 +197,10 @@ function plotarGraficoPizza(dados) {
     Chart.defaults.color = '#ffffff';
     Chart.defaults.font.size = 16;
 
+    if (grafico != null) {
+        grafico.destroy();
+    }
 
-    grafico.destroy();
     grafico = new Chart(
         document.getElementById('dashboard'),
         config
@@ -501,8 +516,7 @@ function alterarTipoGrafico() {
         kpis.innerHTML = indicadoresArea;
 
     } else {
-        AnoMes();
-        alertasGraficoDePizza();
+        anoMes();
        
         
         // secaoTamanho.style.width = "40%";

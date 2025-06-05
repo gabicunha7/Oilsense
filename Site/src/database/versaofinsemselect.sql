@@ -113,3 +113,19 @@ values		(1, 'ABC1D01', 4.500, 12.300, 100),
 			(10, 'VWX7J07', 4.500, 12.300, 100), 
 			(11, 'YZA8K08', 3.200, 11.700, 102); 
 
+CREATE OR REPLACE VIEW vw_nivel_oleo
+AS            
+select 
+                case when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) > 70 then 'Nível 1 (Excesso de óleo)'
+                when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) < 60 then 'Nível 2 (Falta de óleo)'
+                        when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) < 50 then 'Nível 3 (Crítico de falta de óleo)'
+                        else 'Sem Alerta' 
+                end as 'nivel_oleo',
+                month(dtHoraColeta) mes,
+                year(dtHoraColeta) ano
+                from carro c
+                inner join sensor s   
+                        on c.fksensor = s.id
+                inner join telemetria t
+                        on t.fksensor = s.id
+                group by month(dtHoraColeta), year(dtHoraColeta), c.placa;
