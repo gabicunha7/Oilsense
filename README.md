@@ -1,5 +1,5 @@
 # OilSense
-![OilSense](Site/img/logo/logoExtensa.png)
+![OilSense](Site/public/img/logo/logoExtensa.png)
 <p> Um projeto feito por alunos da SPTech, para a disciplina de PI - Projeto e Inovação. </p>
 
 ## Índice
