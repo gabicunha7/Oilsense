@@ -1,3 +1,5 @@
+let grafico = null;
+
 function listarPlacas() {
     let idMontadora = sessionStorage.ID_MONTADORA;
 
@@ -49,7 +51,7 @@ function anoMes() {
                     frase += `<select id="sel_ano">`;
 
                     for (let i = 0; i <= resposta[0].qtd_anos; i++) {
-                        frase += `<option value="${resposta[0].dtcadastro + i}">${resposta[0].dtcadastro + i}</option>`;
+                        frase += `<option value="${resposta[0].dtatual - i}">${resposta[0].dtatual - i}</option>`;
                         
                     }
                     frase += `</select>`;
@@ -148,9 +150,6 @@ function porcentagemCarroPorPlaca() {
     return false;
 }
 
-var grafico = null;
-
-// desenhadoPizza = false;
 function plotarGraficoPizza(dados) {
     console.log('Plotando gráfico de barras com os dados:', dados);
 
@@ -245,7 +244,7 @@ function plotarGraficoPlacaBarras(dados) {
             }
         }
     };
-    for (var i = 0; i < dados.length; i++) {
+    for (var i = dados.length - 1; i >= 0; i--) {
         config.data.datasets[0].data.push(dados[i].porcentagem)
         config.data.labels.push(dados[i].dia_mes)
 
@@ -256,8 +255,10 @@ function plotarGraficoPlacaBarras(dados) {
     Chart.defaults.color = '#ffffff';
     Chart.defaults.font.size = 16;
 
+    if (grafico != null) {
+        grafico.destroy();
+    }
 
-    grafico.destroy();
     grafico = new Chart(
         document.getElementById('dashboard'),
         config
@@ -267,141 +268,23 @@ function plotarGraficoPlacaBarras(dados) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const dataLinhas = {
-//     labels: labelsDias,
-//     datasets: [{
-//         label: 'Veiculo Y',
-//         backgroundColor: 'rgb(54, 162, 235)',
-//         borderColor: 'rgb(54, 162, 235)',
-//         data: [75, 68, 64, 61, 59, 55, 54]
-//     },
-//     {
-//         label: 'Média modelo X',
-//         backgroundColor: 'rgb(255, 205, 86)',
-//         borderColor: 'rgb(255, 205, 86)',
-//         data: [75, 71, 68, 65, 61, 59, 56]
-//     }
-//     ]
-// };
-
-// // const dataBarras = {
-// //     labels: labelsDias,
-// //     datasets: [{
-// //         label: 'Veiculo Y',
-// //         backgroundColor: 'rgb(255, 205, 86)',
-// //         borderColor: 'rgb(255, 205, 86)',
-// //         data: [75, 68, 64, 61, 59, 55, 53]
-// //     },
-// //     ]
-// // };
-
-var dataPizza = {
-    labels: ['Nível 1','Nível 2','Nível 3','Sem Alerta',],
-    datasets: [{
-        label: 'Veiculos',
-        backgroundColor: [
-            'rgb(54, 162, 235)',
-            'rgb(255, 205, 86)',
-            'rgb(255, 99, 132)',
-            'rgb(54, 205, 86)'
-        ],
-        data: [20, 10, 3, 8]
-    },
-    ]
-};
-
-// const dataArea = {
-//     labels: [],
-//     datasets: [
-//         {
-//             label: 'Veículo X',
-//             data: [0.6, 0.7, 1.0, 0.4, 0.5],
-//             fill: true,
-//             backgroundColor: 'rgba(54, 162, 235, 0.5)',
-//             borderColor: 'rgb(54, 162, 235)',
-//             tension: 0.4
-//         },
-//         {
-//             label: 'Veículo Y',
-//             data: [0.4, 0.5, 0.8, 0.3, 0.2],
-//             fill: true,
-//             backgroundColor: 'rgba(255, 205, 86, 0.5)',
-//             borderColor: 'rgb(255, 205, 86)',
-//             tension: 0.4
-//         },
-//         {
-//             label: 'Veículo Z',
-//             data: [0.7, 0.8, 1.1, 0.5, 0.4],
-//             fill: true,
-//             backgroundColor: 'rgba(255, 99, 132, 0.5)',
-//             borderColor: 'rgb(255, 99, 132)',
-//             tension: 0.4
-//         }
-//     ]
-// };
-
-
-
-// Chart.defaults.color = '#ffffff';
-// Chart.defaults.font.size = 16;
-
-// let config = {
-//     type: 'pie',
-//     data: dataPizza,
-//     options: {
-//         plugins: {
-//             title: {
-//                 display: true,
-//                 text: 'Índice de alertas dos veículos em um mês',
-//                 font: {
-//                     size: 28
-//                 },
-//                 padding: {
-//                     top: 16,
-//                     bottom: 16
-//                 }
-//             }
-//         }
-//     }
-// }
-
-// const dashboard = document.getElementById('dashboard');
-//const kpis = document.querySelector('.kpis');
-
-
-
-
-//let temGrafico = false;
 function alterarTipoGrafico() {
     let tipoGrafico = document.getElementById('tipo_grafico').value;
     let btn = document.getElementById('btn_plotar');
     
-    
+    if (grafico != null) {
+        grafico.destroy();
+    }
+
     if (tipoGrafico == 'linha') {
         // btn.addEventListener('click', );
-        //grafico.destroy();
+        
 
     } else if (tipoGrafico == 'barra') {
         btn.addEventListener('click', porcentagemCarroPorPlaca);
 
         listarPlacas();
-        //grafico.destroy();
+        
 
     } else if (tipoGrafico == 'area') {
         // btn.addEventListener('click', );

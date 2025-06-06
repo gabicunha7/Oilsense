@@ -15,7 +15,7 @@ function porcentagemCarroPorPlaca(placa) {
                 on t.fksensor = s.id
         inner join modelo m
                 on c.fkmodelo = m.id
-        where placa = '${placa}' limit 7;
+        where placa = '${placa}' order by t.dtHoraColeta desc limit 7;
     `;
 
         console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -59,7 +59,7 @@ function anosParceira(montadora_id) {
         console.log("ACESSEI O GRAFICO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function anosParceira()");
 
         var instrucaoSql = `
-                select (year(current_date()) - year(dtcadastro)) qtd_anos, year(dtcadastro) dtcadastro
+                select (year(current_date()) - year(dtcadastro)) qtd_anos, year(current_date()) dtatual
                 from montadora m
                 where m.id = ${montadora_id};
         `;
