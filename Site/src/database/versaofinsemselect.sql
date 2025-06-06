@@ -8,7 +8,7 @@ create table montadora(
     cnpj char(14) unique not null,
     email varchar(50) unique not null,
     senha varchar(70) not null,
-    dtatual date,
+    dtcadastro date,
     status varchar(10) default 'Inativo',
     constraint chk_status check (status in ('Ativo', 'Inativo', 'Manutenção'))
 );
@@ -62,7 +62,7 @@ create table telemetria(
 );
 
 
-insert into montadora(nome, cnpj, email, senha, status, dtatual)
+insert into montadora(nome, cnpj, email, senha, status, dtcadastro)
 values  	('Toyota', '59104760000191', 'toyota@gmail.com', 'ToyotaSenha', 'Ativo', '2023-03-15'),
 			('Volkswagen', '59104422000150', 'volkswagen@gmail.com', 'VolkswagenSenha', 'Inativo', '2025-03-10'),
 			('Hyundai', '10394422000142', 'hyundai@gmail.com', 'HyundaiSenha', 'Ativo', '2020-08-20'),
