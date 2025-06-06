@@ -32,6 +32,38 @@ function listarPlacas() {
         });
 }
 
+function listarModelos() {
+    let idMontadora = sessionStorage.ID_MONTADORA;
+
+    fetch(`/modelo/listar/${idMontadora}`)
+        .then(function (resposta) {
+            console.log("resposta: ", resposta);
+
+            if (resposta.ok) {
+                resposta.json().then(function (resposta) {
+                    console.log("Dados recebidos: ", JSON.stringify(resposta));
+
+                    let selecionarModelo = document.querySelector('#selecao');
+                    
+                    frase += `<select id="lista_modelos">`;
+
+                    for (let i = 0; i < resposta.length; i++) {
+
+                        frase += `<option value="${resposta[i].modelo}">${resposta[i].modelo}</option>`;
+                    }
+                    frase += `</select>`;
+
+                    selecionarModelo.innerHTML = frase;
+                });
+            } else {
+                throw "Houve um erro ao tentar listar os carros!";
+            }
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+}
+
 function anoMes() {
     let selecionar = document.querySelector('#selecao');  
     let montadora_id = sessionStorage.ID_MONTADORA;
@@ -70,7 +102,6 @@ function anoMes() {
                     if (dataCadastro.length > 10) {
                         dataCadastro = dataCadastro.substring(0, 10);
                     }
-                    console.log(dataCadastro)
 
                     frase += `<input type="date" id="ipt_data" min="${dataCadastro}" max="${dataAtual}" value="${dataAtual}">`;
 
