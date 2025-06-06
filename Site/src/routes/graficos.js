@@ -15,4 +15,8 @@ router.get("/anosParceira/:montadora", function (req, res) {
     graficosController.anosParceira(req, res);
 });
 
+router.get("/listarCarrosModelo/:idModelo", function (req, res) {
+    graficosController.listarCarrosModelo(req, res);
+});
+
 module.exports = router;
