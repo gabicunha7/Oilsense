@@ -128,8 +128,6 @@ function anoMes() {
         });        
 }
 
-
-
 function alertasGraficoDePizza() {
     let data = document.querySelector('#ipt_data').value;
     let montadora_id = sessionStorage.ID_MONTADORA;
@@ -194,6 +192,62 @@ function porcentagemCarroPorPlaca() {
     return false;
 }
 
+function porcentagemGraficoLinha() {
+    let placa = document.querySelector('#listar_placas').value;
+    let modelo = document.querySelector('#listar_modelos').value;
+
+    let dadosCarro = null;
+
+    fetch(`/graficos/porcentagemCarroPorPlaca/${placa}`)
+        .then(function (resposta) {
+            if (resposta.ok) {
+                if (resposta.statusText == 'No Content') {
+                    alert("nenhum dado encontrado!")
+                } else {
+                    resposta.json().then(function (dados) {
+                        console.log("graficos:", dados);
+                        dadosCarro = dados;
+
+                    });
+                }
+            } else {
+                alert("Houve um erro ao tentar puxar os dados!");
+            }
+    })
+        .catch(function (erro) {
+            console.error("#ERRO: ", erro);
+            alert("Erro ao comunicar com o servidor.");
+    });
+
+    fetch(`/graficos/porcentagemCarroPorModelo/${modelo}`)
+        .then(function (resposta) {
+            if (resposta.ok) {
+                if (resposta.statusText == 'No Content') {
+                    alert("nenhum dado encontrado!")
+                } else {
+                    resposta.json().then(function (dados) {
+                        console.log("graficos:", dados);
+
+                        if(dadosCarro != null){
+                            plotarGraficoLinha(dadosCarro, dados);
+                        } else {
+                            alert('Continua nulo')
+                        }
+
+                    });
+                }
+            } else {
+                alert("Houve um erro ao tentar puxar os dados!");
+            }
+    })
+        .catch(function (erro) {
+            console.error("#ERRO: ", erro);
+            alert("Erro ao comunicar com o servidor.");
+    });
+
+    return false;
+}
+
 function plotarGraficoPizza(dados) {
     console.log('Plotando gráfico de barras com os dados:', dados);
 
@@ -249,10 +303,8 @@ function plotarGraficoPizza(dados) {
         config
     );
 
-    desenhadoPizza = true;
 }
 
-desenhadoBarra = false;
 function plotarGraficoPlacaBarras(dados) {
     console.log('Plotando gráfico de barras com os dados:', dados);
 
@@ -307,6 +359,61 @@ function plotarGraficoPlacaBarras(dados) {
         document.getElementById('dashboard'),
         config
     );
+}
+
+function plotarGraficoLinha(dadosCarro, dados) {
+    console.log('Plotando gráfico de barras com os dados:', dados);
+
+    let labels = [];
+
+    const config = {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: `Valores`,
+                data: [],
+                backgroundColor: [
+                    'rgb(255, 159, 64)',
+                ],
+                borderColor: [
+                    'rgb(255, 159, 64)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    precision: 0
+                }
+            }
+        }
+    };
+    for (var i = dados.length - 1; i >= 0; i--) {
+        config.data.datasets[0].data.push(dados[i].porcentagem)
+        config.data.labels.push(dados[i].dia_mes)
+    }
+
+    document.querySelector(".tamanho").style.display = "block"
+
+    Chart.defaults.color = '#ffffff';
+    Chart.defaults.font.size = 16;
+
+    if (grafico != null) {
+        grafico.destroy();
+    }
+
+    grafico = new Chart(
+        document.getElementById('dashboard'),
+        config
+    );
 
     desenhadoBarra = true;
 }
@@ -326,6 +433,7 @@ function alterarTipoGrafico() {
 
     if (tipoGrafico == 'linha') {
         listarModelos();
+
 
         // btn.addEventListener('click', );
         

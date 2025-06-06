@@ -22,7 +22,7 @@ function porcentagemCarroPorPlaca(placa) {
         return database.executar(instrucaoSql);
 }
 
-function porcentagemMediaModelo(modelo_id) {
+function porcentagemMediaModelo(idModelo) {
         console.log("ACESSEI O GRAFICO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function porcentagemMediaModelo()");
 
         var instrucaoSql = `
@@ -35,7 +35,7 @@ function porcentagemMediaModelo(modelo_id) {
                 on t.fksensor = s.id
         inner join modelo m
                 on c.fkmodelo = m.id
-        where m.id = ${modelo_id}
+        where m.id = ${idModelo}
         group by m.modelo, dia_mes limit 7;
     `;
 
