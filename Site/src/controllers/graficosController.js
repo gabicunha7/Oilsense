@@ -27,38 +27,9 @@ function porcentagemCarroPorPlaca(req, res) {
 }
 
 
-<<<<<<< HEAD
-function nivelDeAlertaPorMes(req,res){
-        var mes = req.body.mes;
-        var ano = req.body.ano;
-        var montadora = req.body.montadora;
-    
-        graficosModel.nivelDeAlertaPorMes(mes, ano, montadora)
-            .then(
-                function (resultado) {
-                    if (resultado.length > 0) {
-                        res.status(200).json(resultado);
-                    } else {
-                        res.status(204).send("Nenhum resultado encontrado!");
-                    }
-                }
-            )
-            .catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log(
-                        "Houve um erro ao buscar os alertas: ",
-                        erro.sqlMessage
-                    );
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
-    }
-=======
 function nivelDeAlertaPorMes(req, res) {
     var data = req.body.data;
     var montadora = req.body.montadora;
->>>>>>> 5b3b8dd70bb0f585748b653222ca16b40aecaa98
 
     graficosModel.nivelDeAlertaPorMes(data, montadora)
         .then(
@@ -109,10 +80,10 @@ function anosParceira(req, res) {
 
 
 
-function porcentagemCarroPorModelo(req, res) {
+function porcentagemMediaModelo(req, res) {
     var idModelo = req.params.idModelo;
 
-    graficosModel.porcentagemCarroPorModelo(idModelo)
+    graficosModel.porcentagemMediaModelo(idModelo)
         .then(
             function (resultado) {
                 if (resultado.length > 0) {
@@ -164,6 +135,6 @@ module.exports = {
     nivelDeAlertaPorMes,
     anosParceira,
     listarCarrosModelo,
-    porcentagemCarroPorModelo
+    porcentagemMediaModelo
 
 }

@@ -36,7 +36,9 @@ function porcentagemMediaModelo(idModelo) {
         inner join modelo m
                 on c.fkmodelo = m.id
         where m.id = ${idModelo}
-        group by m.modelo, dia_mes limit 7;
+        group by m.modelo, dia_mes 
+        order by dia_mes desc
+        limit 7;
     `;
 
         console.log("Executando a instrução SQL: \n" + instrucaoSql);

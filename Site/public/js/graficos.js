@@ -219,7 +219,7 @@ function porcentagemGraficoLinha() {
             alert("Erro ao comunicar com o servidor.");
     });
 
-    fetch(`/graficos/porcentagemCarroPorModelo/${modelo}`)
+    fetch(`/graficos/porcentagemMediaModelo/${modelo}`)
         .then(function (resposta) {
             if (resposta.ok) {
                 if (resposta.statusText == 'No Content') {
@@ -326,19 +326,6 @@ function plotarGraficoPlacaBarras(dados) {
                 borderWidth: 1
             }]
         },
-        options: {
-            plugins: {
-                legend: {
-                    display: false
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    precision: 0
-                }
-            }
-        }
     };
     for (var i = dados.length - 1; i >= 0; i--) {
         config.data.datasets[0].data.push(dados[i].porcentagem)
@@ -362,42 +349,36 @@ function plotarGraficoPlacaBarras(dados) {
 }
 
 function plotarGraficoLinha(dadosCarro, dados) {
-    console.log('Plotando gráfico de barras com os dados:', dados);
+    let select = document.querySelector('#listar_modelos');
+    let indice = select.selectedIndex;
+    let modelo = select.options[indice].text;
+    
+
+    console.log('Plotando gráfico de linha com os dados:', dados);
 
     let labels = [];
 
     const config = {
-        type: 'bar',
+        type: 'line',
         data: {
             labels: labels,
             datasets: [{
-                label: `Valores`,
-                data: [],
-                backgroundColor: [
-                    'rgb(255, 159, 64)',
-                ],
-                borderColor: [
-                    'rgb(255, 159, 64)',
-                ],
-                borderWidth: 1
-            }]
+                    label: `Veiculo`,
+                    data: [],
+                    backgroundColor: 'rgb(255, 159, 64)',
+                    borderColor: 'rgb(255, 159, 64)'
+                },
+                {
+                    label: `${modelo}`,
+                    data: [],
+                    backgroundColor: 'rgb(64, 147, 255)',
+                    borderColor: 'rgb(64, 147, 255)'
+                }]
         },
-        options: {
-            plugins: {
-                legend: {
-                    display: false
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    precision: 0
-                }
-            }
-        }
     };
     for (var i = dados.length - 1; i >= 0; i--) {
-        config.data.datasets[0].data.push(dados[i].porcentagem)
+        config.data.datasets[0].data.push(dadosCarro[i].porcentagem)
+        config.data.datasets[1].data.push(dados[i].porcentagem)
         config.data.labels.push(dados[i].dia_mes)
     }
 
@@ -426,6 +407,8 @@ function alterarTipoGrafico() {
 
     btn.removeEventListener('click', alertasGraficoDePizza);
     btn.removeEventListener('click', porcentagemCarroPorPlaca);
+    btn.removeEventListener('click', porcentagemGraficoLinha);
+
     
     if (grafico != null) {
         grafico.destroy();
@@ -433,20 +416,14 @@ function alterarTipoGrafico() {
 
     if (tipoGrafico == 'linha') {
         listarModelos();
-
-
-        // btn.addEventListener('click', );
-        
+        btn.addEventListener('click', porcentagemGraficoLinha);
 
     } else if (tipoGrafico == 'barra') {
         listarModelos();
         btn.addEventListener('click', porcentagemCarroPorPlaca);
-        
 
     } else if (tipoGrafico == 'area') {
-        // btn.addEventListener('click', );
-
-
+     
     } else {
         anoMes();
         btn.addEventListener('click', alertasGraficoDePizza);

@@ -7,8 +7,8 @@ router.get("/porcentagemCarroPorPlaca/:placa", function (req, res) {
     graficosController.porcentagemCarroPorPlaca(req, res);
 });
 
-router.get("/porcentagemCarroPorModelo/:idModelo", function (req, res) {
-    graficosController.porcentagemCarroPorModelo(req, res);
+router.get("/porcentagemMediaModelo/:idModelo", function (req, res) {
+    graficosController.porcentagemMediaModelo(req, res);
 });
 
 router.post("/nivelDeAlertaPorMes", function (req, res) {
