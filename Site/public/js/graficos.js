@@ -44,7 +44,7 @@ function listarModelos() {
                     console.log("Dados recebidos: ", JSON.stringify(resposta));
 
                     let selecionarModelo = document.querySelector('#selecao');
-                    
+                    let frase = ``; 
                     frase += `<select id="lista_modelos">`;
 
                     for (let i = 0; i < resposta.length; i++) {
