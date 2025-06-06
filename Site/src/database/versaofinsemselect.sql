@@ -144,8 +144,7 @@ select
                         when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) < 50 then 'Nível 3 (Crítico de falta de óleo)'
                         else 'Sem Alerta' 
                 end as 'nivel_oleo',
-                month(dtHoraColeta) mes,
-                year(dtHoraColeta) ano,
+				date(t.dtHoraColeta) dtcoleta,
                 m.id id_montadora
                 from carro c
                 inner join sensor s   
@@ -156,5 +155,5 @@ select
                         on c.fkmodelo = mdl.id
                 inner join montadora m
                         on mdl.fkmontadora = m.id
-                group by month(dtHoraColeta), year(dtHoraColeta), c.placa, m.id;
+                group by dtcoleta, c.placa, m.id;
 
