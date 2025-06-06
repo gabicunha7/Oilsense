@@ -43,11 +43,11 @@ function porcentagemMediaModelo(modelo_id) {
         return database.executar(instrucaoSql);
 }
 
-function nivelDeAlertaPorMes(mes, ano, id_montadora) {
+function nivelDeAlertaPorMes(data, id_montadora) {
         console.log("ACESSEI O GRAFICO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function nivelDeAlertaPorMes()");
 
         var instrucaoSql = `
-                SELECT nivel_oleo, COUNT(nivel_oleo) qtde FROM vw_nivel_oleo where mes = ${mes} and ano = ${ano} and id_montadora = ${id_montadora}
+                SELECT nivel_oleo, COUNT(nivel_oleo) qtde FROM vw_nivel_oleo where dtcoleta = '${data}' and id_montadora = ${id_montadora}
                 GROUP BY nivel_oleo;
         `;
 
@@ -59,7 +59,7 @@ function anosParceira(montadora_id) {
         console.log("ACESSEI O GRAFICO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function anosParceira()");
 
         var instrucaoSql = `
-                select (year(current_date()) - year(dtcadastro)) qtd_anos, year(current_date()) dtatual
+                select date(dtcadastro) dtcadastro
                 from montadora m
                 where m.id = ${montadora_id};
         `;

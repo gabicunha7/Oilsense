@@ -37,6 +37,24 @@ function anoMes() {
     let montadora_id = sessionStorage.ID_MONTADORA;
     let frase = ``;
 
+    let dataAtual = new Date();
+
+    dia = dataAtual.getDate();
+    if (dia < 10) {
+        dia = `0${dia}`;
+    }
+
+    mes = dataAtual.getMonth();
+    if (mes < 10) {
+        mes = `0${mes}`;
+    }
+
+    ano = dataAtual.getFullYear();
+
+    dataAtual = `${ano}-${mes}-${dia}`;
+
+    console.log(dataAtual);
+    
     
     fetch(`/graficos/anosParceira/${montadora_id}`)
     
@@ -48,32 +66,19 @@ function anoMes() {
                 resposta.json().then(function (resposta) {
                     console.log("Dados recebidos: ", JSON.stringify(resposta));
 
-                    frase += `<select id="sel_ano">`;
-
-                    for (let i = 0; i <= resposta[0].qtd_anos; i++) {
-                        frase += `<option value="${resposta[0].dtatual - i}">${resposta[0].dtatual - i}</option>`;
-                        
+                    let dataCadastro = resposta[0].dtcadastro;
+                    if (dataCadastro.length > 10) {
+                        dataCadastro = dataCadastro.substring(0, 10);
                     }
-                    frase += `</select>`;
-                    frase += `<select id="sel_mes">
-                                        <option value="1"> Janeiro</option>
-                                        <option value="2"> Feveiro</option>
-                                        <option value="3"> Março </option>
-                                        <option value="4"> Abril </option>
-                                         <option value="5"> Maio </option>
-                                        <option value="6"> Junho </option>
-                                        <option value="7"> Julho </option>
-                                        <option value="8"> Agosto </option>
-                                         <option value="9"> Setembro </option>
-                                        <option value="10"> Outubro </option>
-                                        <option value="11"> Novembro </option>
-                                        <option value="12"> Dezembro </option>
-                               </select>`;
+                    console.log(dataCadastro)
+
+                    frase += `<input type="date" id="ipt_data" min="${dataCadastro}" max="${dataAtual}" value="${dataAtual}">`;
+
                     
                      selecionar.innerHTML = frase;
                 });
             } else {
-                throw "Houve um erro ao tentar listar os anos que é parceira!";
+                throw "Houve um erro ao tentar listar a data que é parceira!";
             }
         })
         .catch(function (resposta) {
@@ -84,9 +89,7 @@ function anoMes() {
 
 
 function alertasGraficoDePizza() {
-    let mes = document.querySelector('#sel_mes').value;
-    let ano = document.querySelector('#sel_ano').value;
-    console.log(ano);
+    let data = document.querySelector('#ipt_data').value;
     let montadora_id = sessionStorage.ID_MONTADORA;
 
     fetch(`/graficos/nivelDeAlertaPorMes`, {
@@ -95,8 +98,7 @@ function alertasGraficoDePizza() {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            mes: mes,
-            ano: ano,
+            data: data,
             montadora: montadora_id
         }),
     })

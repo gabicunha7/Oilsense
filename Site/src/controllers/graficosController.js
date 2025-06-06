@@ -27,11 +27,10 @@ function porcentagemCarroPorPlaca(req,res){
 
 
 function nivelDeAlertaPorMes(req,res){
-        var mes = req.body.mes;
-        var ano = req.body.ano;
+        var data = req.body.data;
         var montadora = req.body.montadora;
     
-        graficosModel.nivelDeAlertaPorMes(mes, ano, montadora)
+        graficosModel.nivelDeAlertaPorMes(data, montadora)
             .then(
                 function (resultado) {
                     if (resultado.length > 0) {
