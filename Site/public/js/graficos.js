@@ -1,9 +1,9 @@
 let grafico = null;
 
-function listarPlacas() {
-    let idMontadora = sessionStorage.ID_MONTADORA;
+function listarPlacasModelo() {
+    let idModelo = document.querySelector('#listar_modelos').value;
 
-    fetch(`/carro/listar/${idMontadora}`)
+    fetch(`/graficos/listarCarrosModelo/${idModelo}`)
         .then(function (resposta) {
             console.log("resposta: ", resposta);
 
@@ -11,16 +11,15 @@ function listarPlacas() {
                 resposta.json().then(function (resposta) {
                     console.log("Dados recebidos: ", JSON.stringify(resposta));
 
-                    let selecionarPlaca = document.querySelector('#selecao');
+                    let selecionarPlaca = document.querySelector('#listar_placas');
                     // selecionarPlaca = ``;
-                    let frase = `<select id="lista_carros">`;
+                    let frase = ``;
 
                     for (let i = 0; i < resposta.length; i++) {
 
                         frase += `<option value="${resposta[i].placa}">${resposta[i].placa}</option>`;
                     }
-                    frase += `</select>`;
-
+                    
                     selecionarPlaca.innerHTML = frase;
                 });
             } else {
@@ -45,15 +44,22 @@ function listarModelos() {
 
                     let selecionarModelo = document.querySelector('#selecao');
                     
-                    frase += `<select id="lista_modelos">`;
+                    let frase = `<select id="listar_modelos">`;
 
                     for (let i = 0; i < resposta.length; i++) {
 
-                        frase += `<option value="${resposta[i].modelo}">${resposta[i].modelo}</option>`;
+                        frase += `<option value="${resposta[i].id}">${resposta[i].modelo}</option>`;
                     }
                     frase += `</select>`;
 
+                    frase += `<select id="listar_placas"></select>`;
+
                     selecionarModelo.innerHTML = frase;
+                    
+                    listarPlacasModelo()
+
+                    let modelo = document.querySelector('#listar_modelos');
+                    modelo.addEventListener('change', listarPlacasModelo);
                 });
             } else {
                 throw "Houve um erro ao tentar listar os carros!";
@@ -70,13 +76,18 @@ function anoMes() {
     let frase = ``;
 
     let dataAtual = new Date();
+    console.log(dataAtual);
+    
 
     dia = dataAtual.getDate();
     if (dia < 10) {
         dia = `0${dia}`;
     }
 
-    mes = dataAtual.getMonth();
+    mes = dataAtual.getMonth() + 1;
+    console.log(mes);
+    
+
     if (mes < 10) {
         mes = `0${mes}`;
     }
@@ -157,7 +168,7 @@ function alertasGraficoDePizza() {
 }
 
 function porcentagemCarroPorPlaca() {
-    let placa = document.querySelector('#lista_carros').value;
+    let placa = document.querySelector('#listar_placas').value;
 
     fetch(`/graficos/porcentagemCarroPorPlaca/${placa}`)
         .then(function (resposta) {
@@ -302,21 +313,26 @@ function plotarGraficoPlacaBarras(dados) {
 
 
 function alterarTipoGrafico() {
+
     let tipoGrafico = document.getElementById('tipo_grafico').value;
     let btn = document.getElementById('btn_plotar');
+
+    btn.removeEventListener('click', alertasGraficoDePizza);
+    btn.removeEventListener('click', porcentagemCarroPorPlaca);
     
     if (grafico != null) {
         grafico.destroy();
     }
 
     if (tipoGrafico == 'linha') {
+        listarModelos();
+
         // btn.addEventListener('click', );
         
 
     } else if (tipoGrafico == 'barra') {
+        listarModelos();
         btn.addEventListener('click', porcentagemCarroPorPlaca);
-
-        listarPlacas();
         
 
     } else if (tipoGrafico == 'area') {
