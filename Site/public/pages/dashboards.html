@@ -54,11 +54,11 @@
                     <img src="../img/logo/logoExtensa.png" alt="Logo OilSense" class="logo">
                 </a>
             </section>
-
+            
             <span></span>
         </section>
     </header>
-
+    
     <main class="escuro">
         <section class="form">
             <label for="tipo_grafico"> Selecione o tipo de gráfico </label>
@@ -68,16 +68,16 @@
                 <option value="barra"> Barra </option>
                 <option value="area"> Área </option>
             </select>
-
+            
             <section id="selecao"></section>
             <!-- <button onclick="graficos()">aperte e apareça</button> -->
-
+            
             <button id="btn_plotar"> Plotar Gráfico </button>
         </section>
-
-
+        
+        
         <button onclick="kpi_graficos()">teste</button>
-
+        
         <section class="graficos">
             <section class="grafico">
                 <section id="kpi" class="kpis"></section>
@@ -86,6 +86,12 @@
                 </section>
             </section>
         </section>
+        <aside id="alertas">
+            <h1>Guia de alertas</h1>
+            <p>Nível 1 - Excesso de óleo - <span class="nvl">Maior que 70%</span></p> 
+            <p>Nível 2 - Falta de óleo - <span class="nvl">Menor que 60%</span></p>
+            <p>Nível 3 - Crítico de falta de óleo - <span class="nvl">Menor que 50%</span></p>
+        </aside>
     </main>
 
     <footer class="escuro">

@@ -72,3 +72,26 @@
     width: 40%;
     margin: auto;
 }
+
+#alertas {
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+    right: 1rem;
+    bottom: 1rem;
+    background-color: var(--corBotaoKPI);
+    padding: 2rem;
+    color: var(--cor);
+}
+
+#alertas h1 {
+    font-size: 30px;
+
+}
+#alertas .nvl {
+    font-weight: 600;
+    text-decoration: underline;
+}
+
