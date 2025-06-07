@@ -271,7 +271,7 @@ function plotarGraficoPizza(dados) {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Índice de alertas dos veículos em um mês',
+                        text: 'Níveis de alertas dos veículos em um dia',
                         font: {
                             size: 28
                         },
@@ -326,6 +326,21 @@ function plotarGraficoPlacaBarras(dados) {
                 borderWidth: 1
             }]
         },
+        options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Porcentagem de óleo no cárter por dia',
+                        font: {
+                            size: 28
+                        },
+                        padding: {
+                            top: 16,
+                            bottom: 16
+                        }
+                    }
+                }
+            }
     };
     for (var i = dados.length - 1; i >= 0; i--) {
         config.data.datasets[0].data.push(dados[i].porcentagem)
@@ -375,6 +390,21 @@ function plotarGraficoLinha(dadosCarro, dados) {
                     borderColor: 'rgb(64, 147, 255)'
                 }]
         },
+        options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Porcentagem de óleo no cárter de um carro e da média do modelo em dia',
+                        font: {
+                            size: 20
+                        },
+                        padding: {
+                            top: 16,
+                            bottom: 16
+                        }
+                    }
+                }
+            }
     };
     for (var i = dados.length - 1; i >= 0; i--) {
         config.data.datasets[0].data.push(dadosCarro[i].porcentagem)
