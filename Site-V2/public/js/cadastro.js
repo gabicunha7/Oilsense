@@ -23,7 +23,7 @@
 //         if (!emailJaCadastrado && (emailDigitado.includes("@") && emailDigitado.includes(".")) && nomeDigitado != '' && cnpjDigitado != '' && (cnpjDigitado.length == 14)) {
 //             window.location.href = 'login.html';
 //         } 
-        
+
 //         else if(emailJaCadastrado){
 //             alert('Este email já está cadastrado em nosso sistema. Tente novamente.');
 //             break;
@@ -45,7 +45,7 @@
 //         }
 
 //     }
-    
+
 // }
 
 
@@ -59,19 +59,19 @@ function cadastrar() {
   //Recupere o valor da nova input pelo nome do id
   // Agora vá para o método fetch logo abaixo
 
- 
+
 
   var nomeVar = ipt_nome.value;
   var emailVar = ipt_email.value;
   var cnpjVar = ipt_cnpj.value;
-  
+
 
   // Verificando se há algum campo em branco
   if (
     nomeVar == "" ||
     cnpjVar == "" ||
-    emailVar == "" 
-    
+    emailVar == ""
+
   ) {
     cardErro.style.display = "block";
     mensagem_erro.innerHTML =
@@ -93,6 +93,39 @@ function cadastrar() {
       mensagem_erro.innerHTML = "(Mensagem de erro para CNPJ inválido)";
       finalizarAguardar();
     }
+  }
+
+  // Verificando se o nome possui mais de uma letra:
+  if (nomeVar.length <= 1) {
+    cardErro.style.display = "block";
+    mensagem_erro.innerHTML =
+      "(Mensagem de erro para nome inválido.)";
+    finalizarAguardar();
+    return false;
+  } else {
+    setInterval(sumirMensagem, 5000);
+  }
+
+  // Verificando se o CPF é válido:
+  if (cnpjVar.length != 14) {
+    cardErro.style.display = "block";
+    mensagem_erro.innerHTML =
+      "(Mensagem de erro para CNPJ inválido.)";
+    finalizarAguardar();
+    return false;
+  } else {
+    setInterval(sumirMensagem, 5000);
+  }
+
+  // Verificando se o email é válido:
+  if (!emailVar.includes('@') || !emailVar.includes('.')) {
+    cardErro.style.display = "block";
+    mensagem_erro.innerHTML =
+      "(Mensagem de erro para email inválido.)";
+    finalizarAguardar();
+    return false;
+  } else {
+    setInterval(sumirMensagem, 5000);
   }
 
   // Enviando o valor da nova input
