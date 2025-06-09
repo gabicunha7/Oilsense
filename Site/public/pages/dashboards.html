@@ -16,7 +16,7 @@
     <script  src="../js/kpi.js"></script>
 </head>
 
-<body onload="validarSessao(), anoMes(),kpi_graficos()">
+<body onload="validarSessao(), anoMes()">
     <header class="escuro">
         <section class="container">
 
@@ -63,15 +63,13 @@
         <section class="form">
             <label for="tipo_grafico"> Selecione o tipo de gráfico </label>
             <select name="tipo_grafico" id="tipo_grafico">
-                <option value="pizza"> Pizza </option>
-                <option value="linha"> Linha </option>
-                <option value="barra"> Barra </option>
-                <option value="area"> Área </option>
+                <option value="pizza"> Alertas </option>
+                <option value="linha"> Modelo e Carro </option>
+                <option value="barra"> Média Carro </option>
+                <option value="area"> Comparação de Consumo </option>
             </select>
             
             <section id="selecao"></section>
-            
-            <button id="btn_plotar" onclick="kpi_graficos()"> Plotar Gráfico </button>
         </section>
         
         <section class="graficos">

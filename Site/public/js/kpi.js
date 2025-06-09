@@ -13,7 +13,7 @@ function kpi_graficos() {
                         document.getElementById("kpi").innerHTML = '';
                         document.getElementById("kpi").innerHTML += `
                 <section class="indicador">
-                    <h3> Quantidade de Meses que o carro ${placa} esteve acima da média do modelo: </h3>
+                    <h3> Quantidade de meses que o nível esteve maior que a média: </h3>
                     <p class="indice"> ${resposta[0].meses_acima_media_carro} </p>
                 </section>
                 <section class="indicador">
@@ -27,7 +27,7 @@ function kpi_graficos() {
             `
                     });
                 } else {
-                    throw "Houve um erro ao tentar listar a kpi barra!";
+                    throw "Houve um erro ao tentar listar a kpi linha!";
                 }
             })
             .catch(function (resposta) {
@@ -71,7 +71,6 @@ function kpi_graficos() {
 
 
     } else if (tipoGrafico == 'area') {
-        let data = document.querySelector('#ipt_data').value;
 
         fetch(`/kpi/kpiArea/${data}`)
             .then(function (resposta) {
