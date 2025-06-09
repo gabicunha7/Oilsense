@@ -22,9 +22,6 @@ router.get("/kpiPizza/:data", function (req, res) {
 
 
 
-router.get("/kpiArea/:data", function (req, res) {
-    kpiController.kpiArea(req, res);
-});
 
 
 module.exports = router;

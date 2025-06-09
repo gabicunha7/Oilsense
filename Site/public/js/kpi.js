@@ -69,41 +69,6 @@ function kpi_graficos() {
                 console.log(`#ERRO: ${resposta}`);
             });
 
-
-    } else if (tipoGrafico == 'area') {
-
-        fetch(`/kpi/kpiArea/${data}`)
-            .then(function (resposta) {
-                console.log("resposta: ", resposta);
-
-                if (resposta.ok) {
-                    resposta.json().then(function (resposta) {
-                        console.log("Dados recebidos: ", JSON.stringify(resposta));
-                        document.getElementById("kpi").innerHTML = '';
-                        document.getElementById("kpi").innerHTML += `
-                <section class="indicador">
-                    <h3> Maior consumo : </h3>
-                    <p class="indice"> ${resposta[0].altura_nivel} </p>
-                </section>
-                <section class="indicador">
-                        <h3> Quantidade de vezes que o nível do óleo esteve acima de 50% </h3>
-                        <p class="indice"> ${resposta[0].dias_acima_50} </p>
-                </section>
-                <section class="indicador">
-                        <h3> Gasto mais alto </h3>
-                        <p class="indice"> ${resposta[0].dtcoleta} </p>
-                </section>            
-            `
-                    });
-                } else {
-                    throw "Houve um erro ao tentar listar a kpi barra!";
-                }
-            })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
-            });
-
-
     } else {
         let data = document.querySelector('#ipt_data').value;
 

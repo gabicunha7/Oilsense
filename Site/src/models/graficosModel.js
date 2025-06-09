@@ -6,7 +6,7 @@ function porcentagemCarroPorPlaca(placa) {
         console.log("ACESSEI O GRAFICO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function porcentagemCarroPorPlaca()");
 
         var instrucaoSql = `
-        select round(((c.alturacarter - t.distancia) / c.alturacarter) * 100, 1) porcentagem,
+        select round(avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100), 1) porcentagem,
         m.modelo, date_format(t.dtHoraColeta,'%d/%m') dia_mes
         from carro c
         inner join sensor s   
@@ -15,7 +15,10 @@ function porcentagemCarroPorPlaca(placa) {
                 on t.fksensor = s.id
         inner join modelo m
                 on c.fkmodelo = m.id
-        where placa = '${placa}' order by t.dtHoraColeta desc limit 7;
+        where placa = '${placa}' 
+        group by dia_mes
+        order by dia_mes desc
+        limit 7;;
     `;
 
         console.log("Executando a instrução SQL: \n" + instrucaoSql);

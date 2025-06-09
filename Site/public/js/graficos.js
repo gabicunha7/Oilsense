@@ -242,13 +242,13 @@ function porcentagemCarroPorPlaca() {
     return false;
 }
 
-function porcentagemGraficoLinha() {
+async function porcentagemGraficoLinha() {
     let placa = document.querySelector('#listar_placas').value;
     let modelo = document.querySelector('#listar_modelos').value;
 
     let dadosCarro = null;
 
-    fetch(`/graficos/porcentagemCarroPorPlaca/${placa}`)
+   await fetch(`/graficos/porcentagemCarroPorPlaca/${placa}`)
         .then(function (resposta) {
             if (resposta.ok) {
                 if (resposta.statusText == 'No Content') {
@@ -269,7 +269,7 @@ function porcentagemGraficoLinha() {
             alert("Erro ao comunicar com o servidor.");
         });
 
-    fetch(`/graficos/porcentagemMediaModelo/${modelo}`)
+    await fetch(`/graficos/porcentagemMediaModelo/${modelo}`)
         .then(function (resposta) {
             if (resposta.ok) {
                 if (resposta.statusText == 'No Content') {
