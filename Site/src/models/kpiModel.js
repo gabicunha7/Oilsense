@@ -6,15 +6,15 @@ function kpiBarra(placa) {
     console.log("ACESSEI O GRAFICO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function kpiBarra() ");
 
     var instrucaoSql = `select 
-    truncate(max((((c.alturacarter - t.distancia) / c.alturacarter) * 100)),1) as altura_nivel,
-    date_format(t.dtHoraColeta,'%Y-%m') as dtcoleta,
+    truncate(max((((c.alturacarter - t.distancia) / c.alturacarter) * 100)),0) as altura_nivel,
+    date_format(t.dtHoraColeta,'%Y-%m-%d') as dtcoleta,
     c.placa,
     (select count(distinct date(t2.dtHoraColeta))
         from telemetria t2
         inner join sensor s2 on t2.fksensor = s2.id
         inner join carro c2 on c2.fksensor = s2.id
         where c2.placa = c.placa
-          and ((c2.alturacarter - t2.distancia) / c2.alturacarter) * 100 > 50 ) as dias_acima_50
+          and ((c2.alturacarter - t2.distancia) / c2.alturacarter) * 100 > round(((c2.alturacarter - t2.distancia) / c2.alturacarter) * 100, 1) ) as dias_acima_50
                 from carro c
                 inner join sensor s on c.fksensor = s.id
                 inner join telemetria t on t.fksensor = s.id
@@ -46,7 +46,7 @@ FROM
         FROM
             (
                 SELECT
-                    DATE_FORMAT(t.dtHoraColeta, '%Y-%m') AS mes,
+                    DATE_FORMAT(t.dtHoraColeta, '%Y-%m-%d') AS mes,
                     AVG(((c.alturacarter - t.distancia) / c.alturacarter) * 100) AS media_oleo_carro
                 FROM telemetria t
                 INNER JOIN sensor s ON t.fksensor = s.id
@@ -57,7 +57,7 @@ FROM
         INNER JOIN
             (
                 SELECT
-                    DATE_FORMAT(t.dtHoraColeta, '%Y-%m') AS mes,
+                    DATE_FORMAT(t.dtHoraColeta, '%Y-%m-%d') AS mes,
                     AVG(((c.alturacarter - t.distancia) / c.alturacarter) * 100) AS media_oleo_modelo
                 FROM telemetria t
                 INNER JOIN sensor s ON t.fksensor = s.id
@@ -76,7 +76,7 @@ FROM
         FROM
             (
                 SELECT
-                    DATE_FORMAT(t.dtHoraColeta, '%Y-%m') AS mes,
+                    DATE_FORMAT(t.dtHoraColeta, '%Y-%m-%d') AS mes,
                     AVG(((c.alturacarter - t.distancia) / c.alturacarter) * 100) AS media_oleo_modelo,
                     ROW_NUMBER() OVER (ORDER BY AVG(((c.alturacarter - t.distancia) / c.alturacarter) * 100)) AS rn
                 FROM telemetria t

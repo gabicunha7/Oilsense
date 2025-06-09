@@ -13,15 +13,15 @@ function kpi_graficos() {
                         document.getElementById("kpi").innerHTML = '';
                         document.getElementById("kpi").innerHTML += `
                 <section class="indicador">
-                    <h3> Mëses que o carro ${placa} esteve acima da média do modelo: </h3>
+                    <h3> Quantidade de Meses que o carro ${placa} esteve acima da média do modelo: </h3>
                     <p class="indice"> ${resposta[0].meses_acima_media_carro} </p>
                 </section>
                 <section class="indicador">
-                        <h3> mes com a mmenor média do modelo :</h3>
+                        <h3> mês com a menor média do modelo :</h3>
                         <p class="indice"> ${resposta[0].mes_menor_media_modelo} </p>
                 </section>
                 <section class="indicador">
-                        <h3> quantidade de carros do modelo x </h3>
+                        <h3> quantidade de carros deste modelo:  </h3>
                         <p class="indice"> ${resposta[0].qtd_carros_modelo} </p>
                 </section>            
             `
@@ -48,7 +48,7 @@ function kpi_graficos() {
                         document.getElementById("kpi").innerHTML = '';
                         document.getElementById("kpi").innerHTML += `
                 <section class="indicador">
-                    <h3> Maior consumo : </h3>
+                    <h3> Maior nível registrado: </h3>
                     <p class="indice"> ${resposta[0].altura_nivel}% </p>
                 </section>
                 <section class="indicador">
