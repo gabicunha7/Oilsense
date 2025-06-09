@@ -38,7 +38,7 @@ function porcentagemMediaModelo(idModelo) {
         where m.id = ${idModelo}
         group by m.modelo, dia_mes 
         order by dia_mes desc
-        limit 7;
+        limit  7;
     `;
 
         console.log("Executando a instrução SQL: \n" + instrucaoSql);

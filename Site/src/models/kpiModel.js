@@ -46,7 +46,7 @@ FROM
         FROM
             (
                 SELECT
-                    DATE_FORMAT(t.dtHoraColeta, '%Y-%m-%d') AS mes,
+                    DATE_FORMAT(t.dtHoraColeta, '%d/%m/%Y') AS mes,
                     AVG(((c.alturacarter - t.distancia) / c.alturacarter) * 100) AS media_oleo_carro
                 FROM telemetria t
                 INNER JOIN sensor s ON t.fksensor = s.id
@@ -57,7 +57,7 @@ FROM
         INNER JOIN
             (
                 SELECT
-                    DATE_FORMAT(t.dtHoraColeta, '%Y-%m-%d') AS mes,
+                    DATE_FORMAT(t.dtHoraColeta, '%d/%m/%Y') AS mes,
                     AVG(((c.alturacarter - t.distancia) / c.alturacarter) * 100) AS media_oleo_modelo
                 FROM telemetria t
                 INNER JOIN sensor s ON t.fksensor = s.id
@@ -76,7 +76,7 @@ FROM
         FROM
             (
                 SELECT
-                    DATE_FORMAT(t.dtHoraColeta, '%Y-%m-%d') AS mes,
+                    DATE_FORMAT(t.dtHoraColeta, '%d/%m/%Y') AS mes,
                     AVG(((c.alturacarter - t.distancia) / c.alturacarter) * 100) AS media_oleo_modelo,
                     ROW_NUMBER() OVER (ORDER BY AVG(((c.alturacarter - t.distancia) / c.alturacarter) * 100)) AS rn
                 FROM telemetria t
