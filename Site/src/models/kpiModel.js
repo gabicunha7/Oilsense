@@ -7,7 +7,7 @@ function kpiBarra(placa) {
 
     var instrucaoSql = `select 
     truncate(max((((c.alturacarter - t.distancia) / c.alturacarter) * 100)),0) as altura_nivel,
-    date_format(t.dtHoraColeta,'%Y-%m-%d') as dtcoleta,
+    date_format(t.dtHoraColeta,'%d/%m/%Y') as dtcoleta,
     c.placa,
     (select count(distinct date(t2.dtHoraColeta))
         from telemetria t2

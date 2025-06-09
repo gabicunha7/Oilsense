@@ -13,11 +13,11 @@ function kpi_graficos() {
                         document.getElementById("kpi").innerHTML = '';
                         document.getElementById("kpi").innerHTML += `
                 <section class="indicador">
-                    <h3> Quantidade de meses que o nível esteve maior que a média: </h3>
+                    <h3> Quantidade de dias que o nível esteve maior que a média: </h3>
                     <p class="indice"> ${resposta[0].meses_acima_media_carro} </p>
                 </section>
                 <section class="indicador">
-                        <h3> Mês com a menor média do modelo :</h3>
+                        <h3> Dia com a menor média do modelo :</h3>
                         <p class="indice"> ${resposta[0].mes_menor_media_modelo} </p>
                 </section>
                 <section class="indicador">
