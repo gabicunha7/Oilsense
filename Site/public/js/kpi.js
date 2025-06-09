@@ -84,7 +84,7 @@ function kpi_graficos() {
                         document.getElementById("kpi").innerHTML += `
                 <section class="indicador">
                     <h3> Maior consumo : </h3>
-                    <p class="indice"> ${resposta[0].} </p>
+                    <p class="indice"> ${resposta[0].altura_nivel} </p>
                 </section>
                 <section class="indicador">
                         <h3> quantidade de vezes que o nível do óleo esteve acima de 50% </h3>
