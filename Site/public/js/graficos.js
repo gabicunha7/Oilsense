@@ -434,6 +434,7 @@ function alterarTipoGrafico() {
 
     let tipoGrafico = document.getElementById('tipo_grafico').value;
     let btn = document.getElementById('btn_plotar');
+    document.getElementById("kpi").innerHTML = '';
 
     btn.removeEventListener('click', alertasGraficoDePizza);
     btn.removeEventListener('click', porcentagemCarroPorPlaca);

@@ -16,7 +16,7 @@
     <script  src="../js/kpi.js"></script>
 </head>
 
-<body onload="validarSessao(), anoMes()">
+<body onload="validarSessao(), anoMes(),kpi_graficos()">
     <header class="escuro">
         <section class="container">
 
@@ -70,13 +70,9 @@
             </select>
             
             <section id="selecao"></section>
-            <!-- <button onclick="graficos()">aperte e apareça</button> -->
             
-            <button id="btn_plotar"> Plotar Gráfico </button>
+            <button id="btn_plotar" onclick="kpi_graficos()"> Plotar Gráfico </button>
         </section>
-        
-        
-        <button onclick="kpi_graficos()">teste</button>
         
         <section class="graficos">
             <section class="grafico">

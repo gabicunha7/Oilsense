@@ -1,29 +1,42 @@
-
-
-
-
-
 function kpi_graficos() {
     let tipoGrafico = document.getElementById('tipo_grafico').value;
 
     if (tipoGrafico == 'linha') {
-        document.getElementById("#kpi").innerHTML = `
+        let placa = document.querySelector('#listar_placas').value;
+        fetch(`/kpi/kpiLinha/${placa}`)
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    resposta.json().then(function (resposta) {
+                        console.log("Dados recebidos: ", JSON.stringify(resposta));
+                        document.getElementById("kpi").innerHTML = '';
+                        document.getElementById("kpi").innerHTML += `
                 <section class="indicador">
-                    <h3> Total de veículos modelo X </h3>
-                    <p class="indice"> 60 </p>
+                    <h3> Mëses que o carro ${placa} esteve acima da média do modelo: </h3>
+                    <p class="indice"> ${resposta[0].meses_acima_media_carro} </p>
                 </section>
                 <section class="indicador">
-                        <h3> Classificação em relação ao nível de gasto do veículo Y </h3>
-                        <p class="indice"> #8 </p>
+                        <h3> mes com a mmenor média do modelo :</h3>
+                        <p class="indice"> ${resposta[0].mes_menor_media_modelo} </p>
                 </section>
                 <section class="indicador">
-                        <h3> Gasto mais alto </h3>
-                        <p class="indice"> 1° de Maio de 2025 </p>
-                </section>
+                        <h3> quantidade de carros do modelo x </h3>
+                        <p class="indice"> ${resposta[0].qtd_carros_modelo} </p>
+                </section>            
             `
+                    });
+                } else {
+                    throw "Houve um erro ao tentar listar a kpi barra!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+
 
     } else if (tipoGrafico == 'barra') {
-        let placa = document.querySelector('#lista_carros').value;
+        let placa = document.querySelector('#listar_placas').value;
 
         fetch(`/kpi/kpiBarra/${placa}`)
             .then(function (resposta) {
@@ -32,15 +45,15 @@ function kpi_graficos() {
                 if (resposta.ok) {
                     resposta.json().then(function (resposta) {
                         console.log("Dados recebidos: ", JSON.stringify(resposta));
-
+                        document.getElementById("kpi").innerHTML = '';
                         document.getElementById("kpi").innerHTML += `
                 <section class="indicador">
                     <h3> Maior consumo : </h3>
-                    <p class="indice"> ${resposta[0].altura_nivel} </p>
+                    <p class="indice"> ${resposta[0].altura_nivel}% </p>
                 </section>
                 <section class="indicador">
-                        <h3> Classificação em relação ao nível de gasto do veículo Y </h3>
-                        <p class="indice"> #8 </p>
+                        <h3> quantidade de vezes que o nível do óleo esteve acima de 50% </h3>
+                        <p class="indice"> ${resposta[0].dias_acima_50} </p>
                 </section>
                 <section class="indicador">
                         <h3> Gasto mais alto </h3>
@@ -51,13 +64,78 @@ function kpi_graficos() {
                 } else {
                     throw "Houve um erro ao tentar listar a kpi barra!";
                 }
-        })
-        .catch(function (resposta) {
+            })
+            .catch(function (resposta) {
                 console.log(`#ERRO: ${resposta}`);
-        });
+            });
 
 
     } else if (tipoGrafico == 'area') {
+        let data = document.querySelector('#ipt_data').value;
+
+        fetch(`/kpi/kpiArea/${data}`)
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    resposta.json().then(function (resposta) {
+                        console.log("Dados recebidos: ", JSON.stringify(resposta));
+                        document.getElementById("kpi").innerHTML = '';
+                        document.getElementById("kpi").innerHTML += `
+                <section class="indicador">
+                    <h3> Maior consumo : </h3>
+                    <p class="indice"> ${resposta[0].} </p>
+                </section>
+                <section class="indicador">
+                        <h3> quantidade de vezes que o nível do óleo esteve acima de 50% </h3>
+                        <p class="indice"> ${resposta[0].dias_acima_50} </p>
+                </section>
+                <section class="indicador">
+                        <h3> Gasto mais alto </h3>
+                        <p class="indice"> ${resposta[0].dtcoleta} </p>
+                </section>            
+            `
+                    });
+                } else {
+                    throw "Houve um erro ao tentar listar a kpi barra!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+
+
+    } else {
+        let data = document.querySelector('#ipt_data').value;
+
+        fetch(`/kpi/kpiPizza/${data}`)
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    resposta.json().then(function (resposta) {
+                        console.log("Dados recebidos: ", JSON.stringify(resposta));
+                        document.getElementById("kpi").innerHTML = '';
+                        document.getElementById("kpi").innerHTML += `
+                <section class="indicador">
+                    <h3> Nível mais frequente: </h3>
+                    <p class="indice"> ${resposta[0].nivel_mais_frequente} </p>
+                </section>
+                <section class="indicador">
+                        <h3> Total de alertas </h3>
+                        <p class="indice"> ${resposta[0].total_alertas} </p>
+                </section>            
+            `
+                    });
+                } else {
+                    throw "Houve um erro ao tentar listar a kpi barra!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+
+
     }
 }
 
