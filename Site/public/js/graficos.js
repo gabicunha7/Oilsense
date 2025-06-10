@@ -16,13 +16,13 @@ function voltar() {
     }
 
     document.querySelector('#carros .grafico').style.display = 'none';
-    document.getElementById('btn-voltar').style.display = 'none';  
+    document.getElementById('btn-voltar').style.display = 'none';
 
     document.querySelector('#carros table').style.display = 'table';
     document.querySelector('#carros .botoes-tipos-alertas').style.display = 'flex';
 
     document.querySelector('#modelos .grafico').style.display = 'none';
-    document.getElementById('btn-voltar').style.display = 'none';  
+    document.getElementById('btn-voltar').style.display = 'none';
 
     document.querySelector('#modelos table').style.display = 'table';
     document.querySelector('#modelos .botoes-tipos-alertas').style.display = 'flex';
@@ -57,7 +57,7 @@ function alertasGraficoDePizza() {
 
 
 
-function graficoModelo(modelo_id){
+function graficoModelo(modelo_id) {
 
     if (grafico) {
         grafico.destroy();
@@ -69,11 +69,12 @@ function graficoModelo(modelo_id){
     document.querySelector('#modelos .grafico').style.display = 'block';
     document.getElementById('btn-voltar').style.display = 'inline-block';
 
-    fetch(`/graficos/graficoPorModelo/${modelo_id}`)
-        .then(function (resposta) {
-             if (resposta.ok) {
+    function atualizarGrafico() {
+        fetch(`/graficos/graficoPorModelo/${modelo_id}`)
+            .then(function (resposta) {
+                if (resposta.ok) {
                     if (resposta.statusText === 'No Content') {
-                        document.querySelector('#modelos .grafico').innerHTML = '<p>Nenhum dado encontrado para este carro.</p>';
+                        document.querySelector('#carros .grafico').innerHTML = '<p>Nenhum dado encontrado para este carro.</p>';
                     } else {
                         resposta.json().then(function (dados) {
                             plotarGraficoModelo(dados);
@@ -87,13 +88,11 @@ function graficoModelo(modelo_id){
                 console.error("#ERRO: ", erro);
                 alert("Erro ao comunicar com o servidor.");
             });
-       
-        
-         atualizarGrafico(); 
+    }
+
+    atualizarGrafico();
 
     intervaloAtualizacao = setInterval(atualizarGrafico, 5000);
-
-    return false;
 }
 
 
@@ -103,7 +102,7 @@ function exibirGraficoCarroEspecifico(codigo) {
         grafico.destroy();
         grafico = null;
     }
-    
+
     document.querySelector('#carros table').style.display = 'none';
     document.querySelector('#carros .botoes-tipos-alertas').style.display = 'none';
     document.querySelector('#carros .grafico').style.display = 'block';
@@ -131,7 +130,7 @@ function exibirGraficoCarroEspecifico(codigo) {
             });
     }
 
-    atualizarGrafico(); 
+    atualizarGrafico();
 
     intervaloAtualizacao = setInterval(atualizarGrafico, 5000);
 }
@@ -139,7 +138,7 @@ function exibirGraficoCarroEspecifico(codigo) {
 
 
 function plotarGraficoCarro(dados) {
-   
+
     let labels = [];
     let valores = [];
 
@@ -227,46 +226,102 @@ function plotarGraficoCarro(dados) {
 
 function plotarGraficoModelo(dados) {
     let labels = [];
+    let valores = [];
+
+    for (let i = dados.length - 1; i >= 0; i--) {
+        labels.push(dados[i].instante);
+        valores.push(dados[i].porcentagem);
+    }
 
     const config = {
         type: 'line',
         data: {
             labels: labels,
             datasets: [{
-                label: 'Veiculos',
-                backgroundColor: [
-                    'rgb(54, 162, 235)',
-                    'rgb(255, 205, 86)',
-                    'rgb(255, 99, 132)',
-                    'rgb(54, 205, 86)'
-                ],
-                data: []
+                label: 'Nível médio de óleo (%)',
+                data: valores,
+                borderColor: 'rgb(235, 54, 54)',
+                backgroundColor: 'rgba(235, 54, 54, 0.2)',
+                tension: 0.4,
+                fill: true
             }]
         },
         options: {
+            responsive: true,
             plugins: {
                 title: {
                     display: true,
-                    text: 'Níveis de alertas dos veículos em um dia',
-                    font: {
-                        size: 28
-                    },
-                    padding: {
-                        top: 16,
-                        bottom: 16
+                    text: 'Nível médio de óleo dos veículos da montadora',
+                    font: { size: 24 },
+                    padding: { top: 20, bottom: 10 }
+                },
+                legend: {
+                    labels: {
+                        color: '#ffffff'
+                    }
+                },
+                annotation: {
+                    annotations: {
+                        limite60: {
+                            type: 'line',
+                            yMin: 60,
+                            yMax: 60,
+                            borderColor: 'yellow',
+                            borderWidth: 2,
+                            label: {
+                                content: '',
+                                enabled: true,
+                                position: 'start',
+                                backgroundColor: 'yellow',
+                                color: 'black'
+                            }
+                        },
+                        limite70: {
+                            type: 'line',
+                            yMin: 70,
+                            yMax: 70,
+                            borderColor: 'yellow',
+                            borderWidth: 2,
+                            label: {
+                                content: '',
+                                enabled: true,
+                                position: 'start',
+                                backgroundColor: 'yellow',
+                                color: 'black'
+                            }
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    title: {
+                        display: true,
+                        text: '% do Nível de Óleo'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Instante da Coleta'
                     }
                 }
             }
-        }
+        },
     };
+
     for (var i = 0; i < dados.length; i++) {
         config.data.datasets[0].data.push(dados[i].qtde)
         config.data.labels.push(dados[i].nivel_oleo)
 
     }
 
-    document.querySelector(".tamanho").style.display = "block"
-    document.querySelector("tabela-painel").style.display = "none" 
+    document.querySelector("#modelos .tabela-painel").style.display = "none";
+    document.querySelector("#modelos .botoes-tipos-alertas").style.display = "none";
+    document.querySelector("#modelos .grafico").style.display = "block";
+    document.getElementById("btn-voltar").style.display = "inline-block";
 
     Chart.defaults.color = '#ffffff';
     Chart.defaults.font.size = 16;
@@ -301,11 +356,11 @@ function veiculosComAlerta(alerta) {
             if (resposta.ok) {
                 if (resposta.statusText == 'No Content') {
                     let secGrafico = document.querySelector('#carros .grafico');
-                    let mensagem = document.querySelector('#carros .mensagem');  
+                    let mensagem = document.querySelector('#carros .mensagem');
                     let tabela = document.querySelector('#carros table');
-                    
+
                     tabela.style.display = 'none';
-                    
+
                     secGrafico.style.display = 'none';
                     mensagem.innerHTML = `Nenhum carro com nível ${alerta} de alerta`;
                 } else {
@@ -342,11 +397,11 @@ function modelosComAlerta(alerta) {
             if (resposta.ok) {
                 if (resposta.statusText == 'No Content') {
                     let secGrafico = document.querySelector('#modelos .grafico');
-                    let mensagem = document.querySelector('#modelos .mensagem');  
+                    let mensagem = document.querySelector('#modelos .mensagem');
                     let tabela = document.querySelector('#modelos table');
-                    
+
                     tabela.style.display = 'none';
-                    
+
                     secGrafico.style.display = 'none';
                     mensagem.innerHTML = `Nenhum modelo com nível ${alerta} de alerta`;
                 } else {
@@ -371,6 +426,7 @@ function exibirTabelaCarros(dados) {
 
     let secGrafico = document.querySelector('#carros .grafico');
     secGrafico.style.display = 'none';
+    
 
     let conteudo = `<tr>
                         <th> Código Veiculo </th>
@@ -408,7 +464,7 @@ function exibirTabelaModelos(dados) {
                 <td> ${dados[i].modelo} </td>
                 <td> ${dados[i].qtd} </td>
                 <td>
-                    <button onclick="" class="btnTabela">  
+                    <button onclick="graficoModelo('${dados[i].id_modelo}')" class="btnTabela">  
                         <img src="../img/icones/painelIcone.png" alt="Icone de painel" class="iconeTabela"> 
                     </button> 
                 </td>
@@ -555,7 +611,7 @@ function exibirConhecer() {
 }
 
 function fecharConhecer() {
-     let alertas = document.querySelector('aside.alertas');
+    let alertas = document.querySelector('aside.alertas');
 
     alertas.style.display = 'none';
 }
