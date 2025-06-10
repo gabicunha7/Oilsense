@@ -88,6 +88,7 @@ function modelosAlerta(req, res) {
 
 module.exports = {
     nivelDeAlertaPorDia,
-    carrosAlerta
+    carrosAlerta,
+    modelosAlerta
 
 }
