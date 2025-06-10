@@ -7,7 +7,7 @@ function alertasGraficoDePizza() {
         .then(function (resposta) {
             if (resposta.ok) {
                 if (resposta.statusText == 'No Content') {
-                    alert("nenhum dado encontrado!")
+                    alertas.innerHTML = '<p> Nenhum dado encontrado </p>';
                 } else {
                     resposta.json().then(function (dados) {
                         console.log("graficos:", dados);
@@ -99,8 +99,8 @@ function exibir(tipo) {
         carros.style.display = 'none';
         indice = 1;
     } else {
-        modelos.style.display = 'carros';
-        carros.style.display = 'none';
+        modelos.style.display = 'none';
+        alertas.style.display = 'none';
         indice = 2;
     }
 
