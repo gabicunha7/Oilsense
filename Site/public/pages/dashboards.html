@@ -41,7 +41,8 @@
                         <a href="carros.html"> Carros </a>
                     </li>
                     <li>
-                        <a href="https://oilsense.atlassian.net/servicedesk/customer/portals" target="_blank"> Central de Serviço </a>
+                        <a href="https://oilsense.atlassian.net/servicedesk/customer/portals" target="_blank"> Central
+                            de Serviço </a>
                     </li>
                     <li>
                         <a onclick="limparSessao()"> Sair </a>
@@ -53,31 +54,32 @@
                     <img src="../img/logo/logoExtensa.png" alt="Logo OilSense" class="logo">
                 </a>
             </section>
-            
+
             <span></span>
         </section>
     </header>
-    
+
     <main class="escuro">
         <section class="container">
             <section>
-                <label for="tipo_grafico"> Selecione o tipo de gráfico </label>
-                 <section class="botoes-tipos">
+                <h1 class="titulo"> Painel </h1>
+
+                <section class="botoes-tipos">
                     <button onclick="exibir('alertas')" class="btn-selecionado">
                         Alertas
                     </button>
-    
+
                     <button onclick="exibir('modelos')">
                         Modelos com níveis de alerta
                     </button>
-    
+
                     <button onclick="exibir('carros')">
                         Veículos com Nível de Alerta
                     </button>
                 </section>
             </section>
-            
-            <section id="alertas">                
+
+            <section id="alertas">
                 <section class="grafico">
                     <section class="kpis"></section>
                     <section class="tamanho">
@@ -87,27 +89,59 @@
             </section>
 
             <section id="modelos">
+                <section class="botoes-tipos-alertas">
+                    <button onclick="exibirNivel('1', 'modelos')" class="btn-selecionado">
+                        Nível 1
+                    </button>
+
+                    <button onclick="exibirNivel('2', 'modelos')">
+                        Nível 2
+                    </button>
+
+                    <button onclick="exibirNivel('3', 'modelos')">
+                        Nível 3
+                    </button>
+                </section>
+
                 <section class="grafico">
                     <section class="kpis"></section>
                     <section class="tamanho">
                         <canvas id="dashboard-modelos"></canvas>
                     </section>
                 </section>
+
+                <section class="mensagem"></section>
             </section>
 
             <section id="carros">
+                <section class="botoes-tipos-alertas">
+                    <button onclick="exibirNivel('1', 'carros')" class="btn-selecionado">
+                        Nível 1
+                    </button>
+
+                    <button onclick="exibirNivel('2', 'carros')">
+                        Nível 2
+                    </button>
+
+                    <button onclick="exibirNivel('3', 'carros')">
+                        Nível 3
+                    </button>
+                </section>
+
                 <section class="grafico">
                     <section class="kpis"></section>
                     <section class="tamanho">
                         <canvas id="dashboard-carros"></canvas>
                     </section>
                 </section>
+
+                <section class="mensagem"></section>
             </section>
         </section>
 
         <aside class="alertas">
             <h1>Guia de alertas</h1>
-            <p>Nível 1 - Excesso de óleo - <span class="nvl">Maior que 70%</span></p> 
+            <p>Nível 1 - Excesso de óleo - <span class="nvl">Maior que 70%</span></p>
             <p>Nível 2 - Falta de óleo - <span class="nvl">Menor que 60%</span></p>
             <p>Nível 3 - Crítico de falta de óleo - <span class="nvl">Menor que 50%</span></p>
         </aside>

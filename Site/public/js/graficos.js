@@ -7,7 +7,7 @@ function alertasGraficoDePizza() {
         .then(function (resposta) {
             if (resposta.ok) {
                 if (resposta.statusText == 'No Content') {
-                    alert("nenhum dado encontrado!")
+                    alertas.innerHTML = '<p> Nenhum dado encontrado </p>';
                 } else {
                     resposta.json().then(function (dados) {
                         console.log("graficos:", dados);
@@ -24,6 +24,42 @@ function alertasGraficoDePizza() {
         });
 
     return false;
+}
+
+function veiculosComAlerta(alerta) {
+    let montadora_id = sessionStorage.ID_MONTADORA;
+
+    fetch(`/graficos/carrosAlerta`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            alerta: alerta,
+            montadora: montadora_id
+        }),
+    })
+        .then(function (resposta) {
+            if (resposta.ok) {
+                if (resposta.statusText == 'No Content') {
+                    let secGrafico = document.querySelector('#carros .grafico');
+                    let mensagem = document.querySelector('#carros .mensagem');
+
+                    secGrafico.style.display = 'none';
+                    mensagem.innerHTML = `Nenhum carro com ${alerta}`;
+                } else {
+                    resposta.json().then(function (dados) {
+                        console.log("graficos:", dados);
+                    });
+                }
+            } else {
+                alert("Houve um erro ao tentar puxar os dados!");
+            }
+        })
+        .catch(function (erro) {
+            console.error("#ERRO: ", erro);
+            alert("Erro ao comunicar com o servidor.");
+        });
 }
 
 function plotarGraficoPizza(dados) {
@@ -99,8 +135,8 @@ function exibir(tipo) {
         carros.style.display = 'none';
         indice = 1;
     } else {
-        modelos.style.display = 'carros';
-        carros.style.display = 'none';
+        modelos.style.display = 'none';
+        alertas.style.display = 'none';
         indice = 2;
     }
 
@@ -114,3 +150,37 @@ function exibir(tipo) {
         }
     }
 }
+
+function exibirNivel(tipo, tipoGrafico) {
+    let botoesTipos = document.querySelectorAll(`#${tipoGrafico} .botoes-tipos-alertas  button`);
+    let mensagem = document.querySelector(`#${tipoGrafico} .mensagem`);
+    let secGrafico = document.querySelector('#carros .grafico');
+
+    secGrafico.style.display = 'block';
+    mensagem.innerHTML = '';
+
+    let indice = 0;
+    if (tipo == '1') {
+        indice = 0;
+    } else if (tipo == '2') {
+        indice = 1;
+    } else {
+        indice = 2;
+    }
+
+    if (tipoGrafico == 'carros') {
+        veiculosComAlerta(tipo);
+    } else {
+    }
+
+    if (!botoesTipos[indice].classList.contains('btn-selecionado')) {
+        botoesTipos[indice].classList.add('btn-selecionado');
+    }
+
+    for (let i = 0; i < botoesTipos.length; i++) {
+        if (botoesTipos[i].classList.contains('btn-selecionado') && botoesTipos[i] != botoesTipos[indice]) {
+            botoesTipos[i].classList.toggle('btn-selecionado');
+        }
+    }
+}
+

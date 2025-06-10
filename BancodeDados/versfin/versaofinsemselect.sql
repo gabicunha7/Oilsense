@@ -44,7 +44,7 @@ create table sensor(
 
 create table carro(
     fksensor int primary key,
-    placa char(7) unique not null,
+    codigo char(7) unique not null,
 	volumecarter decimal(6,3) not null,
     alturacarter decimal(6,3) not null,
     fkmodelo int not null,
@@ -103,7 +103,7 @@ values 		('Ativo'),
             ('Inativo');
             
             
-insert into carro (fksensor, placa, volumecarter, alturacarter, fkmodelo)
+insert into carro (fksensor, codigo, volumecarter, alturacarter, fkmodelo)
 values		(1, 'ABC1D01', 4.500, 12.300, 100), 
 			(2, 'XYZ2E02', 6.200, 13.500, 101), 
 			(3, 'JKL3F03', 3.200, 11.700, 102),  

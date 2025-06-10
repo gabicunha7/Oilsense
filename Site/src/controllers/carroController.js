@@ -1,14 +1,14 @@
 var carroModel = require("../models/carroModel");
 
 function cadastrarCarro(req, res) {
-	placa = req.body.placaServer;
+	codigo = req.body.codigoServer;
 	volume = req.body.volumeServer;
 	altura = req.body.alturaServer;
 	modelo = req.body.modeloServer;
 	idSensor = req.body.idSensor;
 
-	if (placa == undefined) {
-		res.status(400).send("Sua placa está undefined!");
+	if (codigo == undefined) {
+		res.status(400).send("Sua codigo está undefined!");
 	} else if (volume == undefined) {
 		res.status(400).send("Seu volume está undefined!");
 	} else if (altura == undefined) {
@@ -17,7 +17,7 @@ function cadastrarCarro(req, res) {
 		res.status(400).send("Seu modelo está undefined!");
 	}
 	else {
-		carroModel.cadastrarCarro(placa, volume, altura, modelo, idSensor)
+		carroModel.cadastrarCarro(codigo, volume, altura, modelo, idSensor)
 			.then(
 				function (resultado) {
 					res.json(resultado);
@@ -83,19 +83,19 @@ function listarUmCarro(req, res) {
 }
 
 function editarCarro(req, res) {
-	var placa = req.body.placaServer;
+	var codigo = req.body.codigoServer;
 	var volume = req.body.volumeServer;
 	var altura = req.body.alturaServer;
 	var idCarro = req.body.idCarroServer;
 
-	if (placa == undefined) {
-		res.status(400).send("A placa está undefined!");
+	if (codigo == undefined) {
+		res.status(400).send("A codigo está undefined!");
 	} else if (volume == undefined) {
 		res.status(400).send("O volume está undefined!");
 	} else if (altura == undefined) {
 		res.status(400).send("A altura está undefined!");
 	} else {
-		carroModel.editarCarro(placa, volume, altura, idCarro)
+		carroModel.editarCarro(codigo, volume, altura, idCarro)
 			.then(
 				function (resultado) {
 					res.json(resultado);

@@ -7,7 +7,7 @@ function cadastrarModelo(req, res) {
     var idMontadora = req.body.idMontadoraServer;
 
     if (nome == undefined) {
-        res.status(400).send("Sua placa está undefined!");
+        res.status(400).send("Sua codigo está undefined!");
     } else if (ano == undefined) {
         res.status(400).send("Seu volume está undefined!");
     } 
