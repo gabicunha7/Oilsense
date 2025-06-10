@@ -12,7 +12,7 @@ function nivelDeAlertaPorDia(id_montadora) {
         return database.executar(instrucaoSql);
 }
 
-function nivelDeAlertaPorDia(alerta, montadora) {
+function carrosAlerta(alerta, montadora) {
         console.log("ACESSEI O GRAFICO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function nivelDeAlertaPorMes()");
 
         var instrucaoSql = `
@@ -28,4 +28,5 @@ function nivelDeAlertaPorDia(alerta, montadora) {
 
 module.exports = {
         nivelDeAlertaPorDia,
+        carrosAlerta
 }

@@ -123,6 +123,7 @@ values
 (6, '2025-06-07 10:50:10', 1),
 (6, '2025-06-08 10:50:10', 1),
 (7, '2025-06-09 10:50:10', 1),
+(7.5, '2025-06-10 10:50:10', 1),
 (1, '2025-06-03 10:50:10', 10),
 (1, '2025-06-04 10:50:10', 10),
 (1.5, '2025-06-05 10:50:10', 10),
@@ -130,13 +131,15 @@ values
 (3, '2025-06-07 10:50:10', 10),
 (4, '2025-06-08 10:50:10', 10),
 (4, '2025-06-09 10:50:10', 10),
+(5, '2025-06-10 10:50:10', 10),
 (2, '2025-06-03 10:50:10', 2),
 (2, '2025-06-04 10:50:10', 2),
 (2, '2025-06-05 10:50:10', 2),
 (3, '2025-06-06 10:50:10', 2),
 (3, '2025-06-07 10:50:10', 2),
 (3, '2025-06-08 10:50:10', 2),
-(3, '2025-06-09 10:50:10', 2);
+(3, '2025-06-09 10:50:10', 2),
+(3.5, '2025-06-10 10:50:10', 2);
 
 
 CREATE OR REPLACE VIEW vw_nivel_oleo
@@ -161,12 +164,12 @@ select
                 group by dtcoleta, c.codigo, m.id;
 
 CREATE OR REPLACE VIEW vw_listar_alertas
-AS                       
+AS      
 select 
 m.id, c.codigo cod,  concat(mdl.modelo,' ',mdl.ano) as modelo,
-case when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) > 70 then 'Nível 1 (Excesso de óleo)'
-	 when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) < 60 then 'Nível 2 (Falta de óleo)'
-	 when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) < 50 then 'Nível 3 (Crítico de falta de óleo)'
+case when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) > 70 then 'nivel1'
+	 when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) < 60 then 'nivel2'
+	 when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) < 50 then 'nivel3'
 else 'Sem Alerta' 
 end as nivel_oleo
 from carro c
@@ -178,4 +181,5 @@ inner join modelo mdl
     on c.fkmodelo = mdl.id
 inner join montadora m
     on mdl.fkmontadora = m.id
-group by current_date(), c.codigo;
+where date(t.dtHoraColeta) = current_date()
+group by c.codigo;
