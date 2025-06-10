@@ -29,7 +29,7 @@ function modelosAlerta(alerta, montadora) {
         var instrucaoSql = `
                 select count(nivel_oleo) qtd, nivel_oleo, modelo, id_modelo from vw_listar_alertas
                 where id = ${montadora} and nivel_oleo = ${alerta}
-                group by nivel_oleo, modelo;
+                group by nivel_oleo, modelo, id_modelo;
         `;
 
         console.log("Executando a instrução SQL: \n" + instrucaoSql);
