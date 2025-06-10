@@ -143,7 +143,7 @@ function listarCarros() {
                     let tabela = document.querySelector('table');
                     let frase = `<tr>
                         <th> id </th>
-                        <th> codigo </th>
+                        <th> Código </th>
                         <th> Volume do Cárter </th>
                         <th> Altura do Cárter </th>
                         <th> Modelo </th>

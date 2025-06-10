@@ -208,6 +208,7 @@ table {
     background-color: var(--corTextoForm);
     color: var(--corTextoForm);
     padding: 0.5rem;
+    margin: auto;
 }
 
 th, td {
@@ -364,7 +365,7 @@ button .iconeTabela {
 .botoes-tipos-alertas {
     width: 80%;
     margin: auto;
-    padding-top: 1rem;
+    padding: 1rem 0;
 }
 
 .botoes-tipos button, .botoes-tipos-alertas button {
@@ -400,4 +401,9 @@ button .iconeTabela {
 
 #modelos, #carros {
     display: none;
+}
+
+.mensagem {
+    text-align: center;
+    font-size: 1.5rem;
 }

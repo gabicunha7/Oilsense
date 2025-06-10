@@ -1,4 +1,6 @@
 let grafico = null;
+let alertaModeloAtual = 1;
+let alertaVeiculoAtual = 1;
 
 function alertasGraficoDePizza() {
     let montadora_id = sessionStorage.ID_MONTADORA;
@@ -28,6 +30,7 @@ function alertasGraficoDePizza() {
 
 function veiculosComAlerta(alerta) {
     let montadora_id = sessionStorage.ID_MONTADORA;
+    veiculosAtual = alerta;
 
     fetch(`/graficos/carrosAlerta`, {
         method: "POST",
@@ -43,13 +46,17 @@ function veiculosComAlerta(alerta) {
             if (resposta.ok) {
                 if (resposta.statusText == 'No Content') {
                     let secGrafico = document.querySelector('#carros .grafico');
-                    let mensagem = document.querySelector('#carros .mensagem');
-
+                    let mensagem = document.querySelector('#carros .mensagem');  
+                    let tabela = document.querySelector('#carros table');
+                    
+                    tabela.style.display = 'none';
+                    
                     secGrafico.style.display = 'none';
-                    mensagem.innerHTML = `Nenhum carro com ${alerta}`;
+                    mensagem.innerHTML = `Nenhum carro com nível ${alerta} de alerta`;
                 } else {
                     resposta.json().then(function (dados) {
                         console.log("graficos:", dados);
+                        exibirTabelaCarros(dados);
                     });
                 }
             } else {
@@ -60,6 +67,89 @@ function veiculosComAlerta(alerta) {
             console.error("#ERRO: ", erro);
             alert("Erro ao comunicar com o servidor.");
         });
+}
+
+function modelosComAlerta(alerta) {
+    let montadora_id = sessionStorage.ID_MONTADORA;
+    alertaModeloAtual = alerta;
+
+    fetch(`/graficos/modelosAlerta`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            alerta: alerta,
+            montadora: montadora_id
+        }),
+    })
+        .then(function (resposta) {
+            if (resposta.ok) {
+                if (resposta.statusText == 'No Content') {
+                    let secGrafico = document.querySelector('#modelos .grafico');
+                    let mensagem = document.querySelector('#modelos .mensagem');  
+                    let tabela = document.querySelector('#modelos table');
+                    
+                    tabela.style.display = 'none';
+                    
+                    secGrafico.style.display = 'none';
+                    mensagem.innerHTML = `Nenhum modelo com nível ${alerta} de alerta`;
+                } else {
+                    resposta.json().then(function (dados) {
+                        console.log("graficos:", dados);
+                        exibirTabelaModelos(dados);
+                    });
+                }
+            } else {
+                alert("Houve um erro ao tentar puxar os dados!");
+            }
+        })
+        .catch(function (erro) {
+            console.error("#ERRO: ", erro);
+            alert("Erro ao comunicar com o servidor.");
+        });
+}
+
+function exibirTabelaCarros(dados) {
+    let tabela = document.querySelector('#carros table');
+    tabela.style.display = 'table';
+
+    let conteudo = `<tr>
+                        <th> Código Veiculo </th>
+                        <th> Modelo </th>
+                        <th> Exibir Situação </th>
+                    </tr>`;
+
+    for (let i = 0; i < dados.length; i++) {
+        conteudo += `<tr>
+                <td> ${dados[i].cod} </td>
+                <td> ${dados[i].modelo} </td>
+                <td> </td>
+            </tr>`;
+    }
+
+    tabela.innerHTML = conteudo;
+}
+
+function exibirTabelaModelos(dados) {
+    let tabela = document.querySelector('#modelos table');
+    tabela.style.display = 'table';
+
+    let conteudo = `<tr>
+                        <th> Modelo </th>
+                        <th> Quantidade de Veículos </th>
+                        <th> Exibir Situação </th>
+                    </tr>`;
+
+    for (let i = 0; i < dados.length; i++) {
+        conteudo += `<tr>
+                <td> ${dados[i].modelo} </td>
+                <td> ${dados[i].qtd} </td>
+                <td> </td>
+            </tr>`;
+    }
+
+    tabela.innerHTML = conteudo;
 }
 
 function plotarGraficoPizza(dados) {
@@ -133,10 +223,13 @@ function exibir(tipo) {
     } else if (tipo == 'modelos') {
         alertas.style.display = 'none';
         carros.style.display = 'none';
+        modelosComAlerta(alertaModeloAtual);
         indice = 1;
     } else {
         modelos.style.display = 'none';
         alertas.style.display = 'none';
+        veiculosComAlerta(alertaVeiculoAtual);
+
         indice = 2;
     }
 
@@ -155,7 +248,7 @@ function exibirNivel(tipo, tipoGrafico) {
     let botoesTipos = document.querySelectorAll(`#${tipoGrafico} .botoes-tipos-alertas  button`);
     let mensagem = document.querySelector(`#${tipoGrafico} .mensagem`);
     let secGrafico = document.querySelector('#carros .grafico');
-
+    
     secGrafico.style.display = 'block';
     mensagem.innerHTML = '';
 
@@ -171,6 +264,7 @@ function exibirNivel(tipo, tipoGrafico) {
     if (tipoGrafico == 'carros') {
         veiculosComAlerta(tipo);
     } else {
+        modelosComAlerta(tipo);
     }
 
     if (!botoesTipos[indice].classList.contains('btn-selecionado')) {
