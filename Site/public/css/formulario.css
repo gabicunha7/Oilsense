@@ -17,6 +17,8 @@ header.login {
 
     img {
         width: 100%;
+        object-fit: cover;
+        object-position: center;
         border-radius: 6px 0px 0px 6px;
     }
 

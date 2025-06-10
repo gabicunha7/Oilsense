@@ -191,18 +191,23 @@ function listarModelos() {
             console.log("resposta: ", resposta);
 
             if (resposta.ok) {
-                resposta.json().then(function (resposta) {
-                    console.log("Dados recebidos: ", JSON.stringify(resposta));
-
-                    let select = document.querySelector('#sel_modelos');
-                    frase = '';
-
-                    for (let i = 0; i < resposta.length; i++) {
-                        frase += `<option value="${resposta[i].id}"> ${resposta[i].modelo} </option>`;
-                    }
-
-                    select.innerHTML = frase;
-                });
+                if (resposta.statusText == 'No Content') {
+                    alert('A montadora não possui nenhum modelo cadastrado \nRedirecionando para tela de Modelos');
+                    window.location = 'modelos.html';
+                } else {
+                    resposta.json().then(function (resposta) {
+                        console.log("Dados recebidos: ", JSON.stringify(resposta));
+    
+                        let select = document.querySelector('#sel_modelos');
+                        frase = '';
+    
+                        for (let i = 0; i < resposta.length; i++) {
+                            frase += `<option value="${resposta[i].id}"> ${resposta[i].modelo} </option>`;
+                        }
+    
+                        select.innerHTML = frase;
+                    });
+                }
             } else {
                 throw "Houve um erro ao tentar listar os modelos!";
             }
