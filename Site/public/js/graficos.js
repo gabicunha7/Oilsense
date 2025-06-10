@@ -159,18 +159,18 @@ function exibirNivel(tipo, tipoGrafico) {
     secGrafico.style.display = 'block';
     mensagem.innerHTML = '';
 
-    if (tipoGrafico == 'carros') {
-        veiculosComAlerta(tipo);
-    } else {
-    }
-
     let indice = 0;
-    if (tipo == 'nivel1') {
+    if (tipo == '1') {
         indice = 0;
-    } else if (tipo == 'nivel2') {
+    } else if (tipo == '2') {
         indice = 1;
     } else {
         indice = 2;
+    }
+
+    if (tipoGrafico == 'carros') {
+        veiculosComAlerta(tipo);
+    } else {
     }
 
     if (!botoesTipos[indice].classList.contains('btn-selecionado')) {
