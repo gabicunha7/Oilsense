@@ -107,10 +107,11 @@ function exibirGraficoCarroEspecifico(codigo) {
 
 
 function plotarGraficoCarro(dados) {
+   
     let labels = [];
     let valores = [];
 
-     for (let i = 0; i < dados.length; i++) {
+    for (let i = 0; i < dados.length; i++) {
         labels.push(dados[i].instante);
         valores.push(dados[i].porcentagem);
     }
@@ -122,9 +123,7 @@ function plotarGraficoCarro(dados) {
             datasets: [{
                 label: 'Veículo',
                 data: valores,
-                backgroundColor: [
-                    'rgb(54, 162, 235)',
-                ]
+                backgroundColor: ['rgb(54, 162, 235)'],
             }]
         },
         options: {
@@ -132,13 +131,44 @@ function plotarGraficoCarro(dados) {
                 title: {
                     display: true,
                     text: 'Níveis da altura do óleo do carro',
-                    font: {
-                        size: 28
-                    },
-                    padding: {
-                        top: 16,
-                        bottom: 16
+                    font: { size: 28 },
+                    padding: { top: 16, bottom: 16 }
+                },
+                annotation: {
+                    annotations: {
+                        linhaLimite60: {
+                            type: 'line',
+                            yMin: 60,
+                            yMax: 60,
+                            borderColor: 'red',
+                            borderWidth: 2,
+                            label: {
+                                content: '60%',
+                                enabled: true,
+                                position: 'start',
+                                color: 'red',
+                            }
+                        },
+                        linhaLimite70: {
+                            type: 'line',
+                            yMin: 70,
+                            yMax: 70,
+                            borderColor: 'red',
+                            borderWidth: 2,
+                            label: {
+                                content: ' 70%',
+                                enabled: true,
+                                position: 'start',
+                                color: 'red',
+                            }
+                        }
                     }
+                }
+            },
+            scales: {
+                y: {
+                    min: 0,
+                    max: 100,
                 }
             }
         }
