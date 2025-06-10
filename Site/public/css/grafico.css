@@ -125,4 +125,5 @@
     background: none;
     border: none;
     color: var(--corTexto);
+    cursor: pointer;
 }
