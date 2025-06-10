@@ -492,9 +492,7 @@ function exibir(tipo) {
 function exibirNivel(tipo, tipoGrafico) {
     let botoesTipos = document.querySelectorAll(`#${tipoGrafico} .botoes-tipos-alertas  button`);
     let mensagem = document.querySelector(`#${tipoGrafico} .mensagem`);
-    let secGrafico = document.querySelector('#carros .grafico');
-    
-    secGrafico.style.display = 'block';
+
     mensagem.innerHTML = '';
 
     let indice = 0;
@@ -522,4 +520,16 @@ function exibirNivel(tipo, tipoGrafico) {
             botoesTipos[i].classList.toggle('btn-selecionado');
         }
     }
+}
+
+function exibirConhecer() {
+    let alertas = document.querySelector('aside.alertas');
+
+    alertas.style.display = 'flex';
+}
+
+function fecharConhecer() {
+     let alertas = document.querySelector('aside.alertas');
+
+    alertas.style.display = 'none';
 }

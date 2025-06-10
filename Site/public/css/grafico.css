@@ -79,7 +79,7 @@
 }
 
 .alertas {
-    display: flex;
+    display: none;
     position: fixed;
     flex-direction: column;
     text-align: center;
@@ -100,3 +100,29 @@
     text-decoration: underline;
 }
 
+.btn-exibir {
+    display: flex;
+    font-size: 1.5rem;
+    text-align: center;
+    border-radius: 1rem;
+    border: none;
+    position: fixed;
+    padding: 1rem 2rem;
+    right: 1rem;
+    bottom: 1rem;
+    cursor: pointer;
+    color: var(--corTexto);
+    background-color: var(--corBotaoKPI);
+}
+
+.btn-fechar {
+    display: flex;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    align-self: flex-end;
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    color: var(--corTexto);
+}
