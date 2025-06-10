@@ -127,3 +127,19 @@
     color: var(--corTexto);
     cursor: pointer;
 }
+
+.btn-voltar {
+    display: none;
+    padding: 1rem 1rem;
+    font-size: 1.2rem;
+    color: var(--corTexto);
+    background-color: var(--corBotaoKPI);
+    border-radius: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-voltar:hover {
+    background-color: #A47C3E;
+}

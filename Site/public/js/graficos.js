@@ -16,13 +16,13 @@ function voltar() {
     }
 
     document.querySelector('#carros .grafico').style.display = 'none';
-    document.getElementById('btn-voltar').style.display = 'none';
+    document.querySelector('#carros .btn-voltar').style.display = 'none';
 
     document.querySelector('#carros table').style.display = 'table';
     document.querySelector('#carros .botoes-tipos-alertas').style.display = 'flex';
 
     document.querySelector('#modelos .grafico').style.display = 'none';
-    document.getElementById('btn-voltar').style.display = 'none';
+    document.querySelector('#modelos .btn-voltar').style.display = 'none';
 
     document.querySelector('#modelos table').style.display = 'table';
     document.querySelector('#modelos .botoes-tipos-alertas').style.display = 'flex';
@@ -67,7 +67,7 @@ function graficoModelo(modelo_id) {
     document.querySelector('#modelos table').style.display = 'none';
     document.querySelector('#modelos .botoes-tipos-alertas').style.display = 'none';
     document.querySelector('#modelos .grafico').style.display = 'block';
-    document.getElementById('btn-voltar').style.display = 'inline-block';
+    document.querySelector('#modelos .btn-voltar').style.display = 'inline-block';
 
     function atualizarGrafico() {
         fetch(`/graficos/graficoPorModelo/${modelo_id}`)
@@ -106,7 +106,7 @@ function exibirGraficoCarroEspecifico(codigo) {
     document.querySelector('#carros table').style.display = 'none';
     document.querySelector('#carros .botoes-tipos-alertas').style.display = 'none';
     document.querySelector('#carros .grafico').style.display = 'block';
-    document.getElementById('btn-voltar').style.display = 'inline-block';
+    document.querySelector('#carros .btn-voltar').style.display = 'inline-block';
 
 
     function atualizarGrafico() {
@@ -204,11 +204,6 @@ function plotarGraficoCarro(dados) {
             }
         }
     };
-
-    document.querySelector("#carros .tabela-painel").style.display = "none";
-    document.querySelector("#carros .botoes-tipos-alertas").style.display = "none";
-    document.querySelector("#carros .grafico").style.display = "block";
-    document.getElementById("btn-voltar").style.display = "inline-block";
 
     Chart.defaults.color = '#ffffff';
     Chart.defaults.font.size = 16;
@@ -317,11 +312,6 @@ function plotarGraficoModelo(dados) {
         config.data.labels.push(dados[i].nivel_oleo)
 
     }
-
-    document.querySelector("#modelos .tabela-painel").style.display = "none";
-    document.querySelector("#modelos .botoes-tipos-alertas").style.display = "none";
-    document.querySelector("#modelos .grafico").style.display = "block";
-    document.getElementById("btn-voltar").style.display = "inline-block";
 
     Chart.defaults.color = '#ffffff';
     Chart.defaults.font.size = 16;
@@ -546,15 +536,19 @@ function exibir(tipo) {
         modelos.style.display = 'none';
         carros.style.display = 'none';
         alertasGraficoDePizza();
+
         indice = 0;
     } else if (tipo == 'modelos') {
         alertas.style.display = 'none';
         carros.style.display = 'none';
+        document.querySelector("#modelos .botoes-tipos-alertas").style.display = "grid";
         modelosComAlerta(alertaModeloAtual);
+
         indice = 1;
     } else {
         modelos.style.display = 'none';
         alertas.style.display = 'none';
+        document.querySelector("#carros .botoes-tipos-alertas").style.display = "grid";
         veiculosComAlerta(alertaVeiculoAtual);
 
         indice = 2;
