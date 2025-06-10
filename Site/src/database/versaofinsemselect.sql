@@ -1,4 +1,5 @@
 -- CRIAÇÃO DA BASE DADOS DO NOSSO PROJETO --
+drop database if exists Oilsense;
 create database Oilsense;
 use Oilsense;
 

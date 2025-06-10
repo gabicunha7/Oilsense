@@ -70,8 +70,12 @@
 }
 
 .tamanho {
-    width: 40%;
+    width: 70%;
     margin: auto;
+}
+
+.pizza {
+    width: 40%;
 }
 
 .alertas {

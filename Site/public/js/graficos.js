@@ -10,9 +10,9 @@ function voltar() {
         grafico.destroy();
         grafico = null;
     }
-    if (intervaloAtualizacaoCarro) {
-        clearInterval(intervaloAtualizacaoCarro);
-        intervaloAtualizacaoCarro = null;
+    if (intervaloAtualizacao) {
+        clearInterval(intervaloAtualizacao);
+        intervaloAtualizacao = null;
     }
 
     document.querySelector('#carros .grafico').style.display = 'none';
@@ -84,11 +84,7 @@ function exibirGraficoCarroEspecifico(codigo) {
         grafico.destroy();
         grafico = null;
     }
-    if (intervaloAtualizacao) {
-        clearInterval(intervaloAtualizacao);
-        intervaloAtualizacao = null;
-    }
-
+    
     document.querySelector('#carros table').style.display = 'none';
     document.querySelector('#carros .botoes-tipos-alertas').style.display = 'none';
     document.querySelector('#carros .grafico').style.display = 'block';
@@ -354,6 +350,9 @@ function exibirTabelaCarros(dados) {
     let tabela = document.querySelector('#carros table');
     tabela.style.display = 'table';
 
+    let secGrafico = document.querySelector('#carros .grafico');
+    secGrafico.style.display = 'none';
+
     let conteudo = `<tr>
                         <th> Código Veiculo </th>
                         <th> Modelo </th>
@@ -454,6 +453,11 @@ function exibir(tipo) {
     let botoesTipos = document.querySelectorAll('.botoes-tipos button');
 
     tipoDashboard.style.display = 'block';
+
+    if (intervaloAtualizacao) {
+        clearInterval(intervaloAtualizacao);
+        intervaloAtualizacao = null;
+    }
 
     let indice = 0;
     if (tipo == 'alertas') {
