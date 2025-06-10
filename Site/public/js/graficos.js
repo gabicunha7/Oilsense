@@ -2,6 +2,22 @@ let grafico = null;
 let alertaModeloAtual = 1;
 let alertaVeiculoAtual = 1;
 
+
+
+function voltar() {
+    if (grafico) {
+        grafico.destroy();
+        grafico = null;
+    }
+
+    document.querySelector('#carros .grafico').style.display = 'none';
+    document.getElementById('btn-voltar').style.display = 'none';  // <-- aqui
+
+    document.querySelector('#carros table').style.display = 'table';
+    document.querySelector('#carros .botoes-tipos-alertas').style.display = 'flex';
+}
+
+
 function alertasGraficoDePizza() {
     let montadora_id = sessionStorage.ID_MONTADORA;
 
@@ -27,6 +43,183 @@ function alertasGraficoDePizza() {
 
     return false;
 }
+
+
+
+function graficoModelo(){
+    let modelo_id = ''
+
+    fetch(`/graficos/graficoPorModelo/${modelo_id}`)
+        .then(function (resposta) {
+            if (resposta.ok) {
+                if (resposta.statusText == 'No Content') {
+                    alertas.innerHTML = '<p> Nenhum dado encontrado </p>';
+                } else {
+                    resposta.json().then(function (dados) {
+                        console.log("graficos:", dados);
+                        plotarGraficoModelo(dados);
+                    });
+                }
+            } else {
+                alert("Houve um erro ao tentar puxar os dados!");
+            }
+        })
+        .catch(function (erro) {
+            console.error("#ERRO: ", erro);
+            alert("Erro ao comunicar com o servidor.");
+        });
+
+    return false;
+}
+
+
+
+function exibirGraficoCarroEspecifico(codigo) {
+  
+    document.querySelector('#carros table').style.display = 'none';
+    document.querySelector('#carros .botoes-tipos-alertas').style.display = 'none';
+
+
+    document.querySelector('#carros .grafico').style.display = 'block';
+
+    document.getElementById('btn-voltar').style.display = 'inline-block';
+
+    fetch(`/graficos/graficoPorCarro/${codigo}`)
+        .then(function (resposta) {
+            if (resposta.ok) {
+                if (resposta.statusText === 'No Content') {
+                    document.querySelector('#carros .grafico').innerHTML = '<p>Nenhum dado encontrado para este carro.</p>';
+                } else {
+                    resposta.json().then(function (dados) {
+                        plotarGraficoCarro(dados);
+                    });
+                }
+            } else {
+                alert("Houve um erro ao tentar puxar os dados!");
+            }
+        })
+        .catch(function (erro) {
+            console.error("#ERRO: ", erro);
+            alert("Erro ao comunicar com o servidor.");
+        });
+}
+
+
+
+function plotarGraficoCarro(dados) {
+    let labels = [];
+    let valores = [];
+
+     for (let i = 0; i < dados.length; i++) {
+        labels.push(dados[i].instante);
+        valores.push(dados[i].porcentagem);
+    }
+
+    const config = {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Veículo',
+                data: valores,
+                backgroundColor: [
+                    'rgb(54, 162, 235)',
+                ]
+            }]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Níveis da altura do óleo do carro',
+                    font: {
+                        size: 28
+                    },
+                    padding: {
+                        top: 16,
+                        bottom: 16
+                    }
+                }
+            }
+        }
+    };
+
+    document.querySelector("#carros .tabela-painel").style.display = "none";
+    document.querySelector("#carros .botoes-tipos-alertas").style.display = "none";
+    document.querySelector("#carros .grafico").style.display = "block";
+    document.getElementById("btn-voltar").style.display = "inline-block";
+
+    Chart.defaults.color = '#ffffff';
+    Chart.defaults.font.size = 16;
+
+    if (grafico != null) {
+        grafico.destroy();
+    }
+
+    grafico = new Chart(
+        document.getElementById('dashboard-carros'),
+        config
+    );
+}
+
+
+function plotarGraficoModelo(dados) {
+    let labels = [];
+
+    const config = {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Veiculos',
+                backgroundColor: [
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)',
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 205, 86)'
+                ],
+                data: []
+            }]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Níveis de alertas dos veículos em um dia',
+                    font: {
+                        size: 28
+                    },
+                    padding: {
+                        top: 16,
+                        bottom: 16
+                    }
+                }
+            }
+        }
+    };
+    for (var i = 0; i < dados.length; i++) {
+        config.data.datasets[0].data.push(dados[i].qtde)
+        config.data.labels.push(dados[i].nivel_oleo)
+
+    }
+
+    document.querySelector(".tamanho").style.display = "block"
+    document.querySelector("tabela-painel").style.display = "none" 
+
+    Chart.defaults.color = '#ffffff';
+    Chart.defaults.font.size = 16;
+
+    if (grafico != null) {
+        grafico.destroy();
+    }
+
+    grafico = new Chart(
+        document.getElementById('dashboard-alertas'),
+        config
+    );
+
+}
+
 
 function veiculosComAlerta(alerta) {
     let montadora_id = sessionStorage.ID_MONTADORA;
@@ -124,7 +317,8 @@ function exibirTabelaCarros(dados) {
         conteudo += `<tr>
                 <td> ${dados[i].cod} </td>
                 <td> ${dados[i].modelo} </td>
-                <td> </td>
+                <td> <button onclick="exibirGraficoCarroEspecifico('${dados[i].cod}')"> Ver gráfico </button>
+                </td>
             </tr>`;
     }
 
@@ -263,6 +457,7 @@ function exibirNivel(tipo, tipoGrafico) {
 
     if (tipoGrafico == 'carros') {
         veiculosComAlerta(tipo);
+
     } else {
         modelosComAlerta(tipo);
     }
@@ -277,4 +472,3 @@ function exibirNivel(tipo, tipoGrafico) {
         }
     }
 }
-

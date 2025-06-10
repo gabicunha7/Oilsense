@@ -19,4 +19,9 @@ router.get("/graficoPorModelo/:modelo_id", function (req, res) {
     graficosController.graficoPorModelo(req, res);
 });
 
+
+router.get("/graficoPorCarro/:codigo", function (req,res) {
+    graficosController.graficoPorCarro(req,res)
+});
+
 module.exports = router;
