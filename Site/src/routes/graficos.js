@@ -11,4 +11,8 @@ router.post("/carrosAlerta", function (req, res) {
     graficosController.carrosAlerta(req, res);
 });
 
+router.post("/modelosAlerta", function (req, res) {
+    graficosController.modelosAlerta(req, res);
+});
+
 module.exports = router;

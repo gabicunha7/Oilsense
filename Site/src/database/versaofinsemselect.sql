@@ -145,9 +145,9 @@ values
 CREATE OR REPLACE VIEW vw_nivel_oleo
 AS            
 select 
-                case when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) > 70 then 'Nível 1 (Excesso de óleo)'
-                when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) < 60 then 'Nível 2 (Falta de óleo)'
-                        when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) < 50 then 'Nível 3 (Crítico de falta de óleo)'
+                case when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) > 70 then 1
+                when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) < 60 then 2
+                        when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) < 50 then 3
                         else 'Sem Alerta' 
                 end as 'nivel_oleo',
 				date(t.dtHoraColeta) dtcoleta,
@@ -163,23 +163,3 @@ select
                         on mdl.fkmontadora = m.id
                 group by dtcoleta, c.codigo, m.id;
 
-CREATE OR REPLACE VIEW vw_listar_alertas
-AS      
-select 
-m.id, c.codigo cod,  concat(mdl.modelo,' ',mdl.ano) as modelo,
-case when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) > 70 then 'nivel1'
-	 when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) < 60 then 'nivel2'
-	 when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) < 50 then 'nivel3'
-else 'Sem Alerta' 
-end as nivel_oleo
-from carro c
-inner join sensor s   
-    on c.fksensor = s.id
-inner join telemetria t
-	on t.fksensor = s.id
-inner join modelo mdl 
-    on c.fkmodelo = mdl.id
-inner join montadora m
-    on mdl.fkmontadora = m.id
-where date(t.dtHoraColeta) = current_date()
-group by c.codigo;
