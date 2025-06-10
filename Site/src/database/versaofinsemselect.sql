@@ -44,7 +44,7 @@ create table sensor(
 
 create table carro(
     fksensor int primary key,
-    placa char(7) unique not null,
+    codigo char(7) unique not null,
 	volumecarter decimal(6,3) not null,
     alturacarter decimal(6,3) not null,
     fkmodelo int not null,
@@ -103,7 +103,7 @@ values 		('Ativo'),
             ('Inativo');
             
 
-insert into carro (fksensor, placa, volumecarter, alturacarter, fkmodelo)
+insert into carro (fksensor, codigo, volumecarter, alturacarter, fkmodelo)
 values		(1, 'ABC1D01', 4.500, 12.300, 100), 
 			(2, 'XYZ2E02', 6.200, 13.500, 101), 
 			(3, 'JKL3F03', 3.200, 11.700, 102),  
@@ -158,5 +158,24 @@ select
                         on c.fkmodelo = mdl.id
                 inner join montadora m
                         on mdl.fkmontadora = m.id
-                group by dtcoleta, c.placa, m.id;
+                group by dtcoleta, c.codigo, m.id;
 
+CREATE OR REPLACE VIEW vw_listar_alertas
+AS                       
+select 
+m.id, c.codigo cod,  concat(mdl.modelo,' ',mdl.ano) as modelo,
+case when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) > 70 then 'Nível 1 (Excesso de óleo)'
+	 when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) < 60 then 'Nível 2 (Falta de óleo)'
+	 when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) < 50 then 'Nível 3 (Crítico de falta de óleo)'
+else 'Sem Alerta' 
+end as nivel_oleo
+from carro c
+inner join sensor s   
+    on c.fksensor = s.id
+inner join telemetria t
+	on t.fksensor = s.id
+inner join modelo mdl 
+    on c.fkmodelo = mdl.id
+inner join montadora m
+    on mdl.fkmontadora = m.id
+group by current_date(), c.codigo;
