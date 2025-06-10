@@ -14,7 +14,7 @@ function kpiBarra(placa) {
         inner join sensor s2 on t2.fksensor = s2.id
         inner join carro c2 on c2.fksensor = s2.id
         where c2.placa = c.placa
-          and ((c2.alturacarter - t2.distancia) / c2.alturacarter) * 100 > round(((c2.alturacarter - t2.distancia) / c2.alturacarter) * 100, 1) ) as dias_acima_50
+          and ((c2.alturacarter - t2.distancia) / c2.alturacarter) * 100 >= 60  ) as dias_acima_50
                 from carro c
                 inner join sensor s on c.fksensor = s.id
                 inner join telemetria t on t.fksensor = s.id
@@ -22,7 +22,8 @@ function kpiBarra(placa) {
                 inner join montadora m on mdl.fkmontadora = m.id
                 where c.placa = '${placa}'
                 group by dtcoleta, c.placa, m.id
-                limit 1;`;
+                order by c.placa
+                limit 7;`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -112,17 +113,23 @@ function kpiPizza(data) {
 
     var instrucaoSql = `
     SELECT
-    nivel_oleo AS nivel_mais_frequente,
-    qtd_alertas AS maior_qtd_alertas,
-    (SELECT COUNT(*) FROM vw_nivel_oleo WHERE dtcoleta = '${data}' ) AS total_alertas
+    subconsulta.nivel_oleo AS nivel_mais_frequente,
+    totais.total_alertas
 FROM (
-    SELECT nivel_oleo, COUNT(*) AS qtd_alertas
+    SELECT nivel_oleo
     FROM vw_nivel_oleo
     WHERE dtcoleta = '${data}'
+      AND nivel_oleo COLLATE utf8mb4_unicode_ci <> 'Sem Alerta'
     GROUP BY nivel_oleo
-    ORDER BY qtd_alertas DESC
+    ORDER BY COUNT(*) DESC
     LIMIT 1
-) AS subconsult`;
+) AS subconsulta
+JOIN (
+    SELECT COUNT(*) AS total_alertas
+    FROM vw_nivel_oleo
+    WHERE dtcoleta = '${data}'
+      AND nivel_oleo COLLATE utf8mb4_unicode_ci <> 'Sem Alerta'
+) AS totais;`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -132,7 +139,7 @@ FROM (
 
 
 module.exports = {
-    kpiBarra, 
+    kpiBarra,
     kpiPizza,
     kpiLinha
 };

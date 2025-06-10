@@ -52,7 +52,7 @@ function kpi_graficos() {
                     <p class="indice"> ${resposta[0].altura_nivel}% </p>
                 </section>
                 <section class="indicador">
-                        <h3> Quantidade de vezes que o nível do óleo esteve acima de 50% </h3>
+                        <h3> Quantidade de vezes que o nível do óleo esteve acima de 60% </h3>
                         <p class="indice"> ${resposta[0].dias_acima_50} </p>
                 </section>
                 <section class="indicador">
