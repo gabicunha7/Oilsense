@@ -355,4 +355,42 @@ button .iconeTabela {
     margin-left: 0.5rem;
 }
 
-/* =================== */
+.botoes-tipos {
+    width: 100%;
+    display: grid;
+    place-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.botoes-tipos button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 2rem;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: all 0.2s ease-in-out;
+    border: none;
+    background-color: var(--corFundoKPI);
+    color: var(--corTexto);
+}
+
+.botoes-tipos .btn-selecionado {
+    background-color: #ce8f07;
+}
+
+.botoes-tipos button:first-of-type {
+    border-radius: 2rem 0 0 2rem;
+}
+
+.botoes-tipos button:last-of-type {
+    border-radius: 0 2rem 2rem 0;
+}
+
+#selecao {
+    display: flex;
+    justify-content: center;
+}

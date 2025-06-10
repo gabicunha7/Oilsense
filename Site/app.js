@@ -26,7 +26,6 @@ var modeloRouter = require("./src/routes/modelo.js");
 var carroRouter = require("./src/routes/carro.js");
 var sensorRouter = require("./src/routes/sensor.js");
 var graficosRouter = require("./src/routes/graficos.js");
-var kpiRouter = require("./src/routes/kpi.js");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -41,7 +40,6 @@ app.use("/modelo", modeloRouter);
 app.use("/carro", carroRouter);
 app.use("/sensor", sensorRouter);
 app.use("/graficos",graficosRouter);
-app.use("/kpi",kpiRouter);
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');

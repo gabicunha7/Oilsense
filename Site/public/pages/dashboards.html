@@ -13,10 +13,9 @@
     <link rel="stylesheet" href="../css/grafico.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/sessão.js"></script>
-    <script  src="../js/kpi.js"></script>
 </head>
 
-<body onload="validarSessao(), anoMes()">
+<body onload="validarSessao(), alertasGraficoDePizza()">
     <header class="escuro">
         <section class="container">
 
@@ -60,26 +59,53 @@
     </header>
     
     <main class="escuro">
-        <section class="form">
-            <label for="tipo_grafico"> Selecione o tipo de gráfico </label>
-            <select name="tipo_grafico" id="tipo_grafico">
-                <option value="pizza"> Alertas </option>
-                <option value="linha"> Modelo e Carro </option>
-                <option value="barra"> Porcentagem Carro </option>
-            </select>
+        <section class="container">
+            <section>
+                <label for="tipo_grafico"> Selecione o tipo de gráfico </label>
+                 <section class="botoes-tipos">
+                    <button onclick="exibir('alertas')" class="btn-selecionado">
+                        Alertas
+                    </button>
+    
+                    <button onclick="exibir('modelos')">
+                        Modelos com níveis de alerta
+                    </button>
+    
+                    <button onclick="exibir('carros')">
+                        Veículos com Nível de Alerta
+                    </button>
+                </section>
+            </section>
             
-            <section id="selecao"></section>
-        </section>
-        
-        <section class="graficos">
-            <section class="grafico">
-                <section id="kpi" class="kpis"></section>
-                <section class="tamanho">
-                    <canvas id="dashboard"></canvas>
+            <section id="alertas">                
+                <section class="grafico">
+                    <section class="kpis"></section>
+                    <section class="tamanho">
+                        <canvas id="dashboard-alertas"></canvas>
+                    </section>
+                </section>
+            </section>
+
+            <section id="modelos">
+                <section class="grafico">
+                    <section class="kpis"></section>
+                    <section class="tamanho">
+                        <canvas id="dashboard-modelos"></canvas>
+                    </section>
+                </section>
+            </section>
+
+            <section id="carros">
+                <section class="grafico">
+                    <section class="kpis"></section>
+                    <section class="tamanho">
+                        <canvas id="dashboard-carros"></canvas>
+                    </section>
                 </section>
             </section>
         </section>
-        <aside id="alertas">
+
+        <aside class="alertas">
             <h1>Guia de alertas</h1>
             <p>Nível 1 - Excesso de óleo - <span class="nvl">Maior que 70%</span></p> 
             <p>Nível 2 - Falta de óleo - <span class="nvl">Menor que 60%</span></p>

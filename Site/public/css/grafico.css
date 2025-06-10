@@ -74,7 +74,7 @@
     margin: auto;
 }
 
-#alertas {
+.alertas {
     display: flex;
     position: fixed;
     flex-direction: column;
@@ -87,11 +87,11 @@
     color: var(--cor);
 }
 
-#alertas h1 {
+.alertas h1 {
     font-size: 30px;
 
 }
-#alertas .nvl {
+.alertas .nvl {
     font-weight: 600;
     text-decoration: underline;
 }
