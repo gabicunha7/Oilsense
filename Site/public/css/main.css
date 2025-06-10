@@ -358,8 +358,6 @@ button .iconeTabela {
 .botoes-tipos {
     width: 100%;
     display: grid;
-    place-items: center;
-    display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 }
 
@@ -390,7 +388,6 @@ button .iconeTabela {
     border-radius: 0 2rem 2rem 0;
 }
 
-#selecao {
-    display: flex;
-    justify-content: center;
+#modelos, #carros {
+    display: none;
 }
