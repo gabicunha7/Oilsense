@@ -109,10 +109,36 @@ function graficoPorCarro(req, res) {
         );
 }
 
+function graficoPorModelo(req, res) {
+    var modelo_id = req.params.modelo_id;
+
+    graficosModel.graficoPorModelo(modelo_id)
+        .then(
+            function (resultado) {
+                if (resultado.length > 0) {
+                    res.status(200).json(resultado);
+                } else {
+                    res.status(204).send("Nenhum resultado encontrado!");
+                }
+            }
+        )
+        .catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "Houve um erro ao buscar os alertas: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
 module.exports = {
     nivelDeAlertaPorDia,
     carrosAlerta,
     modelosAlerta,
-    graficoPorCarro
+    graficoPorCarro,
+    graficoPorModelo
 
 }
