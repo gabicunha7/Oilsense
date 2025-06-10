@@ -20,6 +20,12 @@ function voltar() {
 
     document.querySelector('#carros table').style.display = 'table';
     document.querySelector('#carros .botoes-tipos-alertas').style.display = 'flex';
+
+    document.querySelector('#modelos .grafico').style.display = 'none';
+    document.getElementById('btn-voltar').style.display = 'none';  
+
+    document.querySelector('#modelos table').style.display = 'table';
+    document.querySelector('#modelos .botoes-tipos-alertas').style.display = 'flex';
 }
 
 
@@ -51,28 +57,41 @@ function alertasGraficoDePizza() {
 
 
 
-function graficoModelo(){
-    let modelo_id = ''
+function graficoModelo(modelo_id){
+
+    if (grafico) {
+        grafico.destroy();
+        grafico = null;
+    }
+
+    document.querySelector('#modelos table').style.display = 'none';
+    document.querySelector('#modelos .botoes-tipos-alertas').style.display = 'none';
+    document.querySelector('#modelos .grafico').style.display = 'block';
+    document.getElementById('btn-voltar').style.display = 'inline-block';
 
     fetch(`/graficos/graficoPorModelo/${modelo_id}`)
         .then(function (resposta) {
-            if (resposta.ok) {
-                if (resposta.statusText == 'No Content') {
-                    alertas.innerHTML = '<p> Nenhum dado encontrado </p>';
+             if (resposta.ok) {
+                    if (resposta.statusText === 'No Content') {
+                        document.querySelector('#modelos .grafico').innerHTML = '<p>Nenhum dado encontrado para este carro.</p>';
+                    } else {
+                        resposta.json().then(function (dados) {
+                            plotarGraficoModelo(dados);
+                        });
+                    }
                 } else {
-                    resposta.json().then(function (dados) {
-                        console.log("graficos:", dados);
-                        plotarGraficoModelo(dados);
-                    });
+                    alert("Houve um erro ao tentar puxar os dados!");
                 }
-            } else {
-                alert("Houve um erro ao tentar puxar os dados!");
-            }
-        })
-        .catch(function (erro) {
-            console.error("#ERRO: ", erro);
-            alert("Erro ao comunicar com o servidor.");
-        });
+            })
+            .catch(function (erro) {
+                console.error("#ERRO: ", erro);
+                alert("Erro ao comunicar com o servidor.");
+            });
+       
+        
+         atualizarGrafico(); 
+
+    intervaloAtualizacao = setInterval(atualizarGrafico, 5000);
 
     return false;
 }
@@ -257,7 +276,7 @@ function plotarGraficoModelo(dados) {
     }
 
     grafico = new Chart(
-        document.getElementById('dashboard-alertas'),
+        document.getElementById('dashboard-modelos'),
         config
     );
 
