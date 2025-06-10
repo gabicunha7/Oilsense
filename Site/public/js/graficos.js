@@ -382,7 +382,10 @@ function exibirTabelaCarros(dados) {
         conteudo += `<tr>
                 <td> ${dados[i].cod} </td>
                 <td> ${dados[i].modelo} </td>
-                <td> <button onclick="exibirGraficoCarroEspecifico('${dados[i].cod}')"> Ver gráfico </button>
+                <td> 
+                    <button onclick="exibirGraficoCarroEspecifico('${dados[i].cod}')" class="btnTabela">  
+                        <img src="../img/icones/painelIcone.png" alt="Icone de painel" class="iconeTabela"> 
+                    </button>
                 </td>
             </tr>`;
     }
@@ -404,7 +407,11 @@ function exibirTabelaModelos(dados) {
         conteudo += `<tr>
                 <td> ${dados[i].modelo} </td>
                 <td> ${dados[i].qtd} </td>
-                <td> </td>
+                <td>
+                    <button onclick="" class="btnTabela">  
+                        <img src="../img/icones/painelIcone.png" alt="Icone de painel" class="iconeTabela"> 
+                    </button> 
+                </td>
             </tr>`;
     }
 
