@@ -251,10 +251,11 @@ select
                         on mdl.fkmontadora = m.id
                 group by dtcoleta, c.codigo, m.id;
                 
+
 CREATE OR REPLACE VIEW vw_listar_alertas
 AS      
 select 
-m.id, c.codigo cod,  concat(mdl.modelo,' ',mdl.ano) as modelo,
+m.id, c.codigo cod,  concat(mdl.modelo,' ',mdl.ano) as modelo, mdl.id id_modelo,
 case when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) > 70 then 1
 	 when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) < 60 then 2
 	 when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) < 50 then 3

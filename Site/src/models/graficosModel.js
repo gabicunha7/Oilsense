@@ -27,7 +27,7 @@ function modelosAlerta(alerta, montadora) {
         console.log("ACESSEI O GRAFICO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function nivelDeAlertaPorMes()");
 
         var instrucaoSql = `
-                select count(nivel_oleo) qtd, nivel_oleo, modelo from vw_listar_alertas
+                select count(nivel_oleo) qtd, nivel_oleo, modelo, id_modelo from vw_listar_alertas
                 where id = ${montadora} and nivel_oleo = ${alerta}
                 group by nivel_oleo, modelo;
         `;
@@ -42,7 +42,7 @@ function graficoPorCarro(codigo) {
 
         var instrucaoSql = `
                 select 
-                ((c.alturacarter - t.distancia) / c.alturacarter) * 100 porcentagem,
+                round(((c.alturacarter - t.distancia) / c.alturacarter) * 100,2) porcentagem,
                 DATE_FORMAT(t.dtHoraColeta, '%d %H:%i:%s') instante,
                 c.codigo
                 from carro c
@@ -51,9 +51,9 @@ function graficoPorCarro(codigo) {
                 inner join telemetria t
                         on t.fksensor = s.id
                 inner join modelo mdl 
-                on c.fkmodelo = mdl.id
+                        on c.fkmodelo = mdl.id
                 inner join montadora m
-                on mdl.fkmontadora = m.id
+                        on mdl.fkmontadora = m.id
                 where c.codigo = '${codigo}'
                 order by DATE_FORMAT(t.dtHoraColeta, '%H:%i:%s') desc
                 limit 7;
@@ -64,6 +64,31 @@ function graficoPorCarro(codigo) {
 }
 
 
+function graficoPorModelo(modelo_id) {
+        console.log("ACESSEI O GRAFICO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function nivelDeAlertaPorMes()");
+
+        var instrucaoSql = `
+                select 
+                round(avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100),2) porcentagem,
+                DATE_FORMAT(t.dtHoraColeta, '%H:%i:%s') instante
+                from carro c
+                inner join sensor s   
+                on c.fksensor = s.id
+                inner join telemetria t
+                        on t.fksensor = s.id
+                inner join modelo mdl 
+                on c.fkmodelo = mdl.id
+                inner join montadora m
+                on mdl.fkmontadora = m.id
+                where mdl.id = ${modelo_id}
+                group by mdl.id, t.dtHoraColeta
+                order by DATE_FORMAT(t.dtHoraColeta, '%H:%i:%s') desc
+                limit 7;
+        `;
+
+        console.log("Executando a instrução SQL: \n" + instrucaoSql);
+        return database.executar(instrucaoSql);
+}
 
 
 
@@ -71,5 +96,6 @@ module.exports = {
         nivelDeAlertaPorDia,
         carrosAlerta,
         modelosAlerta,
-        graficoPorCarro
+        graficoPorCarro,
+        graficoPorModelo
 }
