@@ -77,9 +77,9 @@ function graficoPorModelo(modelo_id) {
                 inner join telemetria t
                         on t.fksensor = s.id
                 inner join modelo mdl 
-                on c.fkmodelo = mdl.id
+                        on c.fkmodelo = mdl.id
                 inner join montadora m
-                on mdl.fkmontadora = m.id
+                        on mdl.fkmontadora = m.id
                 where mdl.id = ${modelo_id}
                 group by mdl.id, t.dtHoraColeta
                 order by DATE_FORMAT(t.dtHoraColeta, '%H:%i:%s') desc
