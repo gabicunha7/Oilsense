@@ -15,4 +15,8 @@ router.post("/modelosAlerta", function (req, res) {
     graficosController.modelosAlerta(req, res);
 });
 
+router.get("/graficoPorCarro/:codigo", function (req, res) {
+    graficosController.graficoPorCarro(req, res);
+});
+
 module.exports = router;
