@@ -30,7 +30,7 @@ function alertasGraficoDePizza() {
 
 function veiculosComAlerta(alerta) {
     let montadora_id = sessionStorage.ID_MONTADORA;
-    veiculosAtual = alerta;
+    alertaVeiculoAtual = alerta;
 
     fetch(`/graficos/carrosAlerta`, {
         method: "POST",

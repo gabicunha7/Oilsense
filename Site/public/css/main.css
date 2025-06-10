@@ -388,7 +388,7 @@ button .iconeTabela {
 }
 
 .botoes-tipos-alertas .btn-selecionado {
-    background-color: #00759d;
+    background-color: rgb(174, 24, 4);
 }
 
 .botoes-tipos button:first-of-type, .botoes-tipos-alertas button:first-of-type {
@@ -406,4 +406,9 @@ button .iconeTabela {
 .mensagem {
     text-align: center;
     font-size: 1.5rem;
+}
+
+.tabela-painel th {
+    background-color: rgb(174, 24, 4);
+    color: var(--corTexto);
 }
