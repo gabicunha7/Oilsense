@@ -1,4 +1,4 @@
-var placaVar = '';
+var codigoVar = '';
 var volumeVar = '';
 var alturaVar = '';
 var modeloVar = '';
@@ -6,13 +6,13 @@ var modeloVar = '';
 function cadastrarCarro() {
     aguardar();
 
-    placaVar = ipt_placa.value;
+    codigoVar = ipt_codigo.value;
     volumeVar = ipt_volume.value;
     alturaVar = ipt_altura.value;
     modeloVar = sel_modelos.value;
    
     if (
-        placaVar == "" ||
+        codigoVar == "" ||
         volumeVar == "" ||
         alturaVar == "" ||
         modeloVar == ""
@@ -98,7 +98,7 @@ function cadastrar(idSensor) {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            placaServer: placaVar,
+            codigoServer: codigoVar,
             volumeServer: volumeVar,
             alturaServer: alturaVar,
             modeloServer: modeloVar,
@@ -143,7 +143,7 @@ function listarCarros() {
                     let tabela = document.querySelector('table');
                     let frase = `<tr>
                         <th> id </th>
-                        <th> Placa </th>
+                        <th> codigo </th>
                         <th> Volume do Cárter </th>
                         <th> Altura do Cárter </th>
                         <th> Modelo </th>
@@ -154,7 +154,7 @@ function listarCarros() {
                     for (let i = 0; i < resposta.length; i++) {
                         frase += `<tr>`;
                         frase += `<td> ${resposta[i].id} </td>`;
-                        frase += `<td> ${resposta[i].placa} </td>`;
+                        frase += `<td> ${resposta[i].codigo} </td>`;
                         frase += `<td> ${resposta[i].volumecarter} </td>`;
                         frase += `<td> ${resposta[i].alturacarter} </td>`;
                         frase += `<td> ${resposta[i].modelo} </td>`;
@@ -235,7 +235,7 @@ function carregarCarEditando() {
                     ipt_id.value = id;
                     ipt_id.disabled = true;
 
-                    ipt_placa.value = resposta[0].placa;
+                    ipt_codigo.value = resposta[0].codigo;
                     ipt_volume.value = resposta[0].volumecarter; 
                     ipt_altura.value = resposta[0].alturacarter; 
                 });
@@ -251,14 +251,14 @@ function carregarCarEditando() {
 function atualizarCarro() {
     aguardar();
 
-    var placaVar = ipt_placa.value;
+    var codigoVar = ipt_codigo.value;
     var volumeVar = ipt_volume.value;
     var alturaVar = ipt_altura.value;
     var idMontadoraVar = sessionStorage.ID_MONTADORA;
     var idCarroVar = sessionStorage.ID_CARRO_EDITANDO;
 
     if (
-        placaVar == "" ||
+        codigoVar == "" ||
         volumeVar == "" ||
         alturaVar == ""
     ) {
@@ -272,7 +272,7 @@ function atualizarCarro() {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            placaServer: placaVar,
+            codigoServer: codigoVar,
             volumeServer: volumeVar,
             alturaServer: alturaVar,
             idMontadoraServer: idMontadoraVar,
