@@ -355,13 +355,19 @@ button .iconeTabela {
     margin-left: 0.5rem;
 }
 
-.botoes-tipos {
+.botoes-tipos, .botoes-tipos-alertas {
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 }
 
-.botoes-tipos button {
+.botoes-tipos-alertas {
+    width: 80%;
+    margin: auto;
+    padding-top: 1rem;
+}
+
+.botoes-tipos button, .botoes-tipos-alertas button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -380,11 +386,15 @@ button .iconeTabela {
     background-color: #ce8f07;
 }
 
-.botoes-tipos button:first-of-type {
+.botoes-tipos-alertas .btn-selecionado {
+    background-color: #00759d;
+}
+
+.botoes-tipos button:first-of-type, .botoes-tipos-alertas button:first-of-type {
     border-radius: 2rem 0 0 2rem;
 }
 
-.botoes-tipos button:last-of-type {
+.botoes-tipos button:last-of-type, .botoes-tipos-alertas button:last-of-type {
     border-radius: 0 2rem 2rem 0;
 }
 
