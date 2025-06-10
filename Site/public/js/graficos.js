@@ -1,6 +1,7 @@
 let grafico = null;
 let alertaModeloAtual = 1;
 let alertaVeiculoAtual = 1;
+let intervaloAtualizacao = null;
 
 
 
@@ -9,9 +10,13 @@ function voltar() {
         grafico.destroy();
         grafico = null;
     }
+    if (intervaloAtualizacaoCarro) {
+        clearInterval(intervaloAtualizacaoCarro);
+        intervaloAtualizacaoCarro = null;
+    }
 
     document.querySelector('#carros .grafico').style.display = 'none';
-    document.getElementById('btn-voltar').style.display = 'none';  // <-- aqui
+    document.getElementById('btn-voltar').style.display = 'none';  
 
     document.querySelector('#carros table').style.display = 'table';
     document.querySelector('#carros .botoes-tipos-alertas').style.display = 'flex';
@@ -75,33 +80,45 @@ function graficoModelo(){
 
 
 function exibirGraficoCarroEspecifico(codigo) {
-  
+    if (grafico) {
+        grafico.destroy();
+        grafico = null;
+    }
+    if (intervaloAtualizacao) {
+        clearInterval(intervaloAtualizacao);
+        intervaloAtualizacao = null;
+    }
+
     document.querySelector('#carros table').style.display = 'none';
     document.querySelector('#carros .botoes-tipos-alertas').style.display = 'none';
-
-
     document.querySelector('#carros .grafico').style.display = 'block';
-
     document.getElementById('btn-voltar').style.display = 'inline-block';
 
-    fetch(`/graficos/graficoPorCarro/${codigo}`)
-        .then(function (resposta) {
-            if (resposta.ok) {
-                if (resposta.statusText === 'No Content') {
-                    document.querySelector('#carros .grafico').innerHTML = '<p>Nenhum dado encontrado para este carro.</p>';
+
+    function atualizarGrafico() {
+        fetch(`/graficos/graficoPorCarro/${codigo}`)
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    if (resposta.statusText === 'No Content') {
+                        document.querySelector('#carros .grafico').innerHTML = '<p>Nenhum dado encontrado para este carro.</p>';
+                    } else {
+                        resposta.json().then(function (dados) {
+                            plotarGraficoCarro(dados);
+                        });
+                    }
                 } else {
-                    resposta.json().then(function (dados) {
-                        plotarGraficoCarro(dados);
-                    });
+                    alert("Houve um erro ao tentar puxar os dados!");
                 }
-            } else {
-                alert("Houve um erro ao tentar puxar os dados!");
-            }
-        })
-        .catch(function (erro) {
-            console.error("#ERRO: ", erro);
-            alert("Erro ao comunicar com o servidor.");
-        });
+            })
+            .catch(function (erro) {
+                console.error("#ERRO: ", erro);
+                alert("Erro ao comunicar com o servidor.");
+            });
+    }
+
+    atualizarGrafico(); 
+
+    intervaloAtualizacao = setInterval(atualizarGrafico, 5000);
 }
 
 
@@ -123,7 +140,7 @@ function plotarGraficoCarro(dados) {
             datasets: [{
                 label: 'Veículo',
                 data: valores,
-                backgroundColor: ['rgb(54, 162, 235)'],
+                backgroundColor: ['rgb(235, 54, 54)'],
             }]
         },
         options: {
@@ -140,7 +157,7 @@ function plotarGraficoCarro(dados) {
                             type: 'line',
                             yMin: 60,
                             yMax: 60,
-                            borderColor: 'red',
+                            borderColor: 'yellow',
                             borderWidth: 2,
                             label: {
                                 content: '60%',
@@ -153,7 +170,7 @@ function plotarGraficoCarro(dados) {
                             type: 'line',
                             yMin: 70,
                             yMax: 70,
-                            borderColor: 'red',
+                            borderColor: 'yellow',
                             borderWidth: 2,
                             label: {
                                 content: ' 70%',
