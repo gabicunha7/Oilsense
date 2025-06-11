@@ -96,6 +96,36 @@ function graficoModelo(modelo_id) {
     document.querySelector('#modelos .grafico').style.display = 'block';
     document.querySelector('#modelos .btn-voltar').style.display = 'inline-block';
 
+    let dadosSemAlerta = null;
+
+    fetch(`/graficos/graficoPorModeloAlerta`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            alerta: 4,
+            modelo_id: modelo_id
+        }),
+    })
+        .then(function (resposta) {
+            if (resposta.ok) {
+                if (resposta.statusText === 'No Content') {
+                    document.querySelector('#modelos .mensagem').innerHTML = '<p> Nenhum dado encontrado para este carro.</p>';
+                } else {
+                    resposta.json().then(function (dados) {
+                        dadosSemAlerta = dados;
+                    });
+                }
+            } else {
+                alert("Houve um erro ao tentar puxar os dados!");
+            }
+        })
+        .catch(function (erro) {
+            console.error("#ERRO: ", erro);
+            alert("Erro ao comunicar com o servidor.");
+        });
+
     fetch(`/graficos/graficoPorModeloAlerta`, {
         method: "POST",
         headers: {
@@ -152,7 +182,9 @@ function graficoModelo(modelo_id) {
                             </section>
                         `;
 
-                        plotarGraficoModelo(dados, modelo_id);
+                        if (dadosSemAlerta) {
+                            plotarGraficoModelo(dados, dadosSemAlerta, modelo_id);
+                        }
                     });
                 }
             } else {
@@ -244,14 +276,16 @@ function plotarGraficoCarro(dados, codigo) {
             datasets: [{
                 label: 'Veículo',
                 data: valores,
-                backgroundColor: ['rgb(206, 143, 7)'],
+                borderColor: 'rgb(235, 54, 54)',
+                backgroundColor: 'rgba(235, 54, 54, 0.2)',
+                borderWidth: 2
             }]
         },
         options: {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Níveis da altura do óleo do carro',
+                    text: `Níveis da altura do óleo do carro com código ${dados[0].codigo}`,
                     font: { size: 28 },
                     padding: { top: 16, bottom: 16 }
                 },
@@ -308,13 +342,15 @@ function plotarGraficoCarro(dados, codigo) {
     intervaloAtualizacao = setTimeout(() => atualizarGraficoCarro(grafico, config, codigo, dados), 6000);
 }
 
-function plotarGraficoModelo(dados, modelo_id) {
+function plotarGraficoModelo(dados, dadosSemAlerta, modelo_id) {
     let labels = [];
     let valores = [];
+    let valores2 = [];
 
     for (let i = dados.length - 1; i >= 0; i--) {
         labels.push(dados[i].instante);
         valores.push(dados[i].porcentagem);
+        valores2.push(dadosSemAlerta[i].porcentagem);
     }
 
     const config = {
@@ -322,20 +358,28 @@ function plotarGraficoModelo(dados, modelo_id) {
         data: {
             labels: labels,
             datasets: [{
-                label: 'Nível médio de óleo (%)',
+                label: 'Nível médio de óleo com nível (%)',
                 data: valores,
                 borderColor: 'rgb(235, 54, 54)',
                 backgroundColor: 'rgba(235, 54, 54, 0.2)',
                 tension: 0.4,
                 fill: true
-            }]
+            },
+            {
+                label: 'Nível médio de óleo sem alerta (%)',
+                data: valores2,
+                borderColor: 'rgb(55, 54, 235)',
+                backgroundColor: 'rgba(54, 54, 235, 0.2)',
+                tension: 0.4,
+            }
+        ]
         },
         options: {
             responsive: true,
             plugins: {
                 title: {
                     display: true,
-                    text: 'Nível médio de óleo dos veículos da montadora',
+                    text: `Nível médio de óleo dos veículos do modelo ${dados[0].nome}`,
                     font: { size: 24 },
                     padding: { top: 20, bottom: 10 }
                 },
