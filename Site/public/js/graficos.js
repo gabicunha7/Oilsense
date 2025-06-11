@@ -8,8 +8,9 @@ function voltar() {
         grafico.destroy();
         grafico = null;
     }
+
     if (intervaloAtualizacao) {
-        clearInterval(intervaloAtualizacao);
+        clearTimeout(intervaloAtualizacao);
         intervaloAtualizacao = null;
     }
 
@@ -42,8 +43,8 @@ function alertasGraficoDePizza() {
                             totalAlertas += dados[i].qtde;
                         }
 
-                        let maiorQtd = dados[0].qtd;
-                        let alertaMaisFrequente = '';
+                        let maiorQtd = dados[0].qtde;
+                        let alertaMaisFrequente = dados[0].nivel_oleo;
                         for (let i = 0; i < dados.length; i++) {
                             if (dados[i].qtde > maiorQtd) {
                                 maiorQtd = dados[i].qtde;
@@ -51,8 +52,8 @@ function alertasGraficoDePizza() {
                             }
                         }
 
-                        let menorQtd = dados[0].qtd;
-                        let alertaMenosFrequente = '';
+                        let menorQtd = dados[0].qtde;
+                        let alertaMenosFrequente = dados[0].nivel_oleo;
                         for (let i = 0; i < dados.length; i++) {
                             if (dados[i].qtde < menorQtd) {
                                 menorQtd = dados[i].qtde;
@@ -95,70 +96,73 @@ function graficoModelo(modelo_id) {
     document.querySelector('#modelos .grafico').style.display = 'block';
     document.querySelector('#modelos .btn-voltar').style.display = 'inline-block';
 
-    function atualizarGrafico() {
-        fetch(`/graficos/graficoPorModelo/${modelo_id}`)
-            .then(function (resposta) {
-                if (resposta.ok) {
-                    if (resposta.statusText === 'No Content') {
-                        document.querySelector('#modelos .mensagem').innerHTML = '<p> Nenhum dado encontrado para este carro.</p>';
-                    } else {
-                        resposta.json().then(function (dados) {
-
-                            let soma = 0;
-                            let pior = Number(dados[0].porcentagem);
-                            let melhor = Number(dados[0].porcentagem);
-
-                            for (let i = 0; i < dados.length; i++) {
-                                const valor = Number(dados[i].porcentagem);
-
-                                soma += valor;
-
-                                if (valor < pior) {
-                                    pior = valor;
-                                }
-                                if (valor > melhor) {
-                                    melhor = valor;
-                                }
-                            }
-
-                            const ultima = Number(dados[0].porcentagem);
-                            const media = (soma / dados.length).toFixed(2);
-
-                            document.querySelector('#modelos .kpis').innerHTML = `
-                                <section class="indicador">
-                                    <h3> Última porcentagem </h3>
-                                    <p class="indice"> ${ultima}% </p>
-                                </section>
-                                <section class="indicador">
-                                    <h3> Média recente </h3>
-                                    <p class="indice"> ${media}% </p>
-                                </section>
-                                <section class="indicador">
-                                    <h3>  Menor porcentagem </h3>
-                                    <p class="indice"> ${pior}% </p>
-                                </section>
-                                <section class="indicador">
-                                    <h3> Maior porcentagem </h3>
-                                    <p class="indice"> ${melhor}% </p>
-                                </section>
-                            `;
-
-                            plotarGraficoModelo(dados);
-                        });
-                    }
+    fetch(`/graficos/graficoPorModeloAlerta`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            alerta: alertaModeloAtual,
+            modelo_id: modelo_id
+        }),
+    })
+        .then(function (resposta) {
+            if (resposta.ok) {
+                if (resposta.statusText === 'No Content') {
+                    document.querySelector('#modelos .mensagem').innerHTML = '<p> Nenhum dado encontrado para este carro.</p>';
                 } else {
-                    alert("Houve um erro ao tentar puxar os dados!");
+                    resposta.json().then(function (dados) {
+
+                        let soma = 0;
+                        let pior = Number(dados[0].porcentagem);
+                        let melhor = Number(dados[0].porcentagem);
+
+                        for (let i = 0; i < dados.length; i++) {
+                            const valor = Number(dados[i].porcentagem);
+
+                            soma += valor;
+
+                            if (valor < pior) {
+                                pior = valor;
+                            }
+                            if (valor > melhor) {
+                                melhor = valor;
+                            }
+                        }
+
+                        const ultima = Number(dados[0].porcentagem);
+                        const media = (soma / dados.length).toFixed(2);
+
+                        document.querySelector('#modelos .kpis').innerHTML = `
+                            <section class="indicador">
+                                <h3> Última porcentagem </h3>
+                                <p class="indice"> ${ultima}% </p>
+                            </section>
+                            <section class="indicador">
+                                <h3> Média recente </h3>
+                                <p class="indice"> ${media}% </p>
+                            </section>
+                            <section class="indicador">
+                                <h3>  Menor porcentagem </h3>
+                                <p class="indice"> ${pior}% </p>
+                            </section>
+                            <section class="indicador">
+                                <h3> Maior porcentagem </h3>
+                                <p class="indice"> ${melhor}% </p>
+                            </section>
+                        `;
+
+                        plotarGraficoModelo(dados, modelo_id);
+                    });
                 }
-            })
-            .catch(function (erro) {
-                console.error("#ERRO: ", erro);
-                alert("Erro ao comunicar com o servidor.");
-            });
-    }
-
-    atualizarGrafico();
-
-    intervaloAtualizacao = setInterval(atualizarGrafico, 6000);
+            } else {
+                alert("Houve um erro ao tentar puxar os dados!");
+            }
+        })
+        .catch(function (erro) {
+            console.error("#ERRO: ", erro);
+            alert("Erro ao comunicar com o servidor.");
+        });
 }
 
 function exibirGraficoCarroEspecifico(codigo) {
@@ -167,69 +171,63 @@ function exibirGraficoCarroEspecifico(codigo) {
     document.querySelector('#carros .grafico').style.display = 'block';
     document.querySelector('#carros .btn-voltar').style.display = 'inline-block';
 
-    function atualizarGrafico() {
-        fetch(`/graficos/graficoPorCarro/${codigo}`)
-            .then(function (resposta) {
-                if (resposta.ok) {
-                    if (resposta.statusText === 'No Content') {
-                        document.querySelector('#carros .mensagem').innerHTML = '<p> Nenhum dado encontrado para este carro.</p>';
-                    } else {
-                        resposta.json().then(function (dados) {
-                            let soma = 0;
-                            let max = dados[0].porcentagem;
-                            let min = dados[0].porcentagem;
-                            let numColetas = 0;
-
-                            for (let i = 0; i < dados.length; i++) {
-                                let valor = parseFloat(dados[i].porcentagem);
-                                soma += valor;
-                                if (valor > max) max = valor;
-                                if (valor < min) min = valor;
-                                numColetas++;
-                            }
-
-                            let media = (soma / numColetas).toFixed(2);
-                            max = max;
-                            min = min;
-
-                            document.querySelector('#carros .kpis').innerHTML = `
-                                <section class="indicador">
-                                    <h3> Média Atual </h3>
-                                    <p class="indice"> ${media}% </p>
-                                </section>
-                                <section class="indicador">
-                                    <h3> Máximo </h3>
-                                    <p class="indice"> ${max}%</p>
-                                </section>
-                                <section class="indicador">
-                                    <h3> Mínimo </h3>
-                                    <p class="indice"> ${min}% </p>
-                                </section>
-                                <section class="indicador">
-                                    <h3> Nº Coletas </h3>
-                                    <p class="indice"> ${numColetas} </p>
-                                </section>
-                                `;
-
-                            plotarGraficoCarro(dados);
-                        });
-                    }
+    fetch(`/graficos/graficoPorCarro/${codigo}`)
+        .then(function (resposta) {
+            if (resposta.ok) {
+                if (resposta.statusText === 'No Content') {
+                    document.querySelector('#carros .mensagem').innerHTML = '<p> Nenhum dado encontrado para este carro.</p>';
                 } else {
-                    alert("Houve um erro ao tentar puxar os dados!");
+                    resposta.json().then(function (dados) {
+                        let soma = 0;
+                        let max = dados[0].porcentagem;
+                        let min = dados[0].porcentagem;
+                        let numColetas = 0;
+
+                        for (let i = 0; i < dados.length; i++) {
+                            let valor = parseFloat(dados[i].porcentagem);
+                            soma += valor;
+                            if (valor > max) max = valor;
+                            if (valor < min) min = valor;
+                            numColetas++;
+                        }
+
+                        let media = (soma / numColetas).toFixed(2);
+                        max = max;
+                        min = min;
+
+                        document.querySelector('#carros .kpis').innerHTML = `
+                            <section class="indicador">
+                                <h3> Média Atual </h3>
+                                <p class="indice"> ${media}% </p>
+                            </section>
+                            <section class="indicador">
+                                <h3> Máximo </h3>
+                                <p class="indice"> ${max}%</p>
+                            </section>
+                            <section class="indicador">
+                                <h3> Mínimo </h3>
+                                <p class="indice"> ${min}% </p>
+                            </section>
+                            <section class="indicador">
+                                <h3> Nº Coletas </h3>
+                                <p class="indice"> ${numColetas} </p>
+                            </section>
+                            `;
+
+                        plotarGraficoCarro(dados, codigo);
+                    });
                 }
-            })
-            .catch(function (erro) {
-                console.error("#ERRO: ", erro);
-                alert("Erro ao comunicar com o servidor.");
-            });
-    }
-
-    atualizarGrafico();
-
-    intervaloAtualizacao = setInterval(atualizarGrafico, 6000);
+            } else {
+                alert("Houve um erro ao tentar puxar os dados!");
+            }
+        })
+        .catch(function (erro) {
+            console.error("#ERRO: ", erro);
+            alert("Erro ao comunicar com o servidor.");
+        });
 }
 
-function plotarGraficoCarro(dados) {
+function plotarGraficoCarro(dados, codigo) {
 
     let labels = [];
     let valores = [];
@@ -266,6 +264,12 @@ function plotarGraficoCarro(dados) {
                             borderColor: 'rgba(11, 92, 4, 0.34)',
                             backgroundColor: 'rgba(33, 253, 13, 0.34)',
                             borderWidth: 2,
+                            label: {
+                                display: true,
+                                content: 'Porcentagem Ideal',
+                                position: 'start',
+                                color: 'white'
+                            }
                         },
                     }
                 }
@@ -300,9 +304,11 @@ function plotarGraficoCarro(dados) {
         document.getElementById('dashboard-carros'),
         config
     );
+
+    intervaloAtualizacao = setTimeout(() => atualizarGraficoCarro(grafico, config, codigo, dados), 6000);
 }
 
-function plotarGraficoModelo(dados) {
+function plotarGraficoModelo(dados, modelo_id) {
     let labels = [];
     let valores = [];
 
@@ -347,6 +353,12 @@ function plotarGraficoModelo(dados) {
                             borderColor: 'rgba(11, 92, 4, 0.34)',
                             backgroundColor: 'rgba(33, 253, 13, 0.34)',
                             borderWidth: 2,
+                            label: {
+                                display: true,
+                                content: 'Porcentagem Ideal',
+                                position: 'start',
+                                color: 'white'
+                            }
                         },
                     }
                 }
@@ -382,6 +394,156 @@ function plotarGraficoModelo(dados) {
         config
     );
 
+    intervaloAtualizacao = setTimeout(() => atualizarGraficoModelo(grafico, config, modelo_id, dados), 6000);
+}
+
+function atualizarGraficoCarro(grafico, config, codigo, dados) {
+    fetch(`/graficos/atualizarGraficoPorCarro/${codigo}`)
+        .then(function (resposta) {
+            if (resposta.ok) {
+                if (resposta.statusText != 'No Content') {
+                    resposta.json().then(function (dadosUltimo) {
+                        if (dadosUltimo[0].instante != config.data.labels[config.data.labels.length - 1]) {
+                            config.data.labels.shift();
+                            config.data.labels.push(dadosUltimo[0].instante);
+
+                            config.data.datasets[0].data.shift();
+                            config.data.datasets[0].data.push(dadosUltimo[0].porcentagem);
+
+                            grafico.update();
+
+                            dados.shift();
+                            dados.push(dadosUltimo[0]);
+
+                            let soma = 0;
+                            let max = dados[0].porcentagem;
+                            let min = dados[0].porcentagem;
+                            let numColetas = 0;
+    
+                            for (let i = 0; i < dados.length; i++) {
+                                let valor = parseFloat(dados[i].porcentagem);
+                                soma += valor;
+                                if (valor > max) max = valor;
+                                if (valor < min) min = valor;
+                                numColetas++;
+                            }
+    
+                            let media = (soma / numColetas).toFixed(2);
+                            max = max;
+                            min = min;
+    
+                            document.querySelector('#carros .kpis').innerHTML = `
+                                <section class="indicador">
+                                    <h3> Média Atual </h3>
+                                    <p class="indice"> ${media}% </p>
+                                </section>
+                                <section class="indicador">
+                                    <h3> Máximo </h3>
+                                    <p class="indice"> ${max}%</p>
+                                </section>
+                                <section class="indicador">
+                                    <h3> Mínimo </h3>
+                                    <p class="indice"> ${min}% </p>
+                                </section>
+                                <section class="indicador">
+                                    <h3> Nº Coletas </h3>
+                                    <p class="indice"> ${numColetas} </p>
+                                </section>
+                            `;    
+                        }
+
+                        intervaloAtualizacao = setTimeout(() => atualizarGraficoCarro(grafico, config, codigo, dados), 6000);
+                    });
+                }
+            } else {
+                alert("Houve um erro ao tentar puxar os dados!");
+            }
+        })
+        .catch(function (erro) {
+            console.error("#ERRO: ", erro);
+            alert("Erro ao comunicar com o servidor.");
+        });
+}
+
+function atualizarGraficoModelo(grafico, config, modelo_id, dados) {
+    fetch(`/graficos/atualizarGraficoPorModelo`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            alerta: alertaModeloAtual,
+            modelo_id: modelo_id
+        }),
+    })
+        .then(function (resposta) {
+            if (resposta.ok) {
+                if (resposta.statusText != 'No Content') {
+                    resposta.json().then(function (dadosUltimo) {
+                        if (dadosUltimo[0].instante != config.data.labels[config.data.labels.length - 1]) {
+                            config.data.labels.shift();
+                            config.data.labels.push(dadosUltimo[0].instante);
+
+                            config.data.datasets[0].data.shift();
+                            config.data.datasets[0].data.push(dadosUltimo[0].porcentagem);
+
+                            grafico.update();
+
+                            dados.shift();
+                            dados.push(dadosUltimo[0]);
+
+                            let soma = 0;
+                            let pior = Number(dados[0].porcentagem);
+                            let melhor = Number(dados[0].porcentagem);
+
+                            for (let i = 0; i < dados.length; i++) {
+                                const valor = Number(dados[i].porcentagem);
+
+                                soma += valor;
+
+                                if (valor < pior) {
+                                    pior = valor;
+                                }
+                                if (valor > melhor) {
+                                    melhor = valor;
+                                }
+                            }
+
+                            const ultima = Number(dados[0].porcentagem);
+                            const media = (soma / dados.length).toFixed(2);
+
+                            document.querySelector('#modelos .kpis').innerHTML = `
+                                <section class="indicador">
+                                    <h3> Última porcentagem </h3>
+                                    <p class="indice"> ${ultima}% </p>
+                                </section>
+                                <section class="indicador">
+                                    <h3> Média recente </h3>
+                                    <p class="indice"> ${media}% </p>
+                                </section>
+                                <section class="indicador">
+                                    <h3>  Menor porcentagem </h3>
+                                    <p class="indice"> ${pior}% </p>
+                                </section>
+                                <section class="indicador">
+                                    <h3> Maior porcentagem </h3>
+                                    <p class="indice"> ${melhor}% </p>
+                                </section>
+                            `;
+
+                        }
+
+                        intervaloAtualizacao = setTimeout(() => atualizarGraficoModelo(grafico, config, modelo_id, dados), 6000);
+                    });
+                }
+            } else {
+                alert("Houve um erro ao tentar puxar os dados!");
+            }
+        })
+        .catch(function (erro) {
+            console.error("#ERRO: ", erro);
+            alert("Erro ao comunicar com o servidor.");
+        });
 }
 
 function veiculosComAlerta(alerta) {
@@ -585,7 +747,7 @@ function exibir(tipo) {
     tipoDashboard.style.display = 'block';
 
     if (intervaloAtualizacao) {
-        clearInterval(intervaloAtualizacao);
+        clearTimeout(intervaloAtualizacao);
         intervaloAtualizacao = null;
     }
 
