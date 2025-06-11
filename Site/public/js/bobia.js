@@ -3,6 +3,7 @@ function enviarPergunta() {
 
     const perguntaIpt = document.getElementById('inputPergunta').value.trim();
     const respostaDiv = document.getElementById('respostaIA');
+    console.log(perguntaIpt)
 
     if (perguntaIpt === '') {
         alert('Por favor, digite uma pergunta.');
