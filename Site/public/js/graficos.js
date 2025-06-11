@@ -3,8 +3,6 @@ let alertaModeloAtual = 1;
 let alertaVeiculoAtual = 1;
 let intervaloAtualizacao = null;
 
-
-
 function voltar() {
     if (grafico) {
         grafico.destroy();
@@ -27,7 +25,6 @@ function voltar() {
     document.querySelector('#modelos table').style.display = 'table';
     document.querySelector('#modelos .botoes-tipos-alertas').style.display = 'flex';
 }
-
 
 function alertasGraficoDePizza() {
     let montadora_id = sessionStorage.ID_MONTADORA;
@@ -63,19 +60,19 @@ function alertasGraficoDePizza() {
                             }
                         }
 
-                        document.querySelector('#alertas .kpis').innerHTML = 
-                            `<div class="indicador">
-                                <h3>${totalAlertas}</h3>
-                                <p>Total de Alertas</p>
-                            </div>
-                            <div class="indicador">
-                                <h3>${alertaMaisFrequente} | total: (${maiorQtd})</h3>
-                                <p>Alerta Mais Frequente</p>
-                            </div>
-                            <div class="indicador">
-                                <h3>${alertaMenosFrequente} | total: (${menorQtd})</h3>
-                                <p>Alerta Menos Frequente</p>
-                            </div>`;
+                        document.querySelector('#alertas .kpis').innerHTML =
+                            `<section class="indicador">
+                                <h3> Total de Alertas </h3>
+                                <p class="indice"> ${totalAlertas} </p>
+                            </section>
+                            <section class="indicador">
+                                <h3> Alerta Mais Frequente </h3>
+                                <p class="indice"> ${alertaMaisFrequente} | total: (${maiorQtd}) </p>
+                            </section>
+                            <section class="indicador">
+                                <h3> Alerta Menos Frequente </h3>
+                                <p class="indice"> ${alertaMenosFrequente} | total: (${menorQtd}) </p>
+                            </section>`;
                         plotarGraficoPizza(dados);
                     });
                 }
@@ -91,14 +88,7 @@ function alertasGraficoDePizza() {
     return false;
 }
 
-
-
 function graficoModelo(modelo_id) {
-
-    if (grafico) {
-        grafico.destroy();
-        grafico = null;
-    }
 
     document.querySelector('#modelos table').style.display = 'none';
     document.querySelector('#modelos .botoes-tipos-alertas').style.display = 'none';
@@ -110,7 +100,7 @@ function graficoModelo(modelo_id) {
             .then(function (resposta) {
                 if (resposta.ok) {
                     if (resposta.statusText === 'No Content') {
-                        document.querySelector('#modelos .grafico').innerHTML = '<p>Nenhum dado encontrado para este carro.</p>';
+                        document.querySelector('#modelos .mensagem').innerHTML = '<p> Nenhum dado encontrado para este carro.</p>';
                     } else {
                         resposta.json().then(function (dados) {
 
@@ -135,22 +125,22 @@ function graficoModelo(modelo_id) {
                             const media = (soma / dados.length).toFixed(2);
 
                             document.querySelector('#modelos .kpis').innerHTML = `
-                                <div class="indicador">
-                                    <h3>${ultima}%</h3>
-                                    <p>Última leitura</p>
-                                </div>
-                                <div class="indicador">
-                                    <h3>${media}%</h3>
-                                    <p>Média recente</p>
-                                </div>
-                                <div class="indicador">
-                                    <h3>${pior}%</h3>
-                                    <p>Pior leitura</p>
-                                </div>
-                                <div class="indicador">
-                                    <h3>${melhor}%</h3>
-                                    <p>Melhor leitura</p>
-                                </div>
+                                <section class="indicador">
+                                    <h3> Última leitura </h3>
+                                    <p class="indice"> ${ultima}% </p>
+                                </section>
+                                <section class="indicador">
+                                    <h3> Média recente </h3>
+                                    <p class="indice"> ${media}% </p>
+                                </section>
+                                <section class="indicador">
+                                    <h3>  Pior leitura </h3>
+                                    <p class="indice"> ${pior}% </p>
+                                </section>
+                                <section class="indicador">
+                                    <h3> Melhor leitura </h3>
+                                    <p class="indice"> ${melhor}% </p>
+                                </section>
                             `;
 
                             plotarGraficoModelo(dados);
@@ -171,32 +161,20 @@ function graficoModelo(modelo_id) {
     intervaloAtualizacao = setInterval(atualizarGrafico, 6000);
 }
 
-
-
 function exibirGraficoCarroEspecifico(codigo) {
-    if (grafico) {
-        grafico.destroy();
-        grafico = null;
-    }
-
     document.querySelector('#carros table').style.display = 'none';
     document.querySelector('#carros .botoes-tipos-alertas').style.display = 'none';
     document.querySelector('#carros .grafico').style.display = 'block';
     document.querySelector('#carros .btn-voltar').style.display = 'inline-block';
 
-function atualizarGrafico() {
+    function atualizarGrafico() {
         fetch(`/graficos/graficoPorCarro/${codigo}`)
             .then(function (resposta) {
                 if (resposta.ok) {
                     if (resposta.statusText === 'No Content') {
-                        document.querySelector('#carros .grafico').innerHTML = '<p>Nenhum dado encontrado para este carro.</p>';
+                        document.querySelector('#carros .mensagem').innerHTML = '<p> Nenhum dado encontrado para este carro.</p>';
                     } else {
                         resposta.json().then(function (dados) {
-                            if (dados.length === 0) {
-                                document.querySelector('#carros .grafico').innerHTML = '<p>Nenhum dado encontrado para este carro.</p>';
-                                return;
-                            }
-
                             let soma = 0;
                             let max = -Infinity;
                             let min = Infinity;
@@ -215,22 +193,22 @@ function atualizarGrafico() {
                             min = min.toFixed(2);
 
                             document.querySelector('#carros .kpis').innerHTML = `
-                                <div class="indicador">
-                                    <h3>Média Atual</h3>
-                                    <p>${media}%</p>
-                                </div>
-                                <div class="indicador">
-                                    <h3>Máximo</h3>
-                                    <p>${max}%</p>
-                                </div>
-                                <div class="indicador">
-                                    <h3>Mínimo</h3>
-                                    <p>${min}%</p>
-                                </div>
-                                <div class="indicador">
-                                    <h3>Nº Coletas</h3>
-                                    <p>${numColetas}</p>
-                                </div>
+                                <section class="indicador">
+                                    <h3> Média Atual </h3>
+                                    <p class="indice"> ${media}% </p>
+                                </section>
+                                <section class="indicador">
+                                    <h3> Máximo </h3>
+                                    <p class="indice"> ${max}%</p>
+                                </section>
+                                <section class="indicador">
+                                    <h3> Mínimo </h3>
+                                    <p class="indice"> ${min}% </p>
+                                </section>
+                                <section class="indicador">
+                                    <h3> Nº Coletas </h3>
+                                    <p class="indice"> ${numColetas} </p>
+                                </section>
                                 `;
 
                             plotarGraficoCarro(dados);
@@ -244,14 +222,12 @@ function atualizarGrafico() {
                 console.error("#ERRO: ", erro);
                 alert("Erro ao comunicar com o servidor.");
             });
-        }
+    }
 
     atualizarGrafico();
 
     intervaloAtualizacao = setInterval(atualizarGrafico, 6000);
 }
-
-
 
 function plotarGraficoCarro(dados) {
 
@@ -333,7 +309,6 @@ function plotarGraficoCarro(dados) {
         config
     );
 }
-
 
 function plotarGraficoModelo(dados) {
     let labels = [];
@@ -423,8 +398,6 @@ function plotarGraficoModelo(dados) {
         },
     };
 
-
-
     Chart.defaults.color = '#ffffff';
     Chart.defaults.font.size = 16;
 
@@ -438,7 +411,6 @@ function plotarGraficoModelo(dados) {
     );
 
 }
-
 
 function veiculosComAlerta(alerta) {
     let montadora_id = sessionStorage.ID_MONTADORA;
@@ -529,7 +501,6 @@ function exibirTabelaCarros(dados) {
     let secGrafico = document.querySelector('#carros .grafico');
     secGrafico.style.display = 'none';
 
-
     let conteudo = `<tr>
                         <th> Código Veiculo </th>
                         <th> Modelo </th>
@@ -554,6 +525,9 @@ function exibirTabelaCarros(dados) {
 function exibirTabelaModelos(dados) {
     let tabela = document.querySelector('#modelos table');
     tabela.style.display = 'table';
+
+    let secGrafico = document.querySelector('#modelos .grafico');
+    secGrafico.style.display = 'none';
 
     let conteudo = `<tr>
                         <th> Modelo </th>
