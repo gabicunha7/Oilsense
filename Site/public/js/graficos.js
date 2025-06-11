@@ -89,16 +89,16 @@ function alertasGraficoDePizza() {
     return false;
 }
 
-function graficoModelo(modelo_id) {
+async function graficoModelo(modelo_id) {
 
     document.querySelector('#modelos table').style.display = 'none';
     document.querySelector('#modelos .botoes-tipos-alertas').style.display = 'none';
     document.querySelector('#modelos .grafico').style.display = 'block';
     document.querySelector('#modelos .btn-voltar').style.display = 'inline-block';
 
-    let dadosSemAlerta = null;
+    let dadosSemAlerta = [];
 
-    fetch(`/graficos/graficoPorModeloAlerta`, {
+    await fetch(`/graficos/graficoPorModeloAlerta`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -126,7 +126,7 @@ function graficoModelo(modelo_id) {
             alert("Erro ao comunicar com o servidor.");
         });
 
-    fetch(`/graficos/graficoPorModeloAlerta`, {
+    await fetch(`/graficos/graficoPorModeloAlerta`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -181,7 +181,7 @@ function graficoModelo(modelo_id) {
                                 <p class="indice"> ${melhor}% </p>
                             </section>
                         `;
-
+                        
                         if (dadosSemAlerta) {
                             plotarGraficoModelo(dados, dadosSemAlerta, modelo_id);
                         }
@@ -350,30 +350,32 @@ function plotarGraficoModelo(dados, dadosSemAlerta, modelo_id) {
     for (let i = dados.length - 1; i >= 0; i--) {
         labels.push(dados[i].instante);
         valores.push(dados[i].porcentagem);
-        valores2.push(dadosSemAlerta[i].porcentagem);
+        if (dadosSemAlerta.length != 0) {
+            valores2.push(dadosSemAlerta[i].porcentagem);
+        }
     }
 
-   const config = {
-    type: 'line',
-    data: {
-        labels: labels,
-        datasets: [{
-            label: 'Nível médio de óleo com nível (%)',
-            data: valores,
-            borderColor: 'rgb(235, 54, 54)',
-            backgroundColor: 'rgba(235, 54, 54, 0.2)',
-            tension: 0.4,
-            fill: true
+    const config = {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Nível médio de óleo com nível (%)',
+                data: valores,
+                borderColor: 'rgb(235, 54, 54)',
+                backgroundColor: 'rgba(235, 54, 54, 0.2)',
+                tension: 0.4,
+                fill: true
+            },
+            {
+                label: 'Nível médio de óleo sem alerta (%)',
+                data: valores2,
+                borderColor: 'rgb(35, 35, 245)',
+                backgroundColor: 'rgba(54, 54, 235, 0.2)',
+                tension: 0.4,
+                borderWidth: 4
+            }]
         },
-        {
-            label: 'Nível médio de óleo sem alerta (%)',
-            data: valores2,
-            borderColor: 'rgb(35, 35, 245)',
-            backgroundColor: 'rgba(54, 54, 235, 0.2)',
-            tension: 0.4,
-            borderWidth: 4 
-        }]
-    },
         options: {
             responsive: true,
             plugins: {
@@ -463,7 +465,7 @@ function atualizarGraficoCarro(grafico, config, codigo, dados) {
                             let max = dados[0].porcentagem;
                             let min = dados[0].porcentagem;
                             let numColetas = 0;
-    
+
                             for (let i = 0; i < dados.length; i++) {
                                 let valor = parseFloat(dados[i].porcentagem);
                                 soma += valor;
@@ -471,11 +473,11 @@ function atualizarGraficoCarro(grafico, config, codigo, dados) {
                                 if (valor < min) min = valor;
                                 numColetas++;
                             }
-    
+
                             let media = (soma / numColetas).toFixed(2);
                             max = max;
                             min = min;
-    
+
                             document.querySelector('#carros .kpis').innerHTML = `
                                 <section class="indicador">
                                     <h3> Média Atual </h3>
@@ -493,7 +495,7 @@ function atualizarGraficoCarro(grafico, config, codigo, dados) {
                                     <h3> Nº Coletas </h3>
                                     <p class="indice"> ${numColetas} </p>
                                 </section>
-                            `;    
+                            `;
                         }
 
                         intervaloAtualizacao = setTimeout(() => atualizarGraficoCarro(grafico, config, codigo, dados), 6000);
