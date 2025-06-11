@@ -68,11 +68,11 @@ function alertasGraficoDePizza() {
                             </section>
                             <section class="indicador">
                                 <h3> Alerta Mais Frequente </h3>
-                                <p class="indice"> ${alertaMaisFrequente} | total: (${maiorQtd}) </p>
+                                <p class="indice"> ${alertaMaisFrequente} | total: ${maiorQtd} </p>
                             </section>
                             <section class="indicador">
                                 <h3> Alerta Menos Frequente </h3>
-                                <p class="indice"> ${alertaMenosFrequente} | total: (${menorQtd}) </p>
+                                <p class="indice"> ${alertaMenosFrequente} | total: ${menorQtd} </p>
                             </section>`;
                         plotarGraficoPizza(dados);
                     });
@@ -511,8 +511,36 @@ function atualizarGraficoCarro(grafico, config, codigo, dados) {
         });
 }
 
-function atualizarGraficoModelo(grafico, config, modelo_id, dados) {
-    fetch(`/graficos/atualizarGraficoPorModelo`, {
+async function atualizarGraficoModelo(grafico, config, modelo_id, dados) {
+    let dadosSemAlerta = [];
+
+     await fetch(`/graficos/atualizarGraficoPorModelo`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            alerta: alertaModeloAtual,
+            modelo_id: modelo_id
+        }),
+    })
+        .then(function (resposta) {
+            if (resposta.ok) {
+                if (resposta.statusText != 'No Content') {
+                    resposta.json().then(function (dadosUltimo) {
+                        dadosSemAlerta = dadosUltimo;
+                    });
+                }
+            } else {
+                alert("Houve um erro ao tentar puxar os dados!");
+            }
+        })
+        .catch(function (erro) {
+            console.error("#ERRO: ", erro);
+            alert("Erro ao comunicar com o servidor.");
+        });
+
+    await fetch(`/graficos/atualizarGraficoPorModelo`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -532,6 +560,11 @@ function atualizarGraficoModelo(grafico, config, modelo_id, dados) {
 
                             config.data.datasets[0].data.shift();
                             config.data.datasets[0].data.push(dadosUltimo[0].porcentagem);
+
+                            if (dadosSemAlerta.length != 0) {
+                                config.data.datasets[1].data.shift();
+                                config.data.datasets[1].data.push(dadosSemAlerta[0].porcentagem);
+                            }
 
                             grafico.update();
 
