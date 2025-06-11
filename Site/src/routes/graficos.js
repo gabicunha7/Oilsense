@@ -23,4 +23,12 @@ router.post("/graficoPorModeloAlerta", function (req, res) {
     graficosController.graficoPorModeloAlerta(req, res);
 });
 
+router.get("/atualizarGraficoPorCarro/:codigo", function (req,res) {
+    graficosController.atualizarGraficoPorCarro(req,res)
+});
+
+router.post("/atualizarGraficoPorModelo", function (req, res) {
+    graficosController.atualizarGraficoPorModelo(req, res);
+});
+
 module.exports = router;
