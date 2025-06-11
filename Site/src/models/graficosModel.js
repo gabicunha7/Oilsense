@@ -27,7 +27,7 @@ function modelosAlerta(alerta, montadora) {
         console.log("ACESSEI O GRAFICO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function nivelDeAlertaPorMes()");
 
         var instrucaoSql = `
-                select count(nivel_oleo) qtd, nivel_oleo, modelo, id_modelo from vw_listar_alertas
+                select concat(count(nivel_oleo),'/', (select COUNT(*) from carro WHERE carro.fkmodelo = vw_listar_alertas.id_modelo)) qtd, nivel_oleo, modelo, id_modelo from vw_listar_alertas
                 where id = ${montadora} and nivel_oleo = ${alerta}
                 group by nivel_oleo, modelo, id_modelo;
         `;
@@ -95,9 +95,10 @@ function graficoPorModeloAlerta(modelo_id, alerta) {
         console.log("ACESSEI O GRAFICO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function nivelDeAlertaPorMes()");
 
         var instrucaoSql = `
-                select 
+               select 
                 round(avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100),2) porcentagem,
-                DATE_FORMAT(t.dtHoraColeta, '%H:%i:%s') instante, mdl.id modelo, concat(mdl.modelo, ' ', mdl.ano) nome
+                DATE_FORMAT(t.dtHoraColeta, '%H:%i:%s') instante, mdl.id modelo, concat(mdl.modelo, ' ', mdl.ano) nome,
+                concat(count(nivel_oleo),'/', (select COUNT(*) from carro WHERE carro.fkmodelo = vw.id_modelo)) qtd
                 from carro c
                 inner join sensor s   
                 on c.fksensor = s.id
@@ -125,7 +126,8 @@ function atualizarGraficoPorModelo(modelo_id, alerta) {
         var instrucaoSql = `
                 select 
                 round(avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100),2) porcentagem,
-                DATE_FORMAT(t.dtHoraColeta, '%H:%i:%s') instante, mdl.id modelo, concat(mdl.modelo, ' ', mdl.ano) nome
+                DATE_FORMAT(t.dtHoraColeta, '%H:%i:%s') instante, mdl.id modelo, concat(mdl.modelo, ' ', mdl.ano) nome,
+                concat(count(nivel_oleo),'/', (select COUNT(*) from carro WHERE carro.fkmodelo = vw.id_modelo)) qtd
                 from carro c
                 inner join sensor s   
                 on c.fksensor = s.id
