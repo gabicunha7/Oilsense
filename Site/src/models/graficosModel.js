@@ -120,6 +120,22 @@ function graficoPorModeloAlerta(modelo_id, alerta) {
         return database.executar(instrucaoSql);
 }
 
+/*select
+                round(avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100),2) porcentagem,
+                DATE_FORMAT(t.dtHoraColeta, '%d/%m/%Y %H:%i:%s') instante
+                from carro c
+				inner join sensor s   
+					on c.fksensor = s.id
+				inner join telemetria t
+					on t.fksensor = s.id
+				inner join modelo mdl 
+					on c.fkmodelo = mdl.id
+				inner join vw_listar_alertas vw
+					where vw.id_modelo = mdl.id and nivel_oleo = 2 and id_modelo = 101 and date(t.dtHoraColeta) = current_date() 
+                group by instante
+                order by instante desc
+                limit 7;*/
+
 
 
 
