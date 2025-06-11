@@ -353,27 +353,27 @@ function plotarGraficoModelo(dados, dadosSemAlerta, modelo_id) {
         valores2.push(dadosSemAlerta[i].porcentagem);
     }
 
-    const config = {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Nível médio de óleo com nível (%)',
-                data: valores,
-                borderColor: 'rgb(235, 54, 54)',
-                backgroundColor: 'rgba(235, 54, 54, 0.2)',
-                tension: 0.4,
-                fill: true
-            },
-            {
-                label: 'Nível médio de óleo sem alerta (%)',
-                data: valores2,
-                borderColor: 'rgb(55, 54, 235)',
-                backgroundColor: 'rgba(54, 54, 235, 0.2)',
-                tension: 0.4,
-            }
-        ]
+   const config = {
+    type: 'line',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Nível médio de óleo com nível (%)',
+            data: valores,
+            borderColor: 'rgb(235, 54, 54)',
+            backgroundColor: 'rgba(235, 54, 54, 0.2)',
+            tension: 0.4,
+            fill: true
         },
+        {
+            label: 'Nível médio de óleo sem alerta (%)',
+            data: valores2,
+            borderColor: 'rgb(35, 35, 245)',
+            backgroundColor: 'rgba(54, 54, 235, 0.2)',
+            tension: 0.4,
+            borderWidth: 4 
+        }]
+    },
         options: {
             responsive: true,
             plugins: {
