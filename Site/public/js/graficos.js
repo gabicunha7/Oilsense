@@ -42,7 +42,7 @@ function alertasGraficoDePizza() {
                             totalAlertas += dados[i].qtde;
                         }
 
-                        let maiorQtd = -Infinity;
+                        let maiorQtd = dados[0].qtd;
                         let alertaMaisFrequente = '';
                         for (let i = 0; i < dados.length; i++) {
                             if (dados[i].qtde > maiorQtd) {
@@ -51,7 +51,7 @@ function alertasGraficoDePizza() {
                             }
                         }
 
-                        let menorQtd = Infinity;
+                        let menorQtd = dados[0].qtd;
                         let alertaMenosFrequente = '';
                         for (let i = 0; i < dados.length; i++) {
                             if (dados[i].qtde < menorQtd) {
@@ -176,8 +176,8 @@ function exibirGraficoCarroEspecifico(codigo) {
                     } else {
                         resposta.json().then(function (dados) {
                             let soma = 0;
-                            let max = -Infinity;
-                            let min = Infinity;
+                            let max = dados[0].porcentagem;
+                            let min = dados[0].porcentagem;
                             let numColetas = 0;
 
                             for (let i = 0; i < dados.length; i++) {
@@ -189,8 +189,8 @@ function exibirGraficoCarroEspecifico(codigo) {
                             }
 
                             let media = (soma / numColetas).toFixed(2);
-                            max = max.toFixed(2);
-                            min = min.toFixed(2);
+                            max = max;
+                            min = min;
 
                             document.querySelector('#carros .kpis').innerHTML = `
                                 <section class="indicador">
@@ -234,7 +234,7 @@ function plotarGraficoCarro(dados) {
     let labels = [];
     let valores = [];
 
-    for (let i = 0; i < dados.length; i++) {
+    for (let i = dados.length - 1; i >= 0; i--) {
         labels.push(dados[i].instante);
         valores.push(dados[i].porcentagem);
     }
@@ -246,7 +246,7 @@ function plotarGraficoCarro(dados) {
             datasets: [{
                 label: 'Veículo',
                 data: valores,
-                backgroundColor: ['rgb(235, 54, 54)'],
+                backgroundColor: ['rgb(206, 143, 7)'],
             }]
         },
         options: {
@@ -260,38 +260,30 @@ function plotarGraficoCarro(dados) {
                 annotation: {
                     annotations: {
                         linhaLimite60: {
-                            type: 'line',
+                            type: 'box',
                             yMin: 60,
-                            yMax: 60,
-                            borderColor: 'yellow',
-                            borderWidth: 2,
-                            label: {
-                                content: '60%',
-                                enabled: true,
-                                position: 'start',
-                                color: 'red',
-                            }
-                        },
-                        linhaLimite70: {
-                            type: 'line',
-                            yMin: 70,
                             yMax: 70,
-                            borderColor: 'yellow',
+                            borderColor: 'rgba(11, 92, 4, 0.34)',
+                            backgroundColor: 'rgba(33, 253, 13, 0.34)',
                             borderWidth: 2,
-                            label: {
-                                content: ' 70%',
-                                enabled: true,
-                                position: 'start',
-                                color: 'red',
-                            }
-                        }
+                        },
                     }
                 }
             },
             scales: {
                 y: {
-                    min: 0,
+                    beginAtZero: true,
                     max: 100,
+                    title: {
+                        display: true,
+                        text: '% do Nível de Óleo'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Instante da Coleta'
+                    }
                 }
             }
         }
@@ -348,34 +340,14 @@ function plotarGraficoModelo(dados) {
                 },
                 annotation: {
                     annotations: {
-                        limite60: {
-                            type: 'line',
+                        linhaLimite60: {
+                            type: 'box',
                             yMin: 60,
-                            yMax: 60,
-                            borderColor: 'yellow',
-                            borderWidth: 2,
-                            label: {
-                                content: '',
-                                enabled: true,
-                                position: 'start',
-                                backgroundColor: 'yellow',
-                                color: 'black'
-                            }
-                        },
-                        limite70: {
-                            type: 'line',
-                            yMin: 70,
                             yMax: 70,
-                            borderColor: 'yellow',
+                            borderColor: 'rgba(11, 92, 4, 0.34)',
+                            backgroundColor: 'rgba(33, 253, 13, 0.34)',
                             borderWidth: 2,
-                            label: {
-                                content: '',
-                                enabled: true,
-                                position: 'start',
-                                backgroundColor: 'yellow',
-                                color: 'black'
-                            }
-                        }
+                        },
                     }
                 }
             },

@@ -258,10 +258,12 @@ AS
 select 
 m.id, c.codigo cod,  concat(mdl.modelo,' ',mdl.ano) as modelo, mdl.id id_modelo,
 case when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) > 70 then 1
-	 when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) < 60 then 2
+	 when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) < 60 
+	    and avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) >= 50 then 2
 	 when avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) < 50 then 3
-else 'Sem Alerta' 
-end as nivel_oleo
+else 'Sem Alerta'
+end as nivel_oleo,
+avg(((c.alturacarter - t.distancia) / c.alturacarter) * 100) as porcentagenm
 from carro c
 inner join sensor s   
     on c.fksensor = s.id
