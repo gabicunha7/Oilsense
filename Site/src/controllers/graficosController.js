@@ -134,11 +134,41 @@ function graficoPorModelo(req, res) {
         );
 }
 
+function graficoPorModeloAlerta(req, res) {
+    var alerta = req.body.alerta;
+    var modelo_id = req.body.modelo_id;
+
+    if (modelo_id == undefined) {
+        res.status(400).send("O modelo_id está undefined!");
+    } else if (alerta == undefined) {
+        res.status(400).send("O alerta está undefined!");
+    } else {
+        graficosModel.graficoPorModeloAlerta(modelo_id, alerta)
+            .then(
+                function (resultado) {
+                    if (resultado.length > 0) {
+                        res.status(200).json(resultado);
+                    } else {
+                        res.status(204).send("Nenhum resultado encontrado!");
+                    }
+                }
+            )
+            .catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log("\nHouve um erro ao listar alertas dos carros! Erro: ", erro.sqlMessage);
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
 module.exports = {
     nivelDeAlertaPorDia,
     carrosAlerta,
     modelosAlerta,
     graficoPorCarro,
-    graficoPorModelo
+    graficoPorModelo,
+    graficoPorModeloAlerta
 
 }

@@ -24,4 +24,8 @@ router.get("/graficoPorCarro/:codigo", function (req,res) {
     graficosController.graficoPorCarro(req,res)
 });
 
+router.post("/graficoPorModeloAlerta", function (req, res) {
+    graficosController.graficoPorModeloAlerta(req, res);
+});
+
 module.exports = router;
