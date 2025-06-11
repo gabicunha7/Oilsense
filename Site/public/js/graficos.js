@@ -423,11 +423,7 @@ function plotarGraficoModelo(dados) {
         },
     };
 
-    for (var i = 0; i < dados.length; i++) {
-        config.data.datasets[0].data.push(dados[i].qtde)
-        config.data.labels.push(dados[i].nivel_oleo)
 
-    }
 
     Chart.defaults.color = '#ffffff';
     Chart.defaults.font.size = 16;
