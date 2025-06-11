@@ -42,7 +42,7 @@
 }
 
 .kpis {
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -129,6 +129,7 @@
 }
 
 .btn-voltar {
+    margin: 1rem;
     display: none;
     padding: 1rem 1rem;
     font-size: 1.2rem;

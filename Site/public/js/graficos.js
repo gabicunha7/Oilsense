@@ -40,6 +40,42 @@ function alertasGraficoDePizza() {
                 } else {
                     resposta.json().then(function (dados) {
                         console.log("graficos:", dados);
+                        let totalAlertas = 0;
+                        for (let i = 0; i < dados.length; i++) {
+                            totalAlertas += dados[i].qtde;
+                        }
+
+                        let maiorQtd = -Infinity;
+                        let alertaMaisFrequente = '';
+                        for (let i = 0; i < dados.length; i++) {
+                            if (dados[i].qtde > maiorQtd) {
+                                maiorQtd = dados[i].qtde;
+                                alertaMaisFrequente = dados[i].nivel_oleo;
+                            }
+                        }
+
+                        let menorQtd = Infinity;
+                        let alertaMenosFrequente = '';
+                        for (let i = 0; i < dados.length; i++) {
+                            if (dados[i].qtde < menorQtd) {
+                                menorQtd = dados[i].qtde;
+                                alertaMenosFrequente = dados[i].nivel_oleo;
+                            }
+                        }
+
+                        document.querySelector('#alertas .kpis').innerHTML = 
+                            `<div class="indicador">
+                                <h3>${totalAlertas}</h3>
+                                <p>Total de Alertas</p>
+                            </div>
+                            <div class="indicador">
+                                <h3>${alertaMaisFrequente} | total: (${maiorQtd})</h3>
+                                <p>Alerta Mais Frequente</p>
+                            </div>
+                            <div class="indicador">
+                                <h3>${alertaMenosFrequente} | total: (${menorQtd})</h3>
+                                <p>Alerta Menos Frequente</p>
+                            </div>`;
                         plotarGraficoPizza(dados);
                     });
                 }
@@ -74,9 +110,49 @@ function graficoModelo(modelo_id) {
             .then(function (resposta) {
                 if (resposta.ok) {
                     if (resposta.statusText === 'No Content') {
-                        document.querySelector('#carros .grafico').innerHTML = '<p>Nenhum dado encontrado para este carro.</p>';
+                        document.querySelector('#modelos .grafico').innerHTML = '<p>Nenhum dado encontrado para este carro.</p>';
                     } else {
                         resposta.json().then(function (dados) {
+
+                            let soma = 0;
+                            let pior = Number(dados[0].porcentagem);
+                            let melhor = Number(dados[0].porcentagem);
+
+                            for (let i = 0; i < dados.length; i++) {
+                                const valor = Number(dados[i].porcentagem);
+
+                                soma += valor;
+
+                                if (valor < pior) {
+                                    pior = valor;
+                                }
+                                if (valor > melhor) {
+                                    melhor = valor;
+                                }
+                            }
+
+                            const ultima = Number(dados[0].porcentagem);
+                            const media = (soma / dados.length).toFixed(2);
+
+                            document.querySelector('#modelos .kpis').innerHTML = `
+                                <div class="indicador">
+                                    <h3>${ultima}%</h3>
+                                    <p>Última leitura</p>
+                                </div>
+                                <div class="indicador">
+                                    <h3>${media}%</h3>
+                                    <p>Média recente</p>
+                                </div>
+                                <div class="indicador">
+                                    <h3>${pior}%</h3>
+                                    <p>Pior leitura</p>
+                                </div>
+                                <div class="indicador">
+                                    <h3>${melhor}%</h3>
+                                    <p>Melhor leitura</p>
+                                </div>
+                            `;
+
                             plotarGraficoModelo(dados);
                         });
                     }
@@ -92,7 +168,7 @@ function graficoModelo(modelo_id) {
 
     atualizarGrafico();
 
-    intervaloAtualizacao = setInterval(atualizarGrafico, 5000);
+    intervaloAtualizacao = setInterval(atualizarGrafico, 6000);
 }
 
 
@@ -108,8 +184,7 @@ function exibirGraficoCarroEspecifico(codigo) {
     document.querySelector('#carros .grafico').style.display = 'block';
     document.querySelector('#carros .btn-voltar').style.display = 'inline-block';
 
-
-    function atualizarGrafico() {
+function atualizarGrafico() {
         fetch(`/graficos/graficoPorCarro/${codigo}`)
             .then(function (resposta) {
                 if (resposta.ok) {
@@ -117,6 +192,47 @@ function exibirGraficoCarroEspecifico(codigo) {
                         document.querySelector('#carros .grafico').innerHTML = '<p>Nenhum dado encontrado para este carro.</p>';
                     } else {
                         resposta.json().then(function (dados) {
+                            if (dados.length === 0) {
+                                document.querySelector('#carros .grafico').innerHTML = '<p>Nenhum dado encontrado para este carro.</p>';
+                                return;
+                            }
+
+                            let soma = 0;
+                            let max = -Infinity;
+                            let min = Infinity;
+                            let numColetas = 0;
+
+                            for (let i = 0; i < dados.length; i++) {
+                                let valor = parseFloat(dados[i].porcentagem);
+                                soma += valor;
+                                if (valor > max) max = valor;
+                                if (valor < min) min = valor;
+                                numColetas++;
+                            }
+
+                            let media = (soma / numColetas).toFixed(2);
+                            max = max.toFixed(2);
+                            min = min.toFixed(2);
+
+                            document.querySelector('#carros .kpis').innerHTML = `
+                                <div class="indicador">
+                                    <h3>Média Atual</h3>
+                                    <p>${media}%</p>
+                                </div>
+                                <div class="indicador">
+                                    <h3>Máximo</h3>
+                                    <p>${max}%</p>
+                                </div>
+                                <div class="indicador">
+                                    <h3>Mínimo</h3>
+                                    <p>${min}%</p>
+                                </div>
+                                <div class="indicador">
+                                    <h3>Nº Coletas</h3>
+                                    <p>${numColetas}</p>
+                                </div>
+                                `;
+
                             plotarGraficoCarro(dados);
                         });
                     }
@@ -128,11 +244,11 @@ function exibirGraficoCarroEspecifico(codigo) {
                 console.error("#ERRO: ", erro);
                 alert("Erro ao comunicar com o servidor.");
             });
-    }
+        }
 
     atualizarGrafico();
 
-    intervaloAtualizacao = setInterval(atualizarGrafico, 5000);
+    intervaloAtualizacao = setInterval(atualizarGrafico, 6000);
 }
 
 
@@ -416,7 +532,7 @@ function exibirTabelaCarros(dados) {
 
     let secGrafico = document.querySelector('#carros .grafico');
     secGrafico.style.display = 'none';
-    
+
 
     let conteudo = `<tr>
                         <th> Código Veiculo </th>
