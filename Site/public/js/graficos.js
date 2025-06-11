@@ -126,7 +126,7 @@ function graficoModelo(modelo_id) {
 
                             document.querySelector('#modelos .kpis').innerHTML = `
                                 <section class="indicador">
-                                    <h3> Última leitura </h3>
+                                    <h3> Última porcentagem </h3>
                                     <p class="indice"> ${ultima}% </p>
                                 </section>
                                 <section class="indicador">
@@ -134,11 +134,11 @@ function graficoModelo(modelo_id) {
                                     <p class="indice"> ${media}% </p>
                                 </section>
                                 <section class="indicador">
-                                    <h3>  Pior leitura </h3>
+                                    <h3>  Menor porcentagem </h3>
                                     <p class="indice"> ${pior}% </p>
                                 </section>
                                 <section class="indicador">
-                                    <h3> Melhor leitura </h3>
+                                    <h3> Maior porcentagem </h3>
                                     <p class="indice"> ${melhor}% </p>
                                 </section>
                             `;
