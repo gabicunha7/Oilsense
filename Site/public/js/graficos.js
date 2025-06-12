@@ -110,9 +110,7 @@ async function graficoModelo(modelo_id) {
     })
         .then(function (resposta) {
             if (resposta.ok) {
-                if (resposta.statusText === 'No Content') {
-                    document.querySelector('#modelos .mensagem').innerHTML = '<p> Nenhum dado encontrado para este carro.</p>';
-                } else {
+                if (resposta.statusText != 'No Content') {
                     resposta.json().then(function (dados) {
                         dadosSemAlerta = dados;
                     });
