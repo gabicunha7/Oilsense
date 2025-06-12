@@ -150,16 +150,14 @@ async function graficoModelo(modelo_id) {
 
                             soma += valor;
 
+                            if (dadosSemAlerta.length < dados.length) {
+                                dadosSemAlerta[i] = {qtd: 0};
+                            } 
 
                         }
 
                         let semNivel = 0
                         let comNIvel = 0
-
-
-                        for (var i = 0; i < dados.length; i++) {
-
-                        }
 
 
                         const ultima = Number(dados[0].porcentagem);
@@ -912,3 +910,5 @@ function fecharConhecer() {
 
     alertas.style.display = 'none';
 }
+
+
