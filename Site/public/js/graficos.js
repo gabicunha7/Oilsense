@@ -150,14 +150,14 @@ async function graficoModelo(modelo_id) {
 
                             soma += valor;
 
-                          
+
                         }
 
                         let semNivel = 0
                         let comNIvel = 0
 
 
-                        for (var i = 0; i<dados.length;i++){
+                        for (var i = 0; i < dados.length; i++) {
 
                         }
 
@@ -183,7 +183,7 @@ async function graficoModelo(modelo_id) {
                                 <p class="indice">  ${dados[0].qtd} </p>
                             </section>
                         `;
-                        
+
                         if (dadosSemAlerta) {
                             plotarGraficoModelo(dados, dadosSemAlerta, modelo_id);
                         }
@@ -481,22 +481,22 @@ function atualizarGraficoCarro(grafico, config, codigo, dados) {
                             min = min;
 
                             document.querySelector('#carros .kpis').innerHTML = `
-                                <section class="indicador">
-                                    <h3> Média Atual </h3>
-                                    <p class="indice"> ${media}% </p>
-                                </section>
-                                <section class="indicador">
-                                    <h3> Máximo </h3>
-                                    <p class="indice"> ${max}%</p>
-                                </section>
-                                <section class="indicador">
-                                    <h3> Mínimo </h3>
-                                    <p class="indice"> ${min}% </p>
-                                </section>
-                                <section class="indicador">
-                                    <h3> Nº Coletas </h3>
-                                    <p class="indice"> ${numColetas} </p>
-                                </section>
+                            <section class="indicador">
+                                <h3> Média Atual </h3>
+                                <p class="indice"> ${media}% </p>
+                            </section>
+                            <section class="indicador">
+                                <h3> Máximo </h3>
+                                <p class="indice"> ${max}%</p>
+                            </section>
+                            <section class="indicador">
+                                <h3> Mínimo </h3>
+                                <p class="indice"> ${min}% </p>
+                            </section>
+                            <section class="indicador">
+                                <h3> Modelo </h3>
+                                <p class="indice"> ${dados[0].modelo} </p>
+                            </section>
                             `;
                         }
 
@@ -516,7 +516,7 @@ function atualizarGraficoCarro(grafico, config, codigo, dados) {
 async function atualizarGraficoModelo(grafico, config, modelo_id, dados) {
     let dadosSemAlerta = [];
 
-     await fetch(`/graficos/atualizarGraficoPorModelo`, {
+    await fetch(`/graficos/atualizarGraficoPorModelo`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -574,43 +574,45 @@ async function atualizarGraficoModelo(grafico, config, modelo_id, dados) {
                             dados.push(dadosUltimo[0]);
 
                             let soma = 0;
-                            let pior = Number(dados[0].porcentagem);
-                            let melhor = Number(dados[0].porcentagem);
 
                             for (let i = 0; i < dados.length; i++) {
                                 const valor = Number(dados[i].porcentagem);
 
                                 soma += valor;
 
-                                if (valor < pior) {
-                                    pior = valor;
-                                }
-                                if (valor > melhor) {
-                                    melhor = valor;
-                                }
+
                             }
+
+                            let semNivel = 0
+                            let comNIvel = 0
+
+
+                            for (var i = 0; i < dados.length; i++) {
+
+                            }
+
 
                             const ultima = Number(dados[0].porcentagem);
                             const media = (soma / dados.length).toFixed(2);
 
                             document.querySelector('#modelos .kpis').innerHTML = `
-                                <section class="indicador">
-                                    <h3> Última porcentagem </h3>
-                                    <p class="indice"> ${ultima}% </p>
-                                </section>
-                                <section class="indicador">
-                                    <h3> Média recente </h3>
-                                    <p class="indice"> ${media}% </p>
-                                </section>
-                                <section class="indicador">
-                                    <h3>  Menor porcentagem </h3>
-                                    <p class="indice"> ${pior}% </p>
-                                </section>
-                                <section class="indicador">
-                                    <h3> Maior porcentagem </h3>
-                                    <p class="indice"> ${melhor}% </p>
-                                </section>
-                            `;
+                            <section class="indicador">
+                                <h3> Última porcentagem </h3>
+                                <p class="indice"> ${ultima}% </p>
+                            </section>
+                            <section class="indicador">
+                                <h3> Média recente </h3>
+                                <p class="indice"> ${media}% </p>
+                            </section>
+                            <section class="indicador">
+                                <h3> Quantidade de carros sem alertas </h3>
+                                <p class="indice"> ${dadosSemAlerta[0].qtd} </p>
+                            </section>
+                            <section class="indicador">
+                                <h3> Quantidade de carros com nível ${alertaModeloAtual}</h3>
+                                <p class="indice">  ${dados[0].qtd} </p>
+                            </section>
+                        `;
 
                         }
 
