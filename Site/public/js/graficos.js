@@ -144,21 +144,23 @@ async function graficoModelo(modelo_id) {
                     resposta.json().then(function (dados) {
 
                         let soma = 0;
-                        let pior = Number(dados[0].porcentagem);
-                        let melhor = Number(dados[0].porcentagem);
 
                         for (let i = 0; i < dados.length; i++) {
                             const valor = Number(dados[i].porcentagem);
 
                             soma += valor;
 
-                            if (valor < pior) {
-                                pior = valor;
-                            }
-                            if (valor > melhor) {
-                                melhor = valor;
-                            }
+                          
                         }
+
+                        let semNivel = 0
+                        let comNIvel = 0
+
+
+                        for (var i = 0; i<dados.length;i++){
+
+                        }
+
 
                         const ultima = Number(dados[0].porcentagem);
                         const media = (soma / dados.length).toFixed(2);
@@ -173,12 +175,12 @@ async function graficoModelo(modelo_id) {
                                 <p class="indice"> ${media}% </p>
                             </section>
                             <section class="indicador">
-                                <h3>  Menor porcentagem </h3>
-                                <p class="indice"> ${pior}% </p>
+                                <h3> Quantidade de carros sem alertas </h3>
+                                <p class="indice"> ${dadosSemAlerta[0].qtd} </p>
                             </section>
                             <section class="indicador">
-                                <h3> Maior porcentagem </h3>
-                                <p class="indice"> ${melhor}% </p>
+                                <h3> Quantidade de carros com nível ${alertaModeloAtual}</h3>
+                                <p class="indice">  ${dados[0].qtd} </p>
                             </section>
                         `;
                         
@@ -241,8 +243,8 @@ function exibirGraficoCarroEspecifico(codigo) {
                                 <p class="indice"> ${min}% </p>
                             </section>
                             <section class="indicador">
-                                <h3> Nº Coletas </h3>
-                                <p class="indice"> ${numColetas} </p>
+                                <h3> Modelo </h3>
+                                <p class="indice"> ${dados[0].modelo} </p>
                             </section>
                             `;
 
@@ -274,7 +276,7 @@ function plotarGraficoCarro(dados, codigo) {
         data: {
             labels: labels,
             datasets: [{
-                label: 'Veículo',
+                label: `${codigo}`,
                 data: valores,
                 borderColor: 'rgb(235, 54, 54)',
                 backgroundColor: 'rgba(235, 54, 54, 0.2)',
@@ -360,7 +362,7 @@ function plotarGraficoModelo(dados, dadosSemAlerta, modelo_id) {
         data: {
             labels: labels,
             datasets: [{
-                label: 'Nível médio de óleo com nível (%)',
+                label: `Nível ${alertaModeloAtual}`,
                 data: valores,
                 borderColor: 'rgb(235, 54, 54)',
                 backgroundColor: 'rgba(235, 54, 54, 0.2)',
@@ -368,7 +370,7 @@ function plotarGraficoModelo(dados, dadosSemAlerta, modelo_id) {
                 fill: true
             },
             {
-                label: 'Nível médio de óleo sem alerta (%)',
+                label: 'Sem alerta',
                 data: valores2,
                 borderColor: 'rgb(35, 35, 245)',
                 backgroundColor: 'rgba(54, 54, 235, 0.2)',
@@ -381,7 +383,7 @@ function plotarGraficoModelo(dados, dadosSemAlerta, modelo_id) {
             plugins: {
                 title: {
                     display: true,
-                    text: `Nível médio de óleo dos veículos do modelo ${dados[0].nome}`,
+                    text: `Porcentagem média de óleo dos veículos do modelo ${dados[0].nome}`,
                     font: { size: 24 },
                     padding: { top: 20, bottom: 10 }
                 },
@@ -520,7 +522,7 @@ async function atualizarGraficoModelo(grafico, config, modelo_id, dados) {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            alerta: alertaModeloAtual,
+            alerta: 4,
             modelo_id: modelo_id
         }),
     })
