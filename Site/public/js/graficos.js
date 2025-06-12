@@ -150,10 +150,6 @@ async function graficoModelo(modelo_id) {
 
                             soma += valor;
 
-                            if (dadosSemAlerta.length < dados.length) {
-                                dadosSemAlerta[i] = {qtd: 0};
-                            } 
-
                         }
 
                         let semNivel = 0
@@ -162,6 +158,10 @@ async function graficoModelo(modelo_id) {
 
                         const ultima = Number(dados[0].porcentagem);
                         const media = (soma / dados.length).toFixed(2);
+
+                        if (dadosSemAlerta.length == 0) {
+                            dadosSemAlerta[0] = { qtd: 0 };
+                        }
 
                         document.querySelector('#modelos .kpis').innerHTML = `
                             <section class="indicador">
@@ -181,6 +181,10 @@ async function graficoModelo(modelo_id) {
                                 <p class="indice">  ${dados[0].qtd} </p>
                             </section>
                         `;
+
+                        if (dadosSemAlerta.length == 1) {
+                            dadosSemAlerta = [];
+                        }
 
                         if (dadosSemAlerta) {
                             plotarGraficoModelo(dados, dadosSemAlerta, modelo_id);
@@ -581,14 +585,9 @@ async function atualizarGraficoModelo(grafico, config, modelo_id, dados) {
 
                             }
 
-                            let semNivel = 0
-                            let comNIvel = 0
-
-
-                            for (var i = 0; i < dados.length; i++) {
-
+                            if (dadosSemAlerta.length == 0) {
+                                dadosSemAlerta[0] = { qtd: 0 };
                             }
-
 
                             const ultima = Number(dados[0].porcentagem);
                             const media = (soma / dados.length).toFixed(2);
