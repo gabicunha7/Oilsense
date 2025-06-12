@@ -784,7 +784,7 @@ function plotarGraficoPizza(dados) {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Níveis de alertas dos veículos em um dia',
+                    text: 'Quantidade total de alertas dos veículos em um dia',
                     font: {
                         size: 28
                     },
